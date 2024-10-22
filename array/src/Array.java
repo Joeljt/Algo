@@ -1,12 +1,12 @@
 package array.src;
 
-public class Array {
+public class Array<E> {
 
-    private int[] data;
+    private E[] data;
     private int currentSize;
 
     public Array(int capacity) {
-        data = new int[capacity];
+        data = (E[])(new Object[capacity]);
         currentSize = 0;
     }
 
@@ -31,41 +31,42 @@ public class Array {
         return currentSize == 0;
     }
 
-    public int get(int index) {
+    public E get(int index) {
         if (index < 0 || index >= currentSize) {
             throw new IllegalArgumentException("Invalid index: 0 <= index < currentSize");
         }
         return data[index];
     }
 
-    public void set(int index, int e) {
+    public void set(int index, E e) {
         if (index < 0 || index >= currentSize) {
             throw new IllegalArgumentException("Invalid index: 0 <= index < currentSize");
         }
         data[index] = e;
     }
 
-    public void addFirst(int e) {
+    public void addFirst(E e) {
         add(0, e);
     }
 
-    public void addLast(int e) {
+    public void addLast(E e) {
         add(currentSize, e);
     }
 
-    public void add(int index, int e) {
-        // If current size is equals to the capacity of the internal array
-        // then there is no more room for another element, so we're quiting from here.
-        if (currentSize == data.length) {
-            throw new IllegalArgumentException("Add failed. Array is full.");
-        }
-
+    public void add(int index, E e) {
         // if the target index is lesser than 0, then it's an invalid index;
         // if the target index is greater than current size, then it's targeting an alone element, this is achieable 
         // as long as the target index is lesser than the capacity, but it will cause a lot troubles when the elements are not be adjacent to each other
         // so we're limit the index to be as: 0 <= index <= currentSize, to make all the element are stored compactly
         if (index < 0 || index > currentSize) {
             throw new IllegalArgumentException("Add failed, index should be greater that zero and less than.");
+        }
+
+        // If current size is equals to the capacity of the internal array
+        // then there is no more room for another element, so we're quiting from here.
+        // We'll try to resize the array if there is no enough room for another new element
+        if (currentSize == data.length) {
+            resize(data.length * 2);
         }
 
         // Insert the target element into the array
@@ -86,18 +87,18 @@ public class Array {
         currentSize ++;
     }
 
-    public boolean contains(int e) {
+    public boolean contains(E e) {
         for (int i = 0; i < currentSize; i++) {
-            if (data[i] == e) {
+            if (data[i].equals(e)) {
                 return true;
             }
         }
         return false;
     }
 
-    public int find(int e) {
+    public int find(E e) {
         for (int i = 0; i < currentSize; i++) {
-            if (data[i] == e) {
+            if (data[i].equals(e)) {
                 return i;
             }
         }
@@ -105,12 +106,12 @@ public class Array {
     }
 
 
-    public int remove(int index) {
+    public E remove(int index) {
         if (index < 0 || index >= currentSize) {
             throw new IllegalArgumentException("invalid index!");
         }
 
-        int ret = data[index];
+        E ret = data[index];
         // 0 1 2 3 4 5 6 7 8 9
         // a b c d e ? ? ? ? ?
         // a x c d e ? ? ? ? ?
@@ -118,22 +119,31 @@ public class Array {
         // just shift all the elements on the right of the index to erase the target one
         // Actually, we don't need to care about the value of the original index of `currentSize`
         // Cause user will never access that value, it's not valid
-        for (int i = index; i < currentSize; i++) {
-            data[i] = data[i + 1];
+        // !!! Bad
+        // for (int i = index; i < currentSize; i++) {
+        //     data[i] = data[i + 1];
+        // }
+        for (int i = index + 1; i < currentSize; i++) {
+            data[i - 1] = data[i];
         }
         currentSize--;
+
+        if (currentSize <= data.length / 2) {
+            resize(data.length / 2);
+        }
+        
         return ret;
     }
 
-    public int removeFirst() {
+    public E removeFirst() {
         return remove(0);
     }
 
-    public int removeLast() {
+    public E removeLast() {
         return remove(currentSize - 1);
     }
 
-    public int removeElement(int e) {
+    public int removeElement(E e) {
         int index = find(e);
         if (index != -1) {
             remove(index);
@@ -154,6 +164,14 @@ public class Array {
         }
         res.append("]");
         return res.toString();
+    }
+
+    private void resize(int newSize) {
+       E[] newArr = (E[])(new Object[newSize]);
+       for (int i = 0; i <= currentSize - 1; i++) {
+            newArr[i] = data[i];
+       }
+       data = newArr;
     }
     
 }
