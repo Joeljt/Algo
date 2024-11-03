@@ -1,4 +1,4 @@
-package array.src;
+package src.c_array;
 
 public class Main {
   
