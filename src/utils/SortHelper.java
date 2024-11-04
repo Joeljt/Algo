@@ -29,6 +29,7 @@ public class SortHelper {
         switch (sortName) {
             case "SelectionSort": SelectionSort.sort(data); break;
             case "InsertionSort": InsertionSort.sort(data); break;
+            case "InsertionSortBySwap": InsertionSort.sortBySwap(data); break;
             default: throw new IllegalArgumentException("Sort " + sortName + " not found");
         }
         long endTime = System.nanoTime();

@@ -14,9 +14,11 @@ public class Test {
     for (int n : dataSize) {
       Integer[] data = ArrayGenerator.generateRandomArray(n);
       Integer[] copiedData = Arrays.copyOf(data, data.length);
+      Integer[] copiedData2 = Arrays.copyOf(data, data.length);
 
       SortHelper.testSort("SelectionSort", data);
       SortHelper.testSort("InsertionSort", copiedData);
+      SortHelper.testSort("InsertionSortBySwap", copiedData2);
     }
   
   }
