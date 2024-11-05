@@ -38,6 +38,10 @@ public class Array<E> {
         return data[index];
     }
 
+    public E getLast() {
+        return get(currentSize - 1);
+    }
+
     public void set(int index, E e) {
         if (index < 0 || index >= currentSize) {
             throw new IllegalArgumentException("Invalid index: 0 <= index < currentSize");
