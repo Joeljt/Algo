@@ -1,4 +1,4 @@
-package src.d_stack;
+package src.e_stack;
 
 import java.util.Stack;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class Main {
     //    System.out.println(isValidParenthesis("{[()]}"));
     //    System.out.println(isValidParenthesis("{[(])}"));
        System.out.println(isValidParenthesis2("{[()]}"));
-       System.out.println(isValidParenthesis2("{[(])}"));
+       System.out.println(isValid("{[(])}"));
 
     }
 
@@ -61,11 +61,11 @@ public class Main {
         return stack.isEmpty();
     }
 
-    public boolean isValid(String s) {
+    public static boolean isValid(String s) {
         int n = s.length();
         if (n % 2 == 1) return false;
 
-        Map<Character, Character> pairs = new HashMap<>() {{
+        Map<Character, Character> pairs = new HashMap<Character, Character>() {{
             put(')', '(');
             put(']', '[');
             put('}', '{');

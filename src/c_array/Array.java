@@ -38,6 +38,10 @@ public class Array<E> {
         return data[index];
     }
 
+    public E getFirst() {
+        return get(0);
+    }
+
     public E getLast() {
         return get(currentSize - 1);
     }
@@ -132,7 +136,7 @@ public class Array<E> {
         }
         currentSize--;
 
-        if (currentSize <= data.length / 2) {
+        if (currentSize <= data.length / 2 && data.length / 2 != 0) {
             resize(data.length / 2);
         }
         

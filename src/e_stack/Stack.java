@@ -1,4 +1,4 @@
-package src.d_stack;
+package src.e_stack;
 
 public interface Stack<E> {
     
