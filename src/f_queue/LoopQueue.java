@@ -34,6 +34,14 @@ public class LoopQueue<E> implements Queue<E> {
   }
 
   @Override
+  public E getFront() {
+    if (isEmpty()) {
+      throw new RuntimeException("Queue is empty.");
+    }
+    return data[front];
+  }
+
+  @Override
   public void enqueue(E e) {
     // 检查队列是否已经满了，如果满了就要触发扩容
     if ((tail + 1) % data.length == front) {
