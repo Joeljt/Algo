@@ -1,4 +1,6 @@
-package src.f_queue;
+package src.f_queue.quiz;
+
+import src.f_queue.Queue;
 
 /**
  * 不使用 size，但是浪费一个空间，用来区分空队列和满队列状态
@@ -75,7 +77,7 @@ public class LoopQueue2<E> implements Queue<E> {
     E[] newData = (E[])new Object[newCapacity];
     int size = getSize();
     for (int i = 0; i < size; i++) {
-      data[i] = data[(i + front) % data.length];
+      newData[i] = data[(i + front) % data.length];
     }
     data = newData;
     front = 0;
@@ -89,7 +91,7 @@ public class LoopQueue2<E> implements Queue<E> {
     sb.append("Queue: front: [");
     for (int i = front; i != tail; i = (i + 1) % data.length) {
       sb.append(data[i]);
-      if (i != (tail + 1) % data.length) {
+      if ((i + 1) % data.length != tail) {
         sb.append(", ");
       }
     }

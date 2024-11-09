@@ -1,11 +1,17 @@
 package src.f_queue;
 
+import src.f_queue.quiz.LoopQueue3;
 import src.utils.ArrayGenerator;
+import src.f_queue.quiz.QueueByStack;
 
 public class Main {
 
   public static void main(String[] args) {
+    testLoopQueue();
+    testQueueByStack();
+  }
 
+  public static void testLoopQueue() {
     ArrayQueue<Integer> arrayQueue = new ArrayQueue<>();
     // LoopQueue<Integer> loopQueue = new LoopQueue<>();
     // LoopQueue2<Integer> loopQueue = new LoopQueue2<>();
@@ -37,7 +43,18 @@ public class Main {
       System.out.println("ArrayQueue, time: " + time1 + " s");
       System.out.println("LoopQueue, time: " + time2 + " s");
     }
+  }
 
+  public static void testQueueByStack() {
+    QueueByStack<Integer> queueByStack = new QueueByStack<>();
+    for (int i = 0; i < 10; i++) {
+      queueByStack.enqueue(i);
+      System.out.println(queueByStack);
+      if (i % 3 == 2) {
+        queueByStack.dequeue();
+        System.out.println(queueByStack);
+      }
+    }
   }
   
 }

@@ -1,20 +1,20 @@
-package src.f_queue;
+package src.f_queue.quiz;
 
 /**
- * 不浪费空间，但是需要主动维护当前队列 size 的大小，从而有效区分队列空和队列满
+ * 双端队列
  */
-public class LoopQueue3<E> implements Queue<E> {
+public class Deque<E> {
 
   private E[] data;
   private int front, tail;
   private int size;
 
-  public LoopQueue3(int capacity) {
+  public Deque(int capacity) {
     data = (E[])new Object[capacity];
     front = tail = size = 0;
   }
 
-  public LoopQueue3() {
+  public Deque() {
     this(10);
   }
 
@@ -26,18 +26,14 @@ public class LoopQueue3<E> implements Queue<E> {
     return size == getCapacity();
   }
 
-  @Override
   public boolean isEmpty() {
-    // 不主动浪费空间的前提下，就不能用 tail == front 来判断数组空，或 (tail + 1) % data.length == front 来判断数组满
     return size == 0;
   }
 
-  @Override
   public int getSize() {
     return size;
   }
 
-  @Override
   public E getFront() {
     if (isEmpty()) {
       throw new RuntimeException("Queue is empty.");
@@ -45,18 +41,44 @@ public class LoopQueue3<E> implements Queue<E> {
     return data[front];
   }
 
-  @Override
-  public void enqueue(E e) {
-    if (isFull()) {
-      resize(data.length * 2);
+  public E getLast() {
+    if (isEmpty()) {
+      throw new RuntimeException("Queue is empty.");
     }
+    return data[(tail - 1 + data.length) % data.length];
+  }
+
+  public void addFront(E e) {
+    if (isFull()) resize(data.length * 2);
+    int targetIndex = (front - 1 + data.length) % data.length;
+    data[targetIndex] = e;
+    front = targetIndex;
+    size ++;
+  }
+
+  public E removeLast() {
+    if (isEmpty()) {
+      throw new RuntimeException("Queue is empty.");
+    }
+    int currentIndex = ((tail - 1) + data.length) % data.length;
+    E ret = data[currentIndex];
+    data[currentIndex] = null;
+    tail = currentIndex;
+    size --;
+    if (size == data.length / 4 && data.length / 2 != 0) {
+      resize(data.length / 2);
+    }
+    return ret;
+  }
+
+  public void addLast(E e) {
+    if (isFull()) resize(data.length * 2);
     data[tail] = e;
     tail = (tail + 1) % data.length;
     size ++;
   }
 
-  @Override
-  public E dequeue() {
+  public E removeFront() {
     if (isEmpty()) {
       throw new RuntimeException("Queue is empty.");
     }
@@ -64,19 +86,17 @@ public class LoopQueue3<E> implements Queue<E> {
     data[front] = null;
     front = (front + 1) % data.length;
     size --;
-
-    if (getSize() == data.length / 4 && data.length / 2 != 0) {
+    if (size == data.length / 4 && data.length / 2 != 0) {
       resize(data.length / 2);
     }
-
     return ret;
   }
-
+  
   private void resize(int newCapacity) {
     E[] newData = (E[])new Object[newCapacity];
     int size = getSize();
     for (int i = 0; i < size; i++) {
-      data[i] = data[(i + front) % data.length];
+      newData[i] = data[(i + front) % data.length];
     }
     data = newData;
     front = 0;
@@ -90,7 +110,7 @@ public class LoopQueue3<E> implements Queue<E> {
     sb.append("Queue: front: [");
     for (int i = front; i != tail; i = (i + 1) % data.length) {
       sb.append(data[i]);
-      if (i != (tail + 1) % data.length) {
+      if ((i + 1) % data.length != tail) {
         sb.append(", ");
       }
     }
