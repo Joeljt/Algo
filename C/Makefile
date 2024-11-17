@@ -10,9 +10,13 @@ TARGETS = array linkedlist stack
 # 每个数据结构的编译规则
 array: array/*.c
 	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
-	@echo "\n========= $@ ==========\n"
 	@./_dist/test_$@
-	@echo "\n========= $@ ==========\n"
+	@echo "\n"
+
+linkedlist: linkedlist/*.c
+	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
+	@./_dist/test_$@
+	@echo "\n"
 
 # 编译所有
 all: $(TARGETS)
