@@ -1,11 +1,8 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-typedef struct {
-    int* data;
-    int size;
-    int capacity;
-} Array;
+// Opague type
+typedef struct Array Array;
 
 Array* createArray(int capacity);
 void destroyArray(Array* array);

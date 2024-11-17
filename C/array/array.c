@@ -3,11 +3,36 @@
 #include <assert.h>
 #include "array.h"
 
-static void resize(Array* array, int newCapacity) {
+struct Array {
+    int* data;
+    int size;
+    int capacity;
+};
+
+// resize 方法更推荐的实践
+// realloc 会直接在原内存块上进行扩展，并在必要时自动处理数据复制和原内存释放的问题
+// realloc(NULL, new_size) 等价于 mallc()
+// realloc(ptr, 0) 等价于 free(ptr)
+static void expand(Array* array, int newCapacity) {
     int* newData = (int*)realloc(array->data, sizeof(int) * newCapacity);
     if(newData != NULL) {
         array->data = newData;
         array->capacity = newCapacity;
+    }
+}
+
+// 重新申请内存空间并自己处理复制、内存释放等操作
+// 性能不好，而且 array->data 的释放容易落下，更推荐 realloc 的做法
+// 这里只是记录一下这种方式也可行
+static void shrink(Array* array, int newCapacity) {
+    int *newData = (int*)malloc(sizeof(int) * newCapacity);
+    if (newData != NULL) {
+        for (int i = 0; i < array->size; i++) {
+            newData[i] = array->data[i];
+        }
+        free(array->data);
+        array->data = newData;
+        array->capacity = newCapacity; 
     }
 }
 
@@ -44,7 +69,7 @@ int isEmpty(Array* array) {
 void addElement(Array* array, int index, int e) {
     assert(index >= 0 && index <= array->size);
     if (array->size == array->capacity) {
-        resize(array, array->capacity * 2);
+        expand(array, array->capacity * 2);
     }
     for (int i = array->size - 1; i >= index; i--) {
         array->data[i + 1] = array->data[i];
@@ -69,7 +94,7 @@ int removeElement(Array* array, int index) {
     }
     array->size--;
     if (array->size == array->capacity / 4 && array->capacity / 2 != 0) {
-        resize(array, array->capacity / 2);
+        shrink(array, array->capacity / 2);
     }
     return e;
 } 
@@ -83,7 +108,7 @@ int removeLast(Array* array) {
 }
 
 void printArray(Array* array) {
-    printf("Array: size = %d, capacity = %d\n", array->size, array->capacity);
+    printf("Array: (%d/%d)\n", array->size, array->capacity);
     printf("[");
     for (int i = 0; i < array->size; i++) {
         printf("%d", array->data[i]);
