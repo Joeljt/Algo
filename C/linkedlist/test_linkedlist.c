@@ -3,10 +3,9 @@
 
 int main() {
 
-
     // 每次都在最开始插入，导致最终结果是倒序
     // 4 -> 3 -> 2 -> 1 -> NULL
-    Node* head;
+    Node* head = NULL;
     addLast(&head, 4);
     addLastTheHardWay(&head, 5);
     addFirst(&head, 1);
