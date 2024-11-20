@@ -1,21 +1,15 @@
-#pragma once
-
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
 typedef struct Node Node;
 
-Node* buildOneTwoThree();
-Node* buildWithSpecialCase();
-Node* buildWithDummyHead();
-Node* buildWithLocalReference();
+Node* createNode(int data);
+void destroyNode(Node* head);
 
-int length(Node * head);
+void insert(Node** headRef, int data);
+void append(Node** headRef, int data);
+void deleteNode(Node** headRef, int data);
 
-void printLinkedList(Node *head);
+void printList(Node* head);
 
-void addFirst(Node** headRef, int data);
-void addLast(Node** headRef, int data);
-void addLastTheHardWay(Node** headRef, int data);
-
-#endif  
+#endif
