@@ -3,13 +3,18 @@
 
 typedef struct Node Node;
 
-Node* createNode(int data);
-void destroyNode(Node* head);
+typedef struct LinkedList LinkedList;
 
-void insert(Node** headRef, int data);
-void append(Node** headRef, int data);
-void deleteNode(Node** headRef, int data);
+LinkedList* createList();
+void destroyList(LinkedList* list);
 
-void printList(Node* head);
+void insert(LinkedList* list, int data);
+void append(LinkedList* list, int data);
+void remove(LinkedList* list, int data);
+
+int size(LinkedList* list);
+bool isEmpty(LinkedList* list);
+
+void printList(LinkedList* list);
 
 #endif
