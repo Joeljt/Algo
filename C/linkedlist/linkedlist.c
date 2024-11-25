@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 #include "linkedlist.h"
 
 struct Node {
@@ -24,6 +25,12 @@ LinkedList* createList() {
 
 void destroyList(LinkedList* list) {
   if (list != NULL) {
+    Node* current = list->head;
+    while(current != NULL) {
+      Node* next = current->next;
+      free(current);
+      current = next;
+    }
     free(list);
   }
 }
@@ -39,26 +46,27 @@ void insert(LinkedList* list, int data) {
 }
 
 void append(LinkedList* list, int data) {
+  assert(list != NULL);
   Node* newNode = (Node*)malloc(sizeof(Node));
   if (newNode != NULL) {
     newNode->data = data;
-    if (list->head == NULL) {
-      newNode->next = NULL;
+    newNode->next = NULL;
+    Node* current = list->head;
+    if (current == NULL) {
       list->head = newNode;
     } else {
-      Node* current = list->head;
       while (current->next != NULL) {
         current = current->next;
       }
-      current->next = newNode;
-      newNode->next = NULL;
+      current->next = newNode; 
     }
-    list->size++;
+    list->size ++;
   }
 }
 
+// remove 的重点在于找到目标结点的前一个结点，然后把链表断开
 void remove(LinkedList* list, int data) {
-  if (list != NULL) {
-    
-  }
+  assert(list != NULL);
+  assert(list->head != NULL);
+  
 }
