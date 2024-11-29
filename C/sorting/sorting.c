@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "sorting.h"
 #include "helper.h"
 
@@ -25,4 +26,5 @@ void insertionSort(int* arr, int size) {
     arr[j] = target;
   }
 }
+
 
