@@ -10,7 +10,7 @@ typedef struct LinkedList LinkedList;
 LinkedList* createList();
 void destroyList(LinkedList* list);
 
-void insert(LinkedList* list, int data);
+void addFirst(LinkedList* list, int data);
 void append(LinkedList* list, int data);
 void remove(LinkedList* list, int data);
 

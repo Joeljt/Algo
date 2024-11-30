@@ -13,6 +13,18 @@ struct LinkedList {
   int size;
 };
 
+// 模拟 new Node() 的行为
+// 实际上 new Node 在做的也正是在堆区开空间并返回指针这个动作
+Node* createNode(int data, Node* next) {
+  Node* node = (Node*)malloc(sizeof(Node));
+  if (node != NULL) {
+    node->data = data;
+    node->next = next;
+    return node;
+  }
+  return NULL;
+}
+
 LinkedList* createList() {
   LinkedList* list = (LinkedList*)malloc(sizeof(LinkedList));
   if (list != NULL) {
@@ -35,38 +47,31 @@ void destroyList(LinkedList* list) {
   }
 }
 
-void insert(LinkedList* list, int data) {
-  Node* newNode = (Node*)malloc(sizeof(Node));
-  if (newNode != NULL) {
-    newNode->data = data;
-    newNode->next = list->head;
-    list->head = newNode;
-    list->size++;
-  }
-}
-
-void append(LinkedList* list, int data) {
-  assert(list != NULL);
-  Node* newNode = (Node*)malloc(sizeof(Node));
-  if (newNode != NULL) {
-    newNode->data = data;
-    newNode->next = NULL;
-    Node* current = list->head;
-    if (current == NULL) {
-      list->head = newNode;
-    } else {
-      while (current->next != NULL) {
-        current = current->next;
-      }
-      current->next = newNode; 
+// 找到目标位置的前一个位置，断开链接
+void add(LinkedList* list, int index, int data) {
+  assert(index >= 0 && index < list->size);
+  if (index == 0) {
+    addFirst(list, data);
+  } else {
+    Node* prev = list->head;
+    for (int i = 0; i < index - 1; i++) {
+      prev = prev->next;
     }
+    prev->next = createNode(data, prev->next);
     list->size ++;
   }
 }
 
-// remove 的重点在于找到目标结点的前一个结点，然后把链表断开
-void remove(LinkedList* list, int data) {
-  assert(list != NULL);
-  assert(list->head != NULL);
-  
+void addFirst(LinkedList* list, int data) {
+    // Node* node = new Node(data); 
+    // node.next = prev.next;
+    // prev.next = node;
+    list->head = createNode(data, list->head);
+    list->size++;
 }
+
+void addLast(LinkedList* list, int data) {
+  add(list, list->size, data);
+}
+
+
