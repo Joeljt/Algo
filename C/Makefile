@@ -8,17 +8,17 @@ $(shell mkdir -p _dist)
 TARGETS = array linkedlist stack sorting
 
 # 每个数据结构的编译规则
-array: array/*.c
+array: array/**/*.c
 	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
-linkedlist: linkedlist/*.c
+linkedlist: linkedlist/**/*.c
 	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
-sorting: sorting/*.c
+sorting: $(wildcard sorting/*.c) $(wildcard sorting/*/*.c)
 	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"

@@ -1,7 +1,7 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-#include <stdbool.h>  // 为了使用 bool 类型
+#include <stdbool.h> 
 
 // 数组操作
 void swap(int* a, int* b);
@@ -24,8 +24,7 @@ typedef struct {
     long swaps;          // 交换次数
 } SortStats;
 
-SortStats* measureSort(void (*sortFunc)(int*, int), int* arr, int size);
-void printSortStats(const char* sortName, SortStats* stats);
+void measureSort(const char* sortName, void (*sort)(int*, int), int* arr, int size);
 
 // 数组复制和释放
 int* copyArray(int* arr, int size);

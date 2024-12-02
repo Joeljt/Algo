@@ -85,30 +85,17 @@ bool arrayEquals(int* arr1, int* arr2, int size) {
 }
 
 // 性能测试
-SortStats* measureSort(void (*sortFunc)(int*, int), int* arr, int size) {
-    SortStats* stats = (SortStats*)malloc(sizeof(SortStats));
-    if (!stats) return NULL;
-
+void measureSort(const char* sortName, void (*sort)(int*, int), int* arr, int size) {
     clock_t start = clock();
-    sortFunc(arr, size);
+    sort(arr, size);
     clock_t end = clock();
 
-    stats->timeInMs = ((double)(end - start) * 1000) / CLOCKS_PER_SEC;
-    // 注意：comparisons 和 swaps 需要在排序算法内部统计
-    stats->comparisons = 0;  
-    stats->swaps = 0;
+    double timeInSec = (double)(end - start) / CLOCKS_PER_SEC;
 
     assert(isSorted(arr, size));
 
-    return stats;
-}
+    printf("[%s] time: %.5fs, size: %d\n", sortName, timeInSec, size);
 
-void printSortStats(const char* sortName, SortStats* stats) {
-    printf("=== %s ===\n", sortName);
-    printf("执行时间: %.2f ms\n", stats->timeInMs);
-    printf("比较次数: %ld\n", stats->comparisons);
-    printf("交换次数: %ld\n", stats->swaps);
-    printf("==================\n");
 }
 
 // 数组工具函数

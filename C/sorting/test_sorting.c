@@ -1,35 +1,40 @@
-#include "sorting.h"
-#include "helper.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
+#include "helper.h"
+#include "merge/merge_sort.h"
+#include "insert/insertion_sort.h"
+#include "select/selection_sort.h"
+
+#define ARRAY_SIZE 100000
 
 int main() {
+
     int size[2] = {10000, 100000};
     for (int i = 0; i < 2; i++) {
-        // 生成随机数组
         int* arr = generateRandomArray(size[i]);
+
+        // 插入排序
+        int* arr1 = copyArray(arr, size[i]);
+        measureSort("插入排序", insertionSort, arr1, size[i]);
+        freeArray(arr1);
+
+        // 选择排序
         int* arr2 = copyArray(arr, size[i]);
-        int* arr3 = copyArray(arr, size[i]);
-
-        // 测试排序
-        SortStats* stats = measureSort(selectionSort, arr, size[i]);
-        SortStats* stats = measureSort(selectionSort, arr, size[i]);
-        
-        SortStats* stats = measureSort(selectionSort, arr, size[i]); 
-        
-        printSortStats("选择排序", stats);
-
-        // 测试排序
-        stats = measureSort(insertionSort, arr2, size[i]);
-        printSortStats("插入排序", stats);
-
-        // SortStats* stats = measureSort(mergeSort, arr3, size[i]);
-        // printSortStats("归并排序", stats);
-
-        // 清理内存
-        freeArray(arr);
+        measureSort("选择排序", selectionSort, arr2, size[i]);
         freeArray(arr2);
-        free(stats);
+
+        // 迭代归并排序
+        int* arr3 = copyArray(arr, size[i]);
+        measureSort("迭代归并", iterativeMergeSort, arr3, size[i]);
+        freeArray(arr3);
+
+        // 递归归并排序
+        int* arr4 = copyArray(arr, size[i]);
+        measureSort("递归归并", recursiveMergeSort, arr4, size[i]);
+        freeArray(arr4);
+        
+        freeArray(arr);
     }
 
     return 0;
