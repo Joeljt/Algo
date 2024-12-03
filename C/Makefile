@@ -5,7 +5,7 @@ CFLAGS = -Wall -g
 $(shell mkdir -p _dist)
 
 # 定义所有数据结构
-TARGETS = array linkedlist stack sorting
+TARGETS = array linkedlist stack sorting bst
 
 # 每个数据结构的编译规则
 array: array/**/*.c
@@ -19,6 +19,11 @@ linkedlist: linkedlist/**/*.c
 	@echo "\n"
 
 sorting: $(wildcard sorting/*.c) $(wildcard sorting/*/*.c)
+	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
+	@./_dist/test_$@
+	@echo "\n"
+
+bst: bst/*.c
 	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
