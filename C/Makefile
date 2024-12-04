@@ -5,7 +5,7 @@ CFLAGS = -Wall -g -I.
 $(shell mkdir -p _dist)
 
 # 定义所有数据结构
-TARGETS = array linkedlist stack sorting bst
+TARGETS = array linkedlist stack queue sorting bst
 
 # 每个数据结构的编译规则
 array: array/*.c
@@ -20,6 +20,11 @@ linkedlist: linkedlist/**/*.c
 
 stack: stack/*.c array/*.c
 	@$(CC) $(CFLAGS) -DTEST_STACK -o _dist/test_$@ $^
+	@./_dist/test_$@
+	@echo "\n"
+
+queue: queue/*.c array/*.c
+	@$(CC) $(CFLAGS) -DTEST_QUEUE -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 

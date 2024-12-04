@@ -66,6 +66,11 @@ int isEmpty(Array* array) {
     return array->size == 0;
 }
 
+int getElement(Array* array, int index) {
+    assert(index >= 0 && index < array->size);
+    return array->data[index];
+}
+
 void addElement(Array* array, int index, int e) {
     assert(index >= 0 && index <= array->size);
     if (array->size == array->capacity) {

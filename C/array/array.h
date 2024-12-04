@@ -17,6 +17,8 @@ void addElement(Array* array, int index, int e);
 void addLast(Array* array, int e);
 void addFirst(Array* array, int e);
 
+int getElement(Array* array, int index);
+
 int removeElement(Array* array, int index);
 int removeFirst(Array* array);
 int removeLast(Array* array);

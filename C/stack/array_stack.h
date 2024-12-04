@@ -14,5 +14,7 @@ int peekArrayStack(ArrayStack* stack);
 int isEmptyArrayStack(ArrayStack* stack);
 int isFullArrayStack(ArrayStack* stack);
 
+void printArrayStack(ArrayStack* stack);
+
 #endif
 
