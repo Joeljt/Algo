@@ -11,6 +11,7 @@
 
 #define ARRAY_SIZE 100000
 
+#ifdef TEST_SORTING
 int main() {
 
     int* arr = generateRandomArray(ARRAY_SIZE);
@@ -65,3 +66,4 @@ int main() {
 
     return 0;
 }
+#endif

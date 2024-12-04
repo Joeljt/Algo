@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "array.h"
 
+#ifdef TEST_ARRAY
 int main() {
     // 创建数组
     Array* array = createArray(10);
@@ -34,3 +35,4 @@ int main() {
     destroyArray(array);
     return 0;
 }
+#endif

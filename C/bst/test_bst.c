@@ -1,5 +1,6 @@
 #include "bst.h"
 
+#ifdef TEST_BST
 int main() {
     BST* bst = createBST();
     int arr[] = {5, 3, 6, 8, 4, 2};
@@ -9,3 +10,4 @@ int main() {
     print(bst);
     destroyBST(bst);
 }
+#endif

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "linkedlist.h"
 
+#ifdef TEST_LINKEDLIST
 int main() {
   
   LinkedList* list = createList();
@@ -28,3 +29,4 @@ int main() {
 
   return 0;
 }
+#endif

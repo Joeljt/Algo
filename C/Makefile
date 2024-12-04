@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -I.
 
 # 创建 _dist 目录
 $(shell mkdir -p _dist)
@@ -8,23 +8,28 @@ $(shell mkdir -p _dist)
 TARGETS = array linkedlist stack sorting bst
 
 # 每个数据结构的编译规则
-array: array/**/*.c
-	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
+array: array/*.c
+	@$(CC) $(CFLAGS) -DTEST_ARRAY -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
 linkedlist: linkedlist/**/*.c
-	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
+	@$(CC) $(CFLAGS) -DTEST_LINKEDLIST -o _dist/test_$@ $^
+	@./_dist/test_$@
+	@echo "\n"
+
+stack: stack/*.c array/*.c
+	@$(CC) $(CFLAGS) -DTEST_STACK -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
 sorting: $(wildcard sorting/*.c) $(wildcard sorting/*/*.c)
-	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
+	@$(CC) $(CFLAGS) -DTEST_SORTING -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
 bst: bst/*.c
-	@$(CC) $(CFLAGS) -o _dist/test_$@ $^
+	@$(CC) $(CFLAGS) -DTEST_BST -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
