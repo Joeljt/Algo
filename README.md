@@ -1,4 +1,4 @@
-Data Stucture and Algorithms
+## Data Stucture and Algorithms
 
 Implemented all the linear strcutures with Java at first, but turned to C when it comes to linked list for two reasons:
 
@@ -16,3 +16,48 @@ This repo may include the following contents according to my current plan:
 This repo is for my own learning and record, so it may be messy and not well-organized.
 
 And welcome to any suggestions and corrections, I'll be very appreciated.
+
+### C Programming
+
+- [ ] [Makefile](./C/makefile/README.md)
+- [ ] [GDB](./C/gdb/README.md)
+- [ ] [C Programming Pitfalls](./C/c-programming-pitfalls/README.md)
+
+### Data Structures
+
+- [ ] [Array](./C/array/README.md)
+- [ ] [Linked List](./C/linkedlist/README.md)
+- [ ] [Stack](./C/stack/README.md)
+- [ ] [Queue](./C/queue/README.md)
+- [ ] [Tree](./C/tree/README.md)
+- [ ] [Hash Table](./C/hashtable/README.md)
+- [ ] [Graph](./C/graph/README.md)
+
+### Sorting
+
+- [ ] [Bubble Sort](./C/sorting/bubble/README.md)
+- [ ] [Selection Sort](./C/sorting/selection/README.md)
+- [ ] [Insertion Sort](./C/sorting/insertion/README.md)
+- [ ] [Shell Sort](./C/sorting/shell/README.md)
+- [ ] [Merge Sort](./C/sorting/merge/README.md)
+- [ ] [Quick Sort](./C/sorting/quick/README.md)
+- [ ] [Heap Sort](./C/sorting/heap/README.md)
+- [ ] [Counting Sort](./C/sorting/counting/README.md)
+- [ ] [Radix Sort](./C/sorting/radix/README.md)
+- [ ] [Bucket Sort](./C/sorting/bucket/README.md)
+
+### Searching
+
+- [ ] [Linear Search](./C/searching/linear/README.md)
+- [ ] [Binary Search](./C/searching/binary/README.md)
+
+### Strategies
+
+- [ ] [Recursion](./C/recursion/README.md)
+- [ ] [Dynamic Programming](./C/dynamicprogramming/README.md)
+- [ ] [Greedy Algorithm](./C/greedy/README.md)
+- [ ] [Backtracking](./C/backtracking/README.md)
+
+### Leetcode Solutions
+
+- [ ] [1. Two Sum](./C/leetcode/1.two-sum/README.md)
