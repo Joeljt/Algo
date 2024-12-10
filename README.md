@@ -25,39 +25,39 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 
 ### Data Structures
 
-- [ ] [Array](./C/array/README.md)
-- [ ] [Linked List](./C/linkedlist/README.md)
-- [ ] [Stack](./C/stack/README.md)
-- [ ] [Queue](./C/queue/README.md)
-- [ ] [Tree](./C/tree/README.md)
-- [ ] [Hash Table](./C/hashtable/README.md)
-- [ ] [Graph](./C/graph/README.md)
+- [ ] [Array](./array/README.md)
+- [ ] [Linked List](./linkedlist/README.md)
+- [ ] [Stack](./stack/README.md)
+- [ ] [Queue](./queue/README.md)
+- [ ] [Tree](./tree/README.md)
+- [ ] [Hash Table](./hashtable/README.md)
+- [ ] [Graph](./graph/README.md)
 
 ### Sorting
 
-- [ ] [Bubble Sort](./C/sorting/bubble/README.md)
-- [ ] [Selection Sort](./C/sorting/selection/README.md)
-- [ ] [Insertion Sort](./C/sorting/insertion/README.md)
-- [ ] [Shell Sort](./C/sorting/shell/README.md)
-- [ ] [Merge Sort](./C/sorting/merge/README.md)
-- [ ] [Quick Sort](./C/sorting/quick/README.md)
-- [ ] [Heap Sort](./C/sorting/heap/README.md)
-- [ ] [Counting Sort](./C/sorting/counting/README.md)
-- [ ] [Radix Sort](./C/sorting/radix/README.md)
-- [ ] [Bucket Sort](./C/sorting/bucket/README.md)
+- [ ] [Bubble Sort](./sorting/bubble/README.md)
+- [ ] [Selection Sort](./sorting/selection/README.md)
+- [ ] [Insertion Sort](./sorting/insertion/README.md)
+- [ ] [Shell Sort](./sorting/shell/README.md)
+- [ ] [Merge Sort](./sorting/merge/README.md)
+- [ ] [Quick Sort](./sorting/quick/README.md)
+- [ ] [Heap Sort](./sorting/heap/README.md)
+- [ ] [Counting Sort](./sorting/counting/README.md)
+- [ ] [Radix Sort](./sorting/radix/README.md)
+- [ ] [Bucket Sort](./sorting/bucket/README.md)
 
 ### Searching
 
-- [ ] [Linear Search](./C/searching/linear/README.md)
-- [ ] [Binary Search](./C/searching/binary/README.md)
+- [ ] [Linear Search](./searching/linear/README.md)
+- [ ] [Binary Search](./searching/binary/README.md)
 
 ### Strategies
 
-- [ ] [Recursion](./C/recursion/README.md)
-- [ ] [Dynamic Programming](./C/dynamicprogramming/README.md)
-- [ ] [Greedy Algorithm](./C/greedy/README.md)
-- [ ] [Backtracking](./C/backtracking/README.md)
+- [ ] [Recursion](./recursion/README.md)
+- [ ] [Dynamic Programming](./dynamicprogramming/README.md)
+- [ ] [Greedy Algorithm](./greedy/README.md)
+- [ ] [Backtracking](./backtracking/README.md)
 
 ### Leetcode Solutions
 
-- [ ] [1. Two Sum](./C/leetcode/1.two-sum/README.md)
+- [ ] [1. Two Sum](./leetcode/1.two-sum/README.md)
