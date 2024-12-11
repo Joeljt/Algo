@@ -25,14 +25,27 @@
 
 ```c
 void insert_sort(int *arr, int len) {
+    // 1
     for (int i = 1; i < len; i++) {
+        // 2
         int target = arr[i];
+        // 3
         int j = i;
+        // 4
         while (j > 0 && arr[j - 1] > target) {
+            // 5
             arr[j] = arr[j - 1];
+            // 6
             j--;
         }
+        // 7
         arr[j] = target;
     }
 }
 ```
+
+### 注意点
+
+1. 外层循环从 1 开始，因为元素 0 默认已排序；
+2. 把当前正在检查的元素提前存下来，因为后面向前比较的时候会用前面的元素把当前元素覆盖掉；
+3. 内层循环
