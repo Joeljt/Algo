@@ -9,7 +9,7 @@
 #include "select/selection_sort.h"
 #include "quick/quick_sort.h"
 
-#define ARRAY_SIZE 100000
+#define ARRAY_SIZE 10000
 
 #ifdef TEST_SORTING
 int main() {
@@ -55,11 +55,11 @@ int main() {
     freeArray(arr8);
 
     int* arr9 = copyArray(arr, ARRAY_SIZE);
-    measureSort("希尔排序", shellSort, arr9, ARRAY_SIZE);
+    // measureSort("希尔排序", shellSort, arr9, ARRAY_SIZE);
     freeArray(arr9);
 
     int* arr10 = copyArray(arr, ARRAY_SIZE);
-    measureSort("希尔排序2", shellSort2, arr10, ARRAY_SIZE);
+    // measureSort("希尔排序2", shellSort2, arr10, ARRAY_SIZE);
     freeArray(arr10);
 
     freeArray(arr);

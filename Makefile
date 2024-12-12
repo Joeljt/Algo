@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g -I.
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address,undefined -fstack-protector-all -I.
 
 # 创建 _dist 目录
 $(shell mkdir -p _dist)
