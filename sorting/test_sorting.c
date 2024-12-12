@@ -5,11 +5,11 @@
 #include "bubble/bubble_sort.h"
 #include "shell/shell_sort.h"
 #include "merge/merge_sort.h"
-#include "insert/insertion_sort.h"
-#include "select/selection_sort.h"
+#include "insertion/insertion_sort.h"
+#include "selection/selection_sort.h"
 #include "quick/quick_sort.h"
 
-#define ARRAY_SIZE 10000
+#define ARRAY_SIZE 20000
 
 #ifdef TEST_SORTING
 int main() {
@@ -18,7 +18,7 @@ int main() {
 
     // 插入排序
     int* arr1 = copyArray(arr, ARRAY_SIZE);
-    measureSort("插入排序", insertionSort, arr1, ARRAY_SIZE);
+    // measureSort("插入排序", insertionSort, arr1, ARRAY_SIZE);
     freeArray(arr1);
 
     // 选择排序
@@ -47,20 +47,24 @@ int main() {
     freeArray(arr6);
 
     int* arr7 = copyArray(arr, ARRAY_SIZE);
-    // measureSort("冒泡排序2", bubbleSort2, arr7, ARRAY_SIZE);
+    // measureSort("冒泡排序1", bubbleSort1, arr7, ARRAY_SIZE);
     freeArray(arr7);
 
     int* arr8 = copyArray(arr, ARRAY_SIZE);
-    // measureSort("冒泡排序3", bubbleSort3, arr8, ARRAY_SIZE);
+    // measureSort("冒泡排序3", bubbleSort2, arr8, ARRAY_SIZE);
     freeArray(arr8);
 
     int* arr9 = copyArray(arr, ARRAY_SIZE);
-    // measureSort("希尔排序", shellSort, arr9, ARRAY_SIZE);
+    // measureSort("冒泡排序3", bubbleSort3, arr9, ARRAY_SIZE);
     freeArray(arr9);
 
     int* arr10 = copyArray(arr, ARRAY_SIZE);
-    // measureSort("希尔排序2", shellSort2, arr10, ARRAY_SIZE);
+    // measureSort("希尔排序", shellSort, arr10, ARRAY_SIZE);
     freeArray(arr10);
+
+    int* arr11 = copyArray(arr, ARRAY_SIZE);
+    // measureSort("希尔排序2", shellSort2, arr11, ARRAY_SIZE);
+    freeArray(arr11);
 
     freeArray(arr);
 

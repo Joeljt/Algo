@@ -35,7 +35,7 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 
 ### Sorting
 
-- [ ] [Bubble Sort](./sorting/bubble/README.md)
+- [x] [Bubble Sort](./sorting/bubble/README.md)
 - [x] [Selection Sort](./sorting/selection/README.md)
 - [x] [Insertion Sort](./sorting/insertion/README.md)
 - [x] [Shell Sort](./sorting/shell/README.md)
