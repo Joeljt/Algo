@@ -36,9 +36,9 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 ### Sorting
 
 - [ ] [Bubble Sort](./sorting/bubble/README.md)
-- [ ] [Selection Sort](./sorting/selection/README.md)
-- [ ] [Insertion Sort](./sorting/insertion/README.md)
-- [ ] [Shell Sort](./sorting/shell/README.md)
+- [x] [Selection Sort](./sorting/selection/README.md)
+- [x] [Insertion Sort](./sorting/insertion/README.md)
+- [x] [Shell Sort](./sorting/shell/README.md)
 - [ ] [Merge Sort](./sorting/merge/README.md)
 - [ ] [Quick Sort](./sorting/quick/README.md)
 - [ ] [Heap Sort](./sorting/heap/README.md)
