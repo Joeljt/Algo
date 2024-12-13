@@ -25,7 +25,7 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 
 ### Data Structures
 
-- [ ] [Array](./array/README.md)
+- [x] [Array](./array/README.md)
 - [ ] [Linked List](./linkedlist/README.md)
 - [ ] [Stack](./stack/README.md)
 - [ ] [Queue](./queue/README.md)
@@ -39,7 +39,7 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 - [x] [Selection Sort](./sorting/selection/README.md)
 - [x] [Insertion Sort](./sorting/insertion/README.md)
 - [x] [Shell Sort](./sorting/shell/README.md)
-- [ ] [Merge Sort](./sorting/merge/README.md)
+- [x] [Merge Sort](./sorting/merge/README.md)
 - [ ] [Quick Sort](./sorting/quick/README.md)
 - [ ] [Heap Sort](./sorting/heap/README.md)
 - [ ] [Counting Sort](./sorting/counting/README.md)
