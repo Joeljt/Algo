@@ -5,13 +5,13 @@
 
 typedef struct ArrayQueue ArrayQueue;
 
-ArrayQueue* createArrayQueue();
-void destroyArrayQueue(ArrayQueue* queue);
+ArrayQueue* aq_create();
+void aq_destroy(ArrayQueue* queue);
 
-void enqueueArrayQueue(ArrayQueue* queue, int value);
-int dequeueArrayQueue(ArrayQueue* queue);
-int peekArrayQueue(ArrayQueue* queue);
+void aq_enqueue(ArrayQueue* queue, int value);
+int aq_dequeue(ArrayQueue* queue);
+int aq_peek(ArrayQueue* queue);
 
-void printArrayQueue(ArrayQueue* queue);
+void aq_print(ArrayQueue* queue);
 
 #endif

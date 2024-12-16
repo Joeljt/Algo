@@ -6,7 +6,7 @@ struct ArrayQueue {
   Array* array;
 };
 
-ArrayQueue* createArrayQueue() {
+ArrayQueue* aq_create() {
   ArrayQueue* queue = (ArrayQueue*)malloc(sizeof(ArrayQueue));
   if (queue != NULL) {
     queue->array = createArray(10);
@@ -14,26 +14,26 @@ ArrayQueue* createArrayQueue() {
   return queue;
 }
 
-void destroyArrayQueue(ArrayQueue* queue) {
+void aq_destroy(ArrayQueue* queue) {
   if (queue != NULL) {
     destroyArray(queue->array);
     free(queue);
   }
 }
 
-void enqueueArrayQueue(ArrayQueue* queue, int value) {
+void aq_enqueue(ArrayQueue* queue, int value) {
   addLast(queue->array, value);
 }
 
-int dequeueArrayQueue(ArrayQueue* queue) {
+int aq_dequeue(ArrayQueue* queue) {
   return removeFirst(queue->array);
 }
 
-int peekArrayQueue(ArrayQueue* queue) {
+int aq_peek(ArrayQueue* queue) {
   return getElement(queue->array, 0);
 }
 
-void printArrayQueue(ArrayQueue* queue) {
+void aq_print(ArrayQueue* queue) {
   printf("AQ: front [");
   for (int i = 0; i < getSize(queue->array); i++) {
     printf("%d", getElement(queue->array, i));

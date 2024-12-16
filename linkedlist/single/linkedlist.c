@@ -3,13 +3,13 @@
 #include <assert.h>
 #include "linkedlist.h"
 
-struct Node {
+struct LNode {
   int data;
-  Node* next;
+  LNode* next;
 };
 
 struct LinkedList {
-  Node* dummy;
+  LNode* dummy;
   int size;
 };
 
@@ -18,10 +18,10 @@ static void check(LinkedList* list, int index) {
   assert(index >= 0);
 }
 
-// 模拟 new Node() 的行为
-// 实际上 new Node 在做的也正是在堆区开空间并返回指针这个动作
-Node* ll_createNode(int data, Node* next) {
-  Node* node = (Node*)malloc(sizeof(Node));
+// 模拟 new LNode() 的行为
+// 实际上 new LNode 在做的也正是在堆区开空间并返回指针这个动作
+LNode* ll_createLNode(int data, LNode* next) {
+  LNode* node = (LNode*)malloc(sizeof(LNode));
   if (node != NULL) {
     node->data = data;
     node->next = next;
@@ -33,7 +33,7 @@ Node* ll_createNode(int data, Node* next) {
 LinkedList* ll_create() {
   LinkedList* list = (LinkedList*)malloc(sizeof(LinkedList));
   if (list != NULL) {
-    list->dummy = ll_createNode(-1, NULL);
+    list->dummy = ll_createLNode(-1, NULL);
     list->size = 0;
     return list;
   }
@@ -42,9 +42,9 @@ LinkedList* ll_create() {
 
 void ll_destroy(LinkedList* list) {
   if (list != NULL) {
-    Node* current = list->dummy;
+    LNode* current = list->dummy;
     while(current != NULL) {
-      Node* next = current->next;
+      LNode* next = current->next;
       free(current);
       current = next;
     }
@@ -53,15 +53,15 @@ void ll_destroy(LinkedList* list) {
 }
 
 // 找到目标位置的前一个位置，断开链接
-// Node* node = new Node(data); 
+// LNode* node = new LNode(data); 
 // node.next = prev.next;
 // prev.next = node;
 void ll_add(LinkedList* list, int index, int data) {
   check(list, index);
-  Node* prev = list->dummy;
+  LNode* prev = list->dummy;
   for(int i = 0; i < index; i++)
     prev = prev->next;
-  prev->next = ll_createNode(data, prev->next);
+  prev->next = ll_createLNode(data, prev->next);
   list->size ++;
 }
 
@@ -75,11 +75,11 @@ void ll_addLast(LinkedList* list, int data) {
 
 int ll_del(LinkedList* list, int index) {
   check(list, index);
-  Node* prev = list->dummy;
+  LNode* prev = list->dummy;
   for (int i = 0; i < index; i++)
     prev = prev->next;
 
-  Node* target = prev->next; // 找到目标元素的前一个元素
+  LNode* target = prev->next; // 找到目标元素的前一个元素
   int value = target->data;
   prev->next = target->next; // 跳过目标元素进行链接
   target->next = NULL; // 断开目标元素对下一个结点的指针引用
@@ -99,7 +99,7 @@ int ll_delLast(LinkedList* list) {
 
 int ll_get(LinkedList* list, int index) {
   check(list, index); 
-  Node* current = list->dummy->next;
+  LNode* current = list->dummy->next;
   for (int i = 0; i < index; i++)
     current = current->next;
   return current->data;
@@ -115,7 +115,7 @@ int ll_getLast(LinkedList* list) {
 
 void ll_set(LinkedList* list, int index, int data) {
   check(list, 0);
-  Node* current = list->dummy->next;
+  LNode* current = list->dummy->next;
   for (int i = 0; i < index; i++)
     current = current->next;
   current->data = data;
@@ -132,7 +132,7 @@ bool ll_isEmpty(LinkedList* list) {
 
 bool ll_contains(LinkedList* list, int data) {
   check(list, 0);
-  Node* current = list->dummy->next;
+  LNode* current = list->dummy->next;
   while(current != NULL) {
     if (current->data == data) {
       return true;
@@ -144,7 +144,7 @@ bool ll_contains(LinkedList* list, int data) {
 
 void ll_printList(LinkedList* list) {
   // printf("LinkedList: ");
-  for (Node* current = list->dummy->next; current != NULL; current = current->next) {
+  for (LNode* current = list->dummy->next; current != NULL; current = current->next) {
     // printf("%p->", &(current->data));
     printf("%d->", current->data);
   }

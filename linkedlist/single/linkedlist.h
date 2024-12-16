@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-typedef struct Node Node;
+typedef struct LNode LNode;
 
 typedef struct LinkedList LinkedList;
 
