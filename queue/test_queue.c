@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include "arr/array_queue.h"
 #include "linked/linked_queue.h"
+#include "circular/circular_queue.h"
 #include <time.h>
 
-#define QUEUE_SIZE 10000
+#define QUEUE_SIZE 100000
 
 #ifdef TEST_QUEUE
 void test_array_queue() {
@@ -50,9 +51,30 @@ void test_linked_queue() {
     printf("LinkedQueue: %.5fs\n", timeInSec);
 }
 
+void test_circular_queue() {    
+    clock_t start = clock();
+    CircularQueue* queue = cq_create(QUEUE_SIZE / 100);
+    for (int i = 0; i < QUEUE_SIZE; i++) {
+        cq_enqueue(queue, i);
+    }
+
+    for (int i = 0; i < QUEUE_SIZE; i++) {
+        cq_dequeue(queue);
+    }
+
+    cq_destroy(queue);
+
+    clock_t end = clock();
+
+    double timeInSec = (double)(end - start) / CLOCKS_PER_SEC;
+
+    printf("CircularQueue: %.5fs\n", timeInSec);
+}
+
 int main() {
-    test_array_queue();
+    // test_array_queue();
     test_linked_queue();
+    test_circular_queue();
     return 0;
 }
 #endif
