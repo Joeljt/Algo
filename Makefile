@@ -13,17 +13,17 @@ array: array/*.c
 	@./_dist/test_$@
 	@echo "\n"
 
-linkedlist: linkedlist/**/*.c
+linkedlist: $(wildcard linkedlist/*.c) $(wildcard linkedlist/*/*.c)
 	@$(CC) $(CFLAGS) -DTEST_LINKEDLIST -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
-stack: stack/*.c array/*.c
+stack: $(wildcard stack/*.c) $(wildcard stack/*/*.c) array/*.c linkedlist/*/*.c
 	@$(CC) $(CFLAGS) -DTEST_STACK -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
-queue: queue/*.c array/*.c
+queue: $(wildcard queue/*.c) $(wildcard queue/*/*.c) array/*.c
 	@$(CC) $(CFLAGS) -DTEST_QUEUE -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"

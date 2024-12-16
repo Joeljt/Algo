@@ -75,7 +75,7 @@ struct Node* buildWithLocalReference() {
 }
 
 
-int length(Node * head) {
+int sf_length(Node * head) {
     Node* current = head;
     int count = 0;
     while (current != NULL) {
@@ -85,11 +85,11 @@ int length(Node * head) {
     return count; 
 }
 
-void addFirst(Node** head, int data) {
+void sf_addFirst(Node** head, int data) {
     push(head, data);
 }
 
-void addLast(Node **head, int data) {
+void sf_addLast(Node **head, int data) {
     Node* current = *head;
     if (current == NULL) {
         push(head, data);
@@ -101,7 +101,7 @@ void addLast(Node **head, int data) {
     }
 }
 
-void addLastTheHardWay(Node** head, int data) {
+void sf_addLastTheHardWay(Node** head, int data) {
     Node* current = *head;
 
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -118,11 +118,11 @@ void addLastTheHardWay(Node** head, int data) {
     }
 }
 
-void printLinkedList(Node *head) {
+void sf_printLinkedList(Node *head) {
     printf("LinkedList: ");    
     Node *current = head;
     for (; current != NULL; current = current->next) {
         printf("%d -> ", current->data);
     }
-    printf("NULL (%d)\n", length(head));
+    printf("NULL (%d)\n", sf_length(head));
 }

@@ -10,12 +10,12 @@ Node* buildWithSpecialCase();
 Node* buildWithDummyHead();
 Node* buildWithLocalReference();
 
-int length(Node * head);
+int sf_length(Node * head);
 
-void printLinkedList(Node *head);
+void sf_printLinkedList(Node *head);
 
-void addFirst(Node** headRef, int data);
-void addLast(Node** headRef, int data);
-void addLastTheHardWay(Node** headRef, int data);
+void sf_addFirst(Node** headRef, int data);
+void sf_addLast(Node** headRef, int data);
+void sf_addLastTheHardWay(Node** headRef, int data);
 
 #endif  

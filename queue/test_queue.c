@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "array_queue.h"
+#include "arr/array_queue.h"
 
 #ifdef TEST_QUEUE
 int main() {

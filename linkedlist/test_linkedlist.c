@@ -1,31 +1,31 @@
 #include <stdio.h>
-#include "linkedlist.h"
+#include "single/linkedlist.h"
 
 #ifdef TEST_LINKEDLIST
 int main() {
   
-  LinkedList* list = createList();
+  LinkedList* list = ll_create();
 
   for (int i = 0; i < 10; i++) {
-    addLast(list, i);
-    printList(list);
+    ll_addLast(list, i);
+    ll_printList(list);
   }
 
-  del(list, 3);
-  delFirst(list);
-  delLast(list);
-  printList(list);
+  ll_del(list, 3);
+  ll_delFirst(list);
+  ll_delLast(list);
+  ll_printList(list);
 
-  set(list, 4, 777);
-  set(list, 1, 999);
-  printList(list);
+  ll_set(list, 4, 777);
+  ll_set(list, 1, 999);
+  ll_printList(list);
 
-  int e = get(list, 1);
+  int e = ll_get(list, 1);
   printf("target: %d\n", e);
 
-  printf("Contains 7? %d", contains(list, 7));
+  printf("Contains 7? %d", ll_contains(list, 7));
 
-  destroyList(list);
+  ll_destroy(list);
 
   return 0;
 }
