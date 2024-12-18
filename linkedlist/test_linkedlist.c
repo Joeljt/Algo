@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include "single/linkedlist.h"
+#include "double/double_linkedlist.h"
 
 #ifdef TEST_LINKEDLIST
-int main() {
-  
-  LinkedList* list = ll_create();
+
+void test_single_linkedlist() {
+LinkedList* list = ll_create();
 
   for (int i = 0; i < 10; i++) {
     ll_addLast(list, i);
@@ -26,7 +27,30 @@ int main() {
   printf("Contains 7? %d", ll_contains(list, 7));
 
   ll_destroy(list);
+}
 
+void test_double_linkedlist() {
+  DoubleLinkedList* list = dl_create();
+
+  for (int i = 0; i < 10; i++) {
+    dl_add(list, i, i);
+    dl_print(list);
+  }
+
+  dl_remove(list, 3);
+  dl_print(list);
+
+  dl_set(list, 4, 777);
+  dl_set(list, 1, 999);
+  dl_print(list);
+
+  dl_destroy(list);
+}
+
+int main() {
+  test_single_linkedlist();
+  printf("\n\n");
+  test_double_linkedlist();
   return 0;
 }
 #endif
