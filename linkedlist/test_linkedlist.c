@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "single/linkedlist.h"
 #include "double/double_linkedlist.h"
-
+#include "circular/circular_linkedlist.h"
 #ifdef TEST_LINKEDLIST
 
 void test_single_linkedlist() {
@@ -47,10 +47,25 @@ void test_double_linkedlist() {
   dl_destroy(list);
 }
 
+void test_circular_linkedlist() {
+  CircularLinkedList* list = cl_create();
+  for (int i = 0; i < 10; i++) {
+    cl_add(list, i, i);
+    cl_print(list);
+  }
+
+  cl_remove(list, 3);
+  cl_print(list);
+
+  cl_destroy(list);
+}
+
 int main() {
   test_single_linkedlist();
   printf("\n\n");
   test_double_linkedlist();
+  printf("\n\n");
+  test_circular_linkedlist();
   return 0;
 }
 #endif
