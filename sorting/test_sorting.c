@@ -8,8 +8,9 @@
 #include "insertion/insertion_sort.h"
 #include "selection/selection_sort.h"
 #include "quick/quick_sort.h"
+#include "heap/heap_sort.h"
 
-#define ARRAY_SIZE 20000
+#define ARRAY_SIZE 1000000
 
 #ifdef TEST_SORTING
 int main() {
@@ -38,7 +39,7 @@ int main() {
 
     // 快速排序
     int* arr5 = copyArray(arr, ARRAY_SIZE);
-    // measureSort("快速排序", quickSort, arr5, ARRAY_SIZE);
+    measureSort("快速排序", quickSort, arr5, ARRAY_SIZE);
     freeArray(arr5);
 
     // 冒泡排序
@@ -65,6 +66,14 @@ int main() {
     int* arr11 = copyArray(arr, ARRAY_SIZE);
     // measureSort("希尔排序2", shellSort2, arr11, ARRAY_SIZE);
     freeArray(arr11);
+
+    int* arr12 = copyArray(arr, ARRAY_SIZE);
+    measureSort("堆排序", heapSort, arr12, ARRAY_SIZE);
+    freeArray(arr12);
+
+    int* arr13 = copyArray(arr, ARRAY_SIZE);
+    measureSort("堆排序1", heapSort1, arr13, ARRAY_SIZE);
+    freeArray(arr13);
 
     freeArray(arr);
 
