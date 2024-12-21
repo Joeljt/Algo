@@ -2,6 +2,8 @@
 #include "arr/array_queue.h"
 #include "linked/linked_queue.h"
 #include "circular/circular_queue.h"
+#include "deque/arr_deque.h"
+#include "deque/ll_deque.h"
 #include <time.h>
 
 #define QUEUE_SIZE 100000
@@ -71,10 +73,56 @@ void test_circular_queue() {
     printf("CircularQueue: %.5fs\n", timeInSec);
 }
 
+void test_arr_deque() {
+    ArrDeque* deque = ad_create(5);
+    for (int i = 0; i < 10; i++) {
+        ad_push_back(deque, i);
+        ad_print(deque);
+    }
+    for (int i = 0; i < 5; i++) {
+        ad_pop_front(deque);
+        ad_print(deque);
+    }
+    for (int i = 0; i < 5; i++) {
+        ad_pop_back(deque);
+        ad_print(deque);
+    }
+    for (int i = 0; i < 5; i++) {
+        ad_push_front(deque, i);
+        ad_print(deque);
+    }
+    
+    ad_destroy(deque);
+}
+
+void test_ll_deque() {
+    LinkedDeque* deque = ld_create();
+    for (int i = 0; i < 10; i++) {
+        ld_push_back(deque, i);
+        ld_print(deque);
+    }
+    for (int i = 0; i < 5; i++) {
+        ld_pop_front(deque);
+        ld_print(deque);
+    }
+    for (int i = 0; i < 5; i++) {
+        ld_pop_back(deque);
+        ld_print(deque);
+    }
+    for (int i = 0; i < 5; i++) {
+        ld_push_front(deque, i);
+        ld_print(deque);
+    }
+    ld_destroy(deque);
+}
+
 int main() {
     // test_array_queue();
-    test_linked_queue();
-    test_circular_queue();
+    // test_linked_queue();
+    // test_circular_queue();
+    // test_arr_deque();
+    // test_ll_deque();
+    test_ll_deque();
     return 0;
 }
 #endif
