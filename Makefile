@@ -38,7 +38,7 @@ bst: bst/*.c
 	@./_dist/test_$@
 	@echo "\n"
 
-heap: heap/*.c
+heap: $(wildcard heap/*.c) $(wildcard heap/*/*.c)
 	@$(CC) $(CFLAGS) -DTEST_HEAP -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
