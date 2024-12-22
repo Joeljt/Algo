@@ -3,13 +3,13 @@
 
 typedef struct Heap Heap;
 
-Heap* createHeap(int capacity);
-void destroyHeap(Heap* heap);
+Heap* heap_create(int capacity);
+void heap_destroy(Heap* heap);
 
-void push(Heap* heap, int value);
-int pop(Heap* heap);
-int peek(Heap* heap);
+void heap_push(Heap* heap, int value);
+int heap_pop(Heap* heap);
+int heap_peek(Heap* heap);
 
-void printHeap(Heap* heap);
+void heap_print(Heap* heap);
 
 #endif

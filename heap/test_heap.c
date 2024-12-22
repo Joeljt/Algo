@@ -1,24 +1,25 @@
 #include <stdio.h>
 #include "heap.h"
 
+#ifdef TEST_HEAP
 int main() {
-  Heap* heap = createHeap(10);
-  push(heap, 10);
-  push(heap, 7);
-  push(heap, 5);
-  push(heap, 9);
-  push(heap, 3);
-  push(heap, 6);
+  Heap* heap = heap_create(5);
 
-  printf("peek: %d\n", peek(heap));
+  for (int i = 0; i < 10; i++) {
+    heap_push(heap, i);
+    heap_print(heap);  
+  }
 
-  push(heap, -1);
-  printf("peek: %d\n", peek(heap));
+  heap_push(heap, 13);
+  heap_print(heap);
 
-  pop(heap);
-  pop(heap);
-  printf("peek: %d\n", peek(heap));
+  heap_pop(heap);
+  heap_print(heap);
 
-  destroyHeap(heap);
+  heap_pop(heap);
+  heap_print(heap);
+
+  heap_destroy(heap);
   return 0;
 }
+#endif

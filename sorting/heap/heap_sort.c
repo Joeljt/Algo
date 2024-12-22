@@ -1,5 +1,6 @@
 #include "heap_sort.h"
 #include "../helper.h"
+#include "heap/heap.h"
 
 static void sift_down(int* arr, int length, int i) {
   int left = 2 * i + 1;
@@ -46,8 +47,19 @@ static void sink(int* arr, int n, int i) {
 }
 
 void heapSort(int* arr, int length) {
+  Heap* heap = heap_create(length);
+  for (int i = 0; i < length; i++) {
+    heap_push(heap, arr[i]);
+  }
+  for (int i = length - 1; i >= 0; i--) {
+    arr[i] = heap_pop(heap);
+  }
+  heap_destroy(heap);
+}
+
+void heapSort1(int* arr, int length) {
   // 建堆
-  for (int i = (length - 1) / 2; i >= 0; i--) {
+  for (int i = length / 2 - 1; i >= 0; i--) {
     sift_down(arr, length, i);
   }
 
@@ -58,8 +70,8 @@ void heapSort(int* arr, int length) {
   }
 }
 
-void heapSort1(int* arr, int length) {
-  for (int i = (length - 1) / 2; i >= 0; i--) {
+void heapSort2(int* arr, int length) {
+  for (int i = length / 2 - 1; i >= 0; i--) {
     sink(arr, length, i);
   }
 

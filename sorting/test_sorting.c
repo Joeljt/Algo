@@ -75,6 +75,10 @@ int main() {
     measureSort("堆排序1", heapSort1, arr13, ARRAY_SIZE);
     freeArray(arr13);
 
+    int* arr14 = copyArray(arr, ARRAY_SIZE);
+    measureSort("堆排序2", heapSort2, arr14, ARRAY_SIZE);
+    freeArray(arr14);
+
     freeArray(arr);
 
     return 0;
