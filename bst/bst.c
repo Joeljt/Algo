@@ -23,6 +23,8 @@ static BSTNode* createBSTNode(int data) {
     return node;
 }
 
+// 插入节点
+// 通过直接返回插入的节点，可以很方便地用递归来处理整个插入动作
 static BSTNode* insertNode(BSTNode* node, int data) {
     if (node == NULL) {
         return createBSTNode(data);
@@ -56,62 +58,5 @@ BST* createBST() {
 }
 
 void destroyBST(BST* bst) {
-
     free(bst);
 }
-
-
-int getSize(BST* bst) {
-    return bst->size;
-}
-
-bool isEmpty(BST* bst) {
-    return bst->size == 0;
-}
-
-void insert(BST* bst, int data) {
-    bst->root = insertNode(bst->root, data);
-    bst->size++;
-}
-
-bool search(BST* bst, int data) {
-    return searchNode(bst->root, data);
-}
-
-void preorder(BSTNode* node) {
-    if (node == NULL) return;
-    printf("%d ", node->data);
-    preorder(node->left);
-    preorder(node->right);
-}
-
-void inorder(BSTNode* node) {
-    if (node == NULL) return;
-    inorder(node->left);
-    printf("%d ", node->data);
-    inorder(node->right);
-}
-
-void postorder(BSTNode* node) {
-    if (node == NULL) return;
-    postorder(node->left);
-    postorder(node->right);
-    printf("%d ", node->data);
-}
-
-void printNode(BSTNode* node) {
-    if (node == NULL) return;
-    printf("%d(左) ", node->data);
-    printNode(node->left);
-    printf("%d(中) ", node->data);
-    printNode(node->right);
-    printf("%d(右) ", node->data);
-}
-
-void print(BST* bst) {
-    // preorder(bst->root);
-    // inorder(bst->root);
-    // postorder(bst->root);
-    printNode(bst->root);
-}
-

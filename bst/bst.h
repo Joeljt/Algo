@@ -7,21 +7,19 @@ typedef struct BSTNode BSTNode;
 
 typedef struct BST BST;
 
-BST* createBST();
-void destroyBST(BST* bst);
+BST* bst_create();
+void bst_destroy(BST* bst);
 
-int getSize(BST* bst);
-bool isEmpty(BST* bst);
 
-void insert(BST* bst, int data);
-void delete(BST* bst, int data);
+void bst_insert(BST* bst, int data);
+void bst_delete(BST* bst, int data);
 
-bool search(BST* bst, int data);
+bool bst_search(BST* bst, int data);
 
-void preorder(BSTNode* node);
-void inorder(BSTNode* node);
-void postorder(BSTNode* node);
+void bst_preorder(BSTNode* node);
+void bst_inorder(BSTNode* node);
+void bst_postorder(BSTNode* node);
 
-void print(BST* bst);
+void bst_print(BST* bst);
 
 #endif
