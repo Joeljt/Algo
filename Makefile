@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address,undefined -fstack-protector
 $(shell mkdir -p _dist)
 
 # 定义所有数据结构
-TARGETS = array linkedlist stack queue sorting bst heap
+TARGETS = array linkedlist stack queue sorting bst heap map set hash
 
 # 每个数据结构的编译规则
 array: array/*.c
@@ -40,6 +40,11 @@ bst: $(wildcard bst/*.c) $(wildcard bst/*/*.c) $(wildcard queue/*/*.c) array/*.c
 
 heap: $(wildcard heap/*.c) $(wildcard heap/*/*.c)
 	@$(CC) $(CFLAGS) -DTEST_HEAP -o _dist/test_$@ $^
+	@./_dist/test_$@
+	@echo "\n"
+
+map: $(wildcard map/bst/*.c) $(wildcard map/bst/*/*.c) $(wildcard queue/*/*.c) array/*.c
+	@$(CC) $(CFLAGS) -DTEST_BST_MAP -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
