@@ -33,7 +33,7 @@ sorting: $(wildcard sorting/*.c) $(wildcard sorting/*/*.c) heap/*.c
 	@./_dist/test_$@
 	@echo "\n"
 
-bst: bst/*.c
+bst: $(wildcard bst/*.c) $(wildcard bst/*/*.c) $(wildcard queue/*/*.c) array/*.c
 	@$(CC) $(CFLAGS) -DTEST_BST -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"

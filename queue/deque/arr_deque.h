@@ -11,14 +11,17 @@ typedef struct ArrDeque ArrDeque;
 ArrDeque *ad_create(int size);
 void ad_destroy(ArrDeque* deque);
 
-void ad_push_front(ArrDeque* deque, int value);
-void ad_push_back(ArrDeque* deque, int value);
+void ad_push_front(ArrDeque* deque, void* value);
+void ad_push_back(ArrDeque* deque, void* value);
 
-int ad_pop_front(ArrDeque* deque);
-int ad_pop_back(ArrDeque* deque);
+void* ad_pop_front(ArrDeque* deque);
+void* ad_pop_back(ArrDeque* deque);
 
-int ad_peek_front(ArrDeque* deque);
-int ad_peek_back(ArrDeque* deque);
+void* ad_peek_front(ArrDeque* deque);
+void* ad_peek_back(ArrDeque* deque);
+
+bool ad_is_empty(ArrDeque* deque);
+int ad_size(ArrDeque* deque);
 
 void ad_print(ArrDeque* deque);
 

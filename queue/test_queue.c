@@ -5,6 +5,7 @@
 #include "deque/arr_deque.h"
 #include "deque/ll_deque.h"
 #include <time.h>
+#include <stdlib.h>
 
 #define QUEUE_SIZE 100000
 
@@ -76,19 +77,23 @@ void test_circular_queue() {
 void test_arr_deque() {
     ArrDeque* deque = ad_create(5);
     for (int i = 0; i < 10; i++) {
-        ad_push_back(deque, i);
+        int* value = malloc(sizeof(int));
+        *value = i;
+        ad_push_back(deque, value);
         ad_print(deque);
     }
     for (int i = 0; i < 5; i++) {
-        ad_pop_front(deque);
+        free(ad_pop_front(deque));
         ad_print(deque);
     }
     for (int i = 0; i < 5; i++) {
-        ad_pop_back(deque);
+        free(ad_pop_back(deque));
         ad_print(deque);
     }
     for (int i = 0; i < 5; i++) {
-        ad_push_front(deque, i);
+        int* value = malloc(sizeof(int));
+        *value = i;
+        ad_push_front(deque, value);
         ad_print(deque);
     }
     

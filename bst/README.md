@@ -199,10 +199,14 @@ BSTNode* bst_delete_node(BSTNode* node, int data) {
         // 如果左子树为空，则直接用右子树替换当前节点
         // 如果当前节点是叶子节点，也会走到这里，而且返回值也是 NULL，不影响结果
         if (node->left == NULL) {
-            return node->right;
+            BSTNode* rightChild = node->right;
+            free(node);
+            return rightChild;
         } else if (node->right == NULL) {
             // 如果右子树为空，则直接用左子树替换当前节点
-            return node->left;
+            BSTNode* leftChild = node->left;
+            free(node);
+            return leftChild;
         } else {
             // 如果左右子树都不为空，则用右子树的最小节点替换当前节点
             BSTNode* min_node = find_min_node(node->right);
