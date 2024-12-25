@@ -43,8 +43,8 @@ heap: $(wildcard heap/*.c) $(wildcard heap/*/*.c)
 	@./_dist/test_$@
 	@echo "\n"
 
-map: $(wildcard map/bst/*.c) $(wildcard map/bst/*/*.c) $(wildcard queue/*/*.c) array/*.c
-	@$(CC) $(CFLAGS) -DTEST_BST_MAP -o _dist/test_$@ $^
+map: $(wildcard map/*.c) $(wildcard map/*/*.c)
+	@$(CC) $(CFLAGS) -DTEST_MAP -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
