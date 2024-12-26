@@ -1,4 +1,5 @@
 #include "bst/bst_map.h"
+#include "list/list_map.h"
 
 #ifdef TEST_MAP
 
@@ -20,8 +21,28 @@ void test_bst_map() {
     bm_destroy(map);
 }
 
+void test_list_map() {
+    ListMap* map = lm_create();
+    lm_put(map, 1, 1);
+    lm_put(map, 2, 2);
+    lm_put(map, 3, 3);
+    lm_print(map);
+
+    lm_remove(map, 2);
+    lm_print(map);
+
+    lm_put(map, 12, 19);
+    lm_print(map);
+    printf("contains 4: %d\n", lm_contains(map, 4));
+    printf("get 12: %d\n", lm_get(map, 12, -1));
+
+    lm_destroy(map);
+}
+
 int main() {
-    test_bst_map();
+    // test_bst_map();
+    test_list_map();
     return 0;
 }
 #endif
+

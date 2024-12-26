@@ -48,6 +48,11 @@ map: $(wildcard map/*.c) $(wildcard map/*/*.c)
 	@./_dist/test_$@
 	@echo "\n"
 
+set: $(wildcard set/*.c) $(wildcard set/*/*.c) $(wildcard map/*/*.c)
+	@$(CC) $(CFLAGS) -DTEST_SET -o _dist/test_$@ $^
+	@./_dist/test_$@
+	@echo "\n"
+
 # 编译所有
 all: $(TARGETS)
 
