@@ -14,7 +14,7 @@ void trie_destroy(Trie* trie);
 void trie_insert(Trie* trie, const char* word);
 bool trie_find(Trie* trie, const char* word);
 bool trie_start_with(Trie* trie, const char* prefix);
-// void trie_remove(Trie* trie, const char* word);
+void trie_remove(Trie* trie, const char* word);
 
 int trie_size(Trie* trie);
 

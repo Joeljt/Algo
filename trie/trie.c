@@ -99,6 +99,57 @@ bool trie_start_with(Trie* trie, const char* prefix) {
     return true;
 }
 
+bool is_empty_node(TrieNode* node) {
+    if (node == NULL) return true;
+    for (int i = 0; i < 26; i++) {
+        if (node->children[i] != NULL) {
+            // 只要有一个子节点不为空，就说明不是空树
+            return false;
+        }
+    }
+    // 所有子节点都为空
+    return true;
+}
+
+bool trie_delete(Trie* trie, TrieNode* node, const char* word, int depth) {
+    if (node == NULL) return false;
+
+    // 检查当前是否递归到单词末尾了
+    if (word[depth] == '\0') {
+        // 如果当前位置确实存了单词，就取消标记，逻辑删除
+        if (node->is_word) {
+            node->is_word = false;
+            trie->size--;
+            // 然后检查当前节点是否还有其他子节点
+            // 只有 26 个子节点都为空，当前节点才能被删除，说明没有其他单词在使用这个字母
+            return is_empty_node(node);
+        }
+        // 当前单词在字典树中不存在，不可以删除
+        return false;
+    }
+
+    // 否则就继续递归向下，depth++，递归删除子节点
+    int index = word[depth] - 'a';
+    if (trie_delete(trie, node->children[index], word, depth + 1)) {
+        // 如果下层子节点可以被删除，直接释放节点空间
+        free(node->children[index]);
+        // 清空指针
+        node->children[index] = NULL;
+
+        // 如果当前节点不是【其他单词】的末尾字母，并且也没有子节点，就可以删除
+        return !node->is_word && is_empty_node(node);
+    }
+
+    // 执行到这里，说明 trie_is_removable 返回 false
+    // 1. 表示在当前节点的子节点中没有找到要删除的单词
+    // 2. 当前节点的子节点不需要被删除，仍然有其他单词共享该子节点
+    return false;
+}
+
+void trie_remove(Trie* trie, const char* word) {
+    trie_delete(trie, trie->root, word, 0);
+}
+
 int trie_size(Trie* trie) {
     return trie->size;
 }
