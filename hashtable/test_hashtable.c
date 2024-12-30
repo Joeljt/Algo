@@ -46,16 +46,29 @@ void test_chaining_ht() {
 }
 
 void test_addressing_ht() {
-  AddrHashTable *hashtable = ah_create(10);
+  AddrHashTable *hashtable = ah_create(5);
   ah_put(hashtable, "key1", "value1");
   ah_put(hashtable, "key4", "value4");
   ah_put(hashtable, "key5", "value5");
-  ah_put(hashtable, "key9", "value9");
+  ah_put(hashtable, "key6", "value6");
+  ah_put(hashtable, "key7", "value7");
   ah_print(hashtable);
 
+  printf("-----------------------------------\n");
+
   printf("get key4: %s\n", (char*)ah_get(hashtable, "key4"));
+  int value4 = 1219;
+  ah_put(hashtable, "key4", &value4);
+  printf("get key4: %d\n", *(int*)ah_get(hashtable, "key4"));
   ah_delete(hashtable, "key4");
   printf("get key4: %s\n", (char*)ah_get(hashtable, "key4"));
+
+  printf("-----------------------------------\n");
+
+  ah_put(hashtable, "Aa", "测试哈希冲突");
+  ah_put(hashtable, "BB", "测试哈希冲突");
+  ah_put(hashtable, "Cc", "测试哈希冲突");
+  ah_print(hashtable);
 
   ah_destroy(hashtable);
 }

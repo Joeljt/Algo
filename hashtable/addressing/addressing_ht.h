@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LOAD_FACTOR 0.75
+#define LOAD_FACTOR 0.5
 #define STATUS_EMPTY 0
 #define STATUS_USED 1
 #define STATUS_DELETED 2

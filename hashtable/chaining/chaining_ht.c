@@ -160,7 +160,7 @@ void chht_delete(ChainingHashTable *hashtable, const char *key) {
 }
 
 void chht_print(ChainingHashTable *hashtable) {
-  printf("HashTable size: %zu, count: %zu\n", hashtable->size, hashtable->count);
+  printf("Chaining HashTable size: %zu, count: %zu\n", hashtable->size, hashtable->count);
   for (size_t i = 0; i < hashtable->size; i++) {
     ChainingHashNode *node = hashtable->buckets[i];
     if (node != NULL) {
