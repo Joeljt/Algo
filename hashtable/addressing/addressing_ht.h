@@ -19,10 +19,11 @@ typedef struct AddrHashNode {
 typedef struct AddrHashTable {
   size_t size;
   size_t count;
-  AddrHashNode *data;
+  AddrHashNode **data;
 } AddrHashTable;
 
 AddrHashTable *ah_create(size_t size);
+void ah_destroy(AddrHashTable *hashtable);
 
 void ah_put(AddrHashTable *hashtable, const char *key, void *value);
 void *ah_get(AddrHashTable *hashtable, const char *key);

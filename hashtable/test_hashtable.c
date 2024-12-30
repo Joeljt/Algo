@@ -1,4 +1,5 @@
 #include "chaining/chaining_ht.h"
+#include "addressing/addressing_ht.h"
 #include <stdio.h>
 #include <stdlib.h>
 #ifdef TEST_HASHTABLE
@@ -15,7 +16,7 @@ char* generate_key(const char* base, int i) {
     return result;
 }
 
-int main() {
+void test_chaining_ht() {
   ChainingHashTable *hashtable = chht_create();
 
   chht_put(hashtable, "key1", "value1");
@@ -42,6 +43,26 @@ int main() {
   chht_print(hashtable);
 
   chht_destroy(hashtable);
+}
+
+void test_addressing_ht() {
+  AddrHashTable *hashtable = ah_create(10);
+  ah_put(hashtable, "key1", "value1");
+  ah_put(hashtable, "key4", "value4");
+  ah_put(hashtable, "key5", "value5");
+  ah_put(hashtable, "key9", "value9");
+  ah_print(hashtable);
+
+  printf("get key4: %s\n", (char*)ah_get(hashtable, "key4"));
+  ah_delete(hashtable, "key4");
+  printf("get key4: %s\n", (char*)ah_get(hashtable, "key4"));
+
+  ah_destroy(hashtable);
+}
+
+int main() {
+  test_chaining_ht();
+  test_addressing_ht();
   return 0;
 }
 #endif

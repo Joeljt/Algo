@@ -24,15 +24,6 @@ static size_t chht_hash(const char *key, size_t size) {
   return hash & (size - 1);
 }
 
-// static size_t chht_hash_djb2(const char *key, size_t size) {
-//     size_t hash = 5381;  // DJB2 算法的初始值
-//     int c;
-//     while ((c = *key++)) {
-//         hash = ((hash << 5) + hash) + c;  // hash * 33 + c
-//     }
-//     return hash & (size - 1);
-// }
-
 ChainingHashTable *chht_create() {
   // 分配哈希表结构体
   ChainingHashTable *hashtable = (ChainingHashTable *)malloc(sizeof(ChainingHashTable));
