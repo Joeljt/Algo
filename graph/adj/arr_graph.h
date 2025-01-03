@@ -9,7 +9,7 @@
 typedef struct {
   int* neighbours;
   int count;
-} AdjMatrixList;
+} AdjMatrix;
 
 // 定义图结构
 typedef struct {
@@ -24,7 +24,7 @@ void mg_destroy(MatrixGraph* graph);
 
 int mg_addVertex(MatrixGraph* graph);
 void mg_addEdge(MatrixGraph* graph, int a, int b);
-AdjMatrixList mg_adj(MatrixGraph* graph, int v);
+AdjMatrix mg_adj(MatrixGraph* graph, int v);
 
 void mg_print(MatrixGraph* graph);
 

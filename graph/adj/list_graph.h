@@ -1,0 +1,37 @@
+#ifndef __LIST_GRAPH_H__
+#define __LIST_GRAPH_H__
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+// 定义相邻节点的结构信息
+typedef struct {
+  int* neighbours;
+  int count;
+} AdjList;
+
+// 定义邻接表节点
+typedef struct VertexNode {
+  int vertex;
+  struct VertexNode* next;
+} VertexNode;
+
+// 定义图结构
+typedef struct {
+  int V;        // 当前顶点数
+  int E;        // 当前边数
+  int capacity; // 最大顶点容量
+  VertexNode** adj; // 存储顶点信息的数组，每个数组元素都是一个链表
+} ListGraph;
+
+ListGraph* lg_create(int capacity);
+void lg_destroy(ListGraph* graph);
+
+int lg_addVertex(ListGraph* graph);
+void lg_addEdge(ListGraph* graph, int a, int b);
+AdjList lg_adj(ListGraph* graph, int v);
+
+void lg_print(ListGraph* graph);
+
+#endif

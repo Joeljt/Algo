@@ -1,6 +1,6 @@
 #include "heap_sort.h"
 #include "../helper.h"
-#include "heap/heap.h"
+#include "heap/basic/heap.h"
 
 static void sift_down(int* arr, int length, int i) {
   int left = 2 * i + 1;

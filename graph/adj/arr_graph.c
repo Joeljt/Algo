@@ -46,14 +46,16 @@ void mg_addEdge(MatrixGraph* graph, int a, int b) {
     // 无向图，两个节点相对于对方都需要标记连接
     graph->adj[a][b] = 1;
     graph->adj[b][a] = 1;
+    // 维护 E
+    graph->E++;
   }
 }
 
 // 查找顶点 v 在图中所有相连的顶点
-AdjMatrixList mg_adj(MatrixGraph* graph, int v) {
+AdjMatrix mg_adj(MatrixGraph* graph, int v) {
   assert(v >= 0 && v < graph->V);
   // 初始化一个结构，用来记录存储的相连节点列表和数量信息
-  AdjMatrixList result = {NULL, 0};
+  AdjMatrix result = {NULL, 0};
 
   // 初始化临时数组，顶点数量最大不可能超过总节点数量
   int* temp = (int*)malloc(sizeof(int) * graph->V);

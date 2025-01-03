@@ -28,7 +28,7 @@ queue: $(wildcard queue/*.c) $(wildcard queue/*/*.c) array/*.c
 	@./_dist/test_$@
 	@echo "\n"
 
-sorting: $(wildcard sorting/*.c) $(wildcard sorting/*/*.c) heap/*.c
+sorting: $(wildcard sorting/*.c) $(wildcard sorting/*/*.c) $(wildcard heap/*/*.c)
 	@$(CC) $(CFLAGS) -DTEST_SORTING -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
