@@ -24,6 +24,7 @@ typedef struct {
   int E;        // 当前边数
   int capacity; // 最大顶点容量
   int* visited; // 当前顶点是否被遍历过
+  int* preceder; // 记录当前顶点是从哪个顶点遍历过来的
   VertexNode** adj; // 存储顶点信息的数组，每个数组元素都是一个链表
 } ListGraph;
 
@@ -36,6 +37,8 @@ AdjList lg_adj(ListGraph* graph, int v);
 
 void lg_dfs(ListGraph* graph);
 bool lg_isConnected(ListGraph* graph, int a, int b);
+int* lg_path(ListGraph* graph, int a, int b, int* len);
+bool lg_isCycle(ListGraph* graph);
 
 void lg_print(ListGraph* graph);
 

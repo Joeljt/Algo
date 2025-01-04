@@ -34,9 +34,9 @@ void test_list_graph() {
     lg_addVertex(graph);
   }
 
-  lg_addEdge(graph, 0, 1);
-  lg_addEdge(graph, 0, 2);
+  lg_addEdge(graph, 2, 0);
   lg_addEdge(graph, 2, 3);
+  lg_addEdge(graph, 0, 1);
   lg_addEdge(graph, 3, 4);
   // lg_addEdge(graph, 4, 0);
   lg_print(graph);
@@ -50,6 +50,14 @@ void test_list_graph() {
 
   lg_dfs(graph);
   printf("2->4: %d", lg_isConnected(graph, 2, 4));
+
+  int len = 0;
+  int* path = lg_path(graph, 1, 3, &len);
+  printf("\n2->1 path: ");
+  for (int i = 0; i < len; i++) {
+    printf("%d ", path[i]);
+  }
+  printf("\n");
 
   lg_destroy(graph);
 }

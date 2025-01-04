@@ -11,6 +11,7 @@ VertexNode* createVertexNode(int vertex) {
 void resetVisitedStatus(ListGraph* graph) {
   for (int i = 0; i < graph->V; i++){
     graph->visited[i] = -1;
+    graph->preceder[i] = -1;
   }
 }
 
@@ -33,6 +34,9 @@ ListGraph* lg_create(int capacity) {
   // 为每个顶点都在 visited 数组中初始化遍历状态
   graph->visited = (int*)malloc(capacity * sizeof(int));
 
+  // 初始化前驱顶点的数组
+  graph->preceder = (int*)malloc(capacity * sizeof(int));
+
   return graph;
 }
 
@@ -48,6 +52,7 @@ void lg_destroy(ListGraph* graph) {
   }
   free(graph->adj);
   free(graph->visited);
+  free(graph->preceder);
   free(graph);
 }
 
@@ -102,10 +107,12 @@ AdjList lg_adj(ListGraph* graph, int v){
 
 // 从某个顶点开始，对整张图进行递归遍历
 // 先访问当前节点，然后通过 adj() 得到当前节点的所有相连接的节点，之后再一一调用 dfs 访问该节点
-void dfs(ListGraph* graph, int vertex, int ccId) {
+void dfs(ListGraph* graph, int vertex, int ccId, int preceder) {
   // 访问当前节点
   printf("%d ", vertex);
   graph->visited[vertex] = ccId;
+  // 记录当前顶点是从哪个顶点过来的
+  graph->preceder[vertex] = preceder;
   // 通过 adj() 得到当前顶点的所有相连顶点
   AdjList adjList = lg_adj(graph, vertex); 
   for (int i = 0; i < adjList.count; i++) {
@@ -113,7 +120,8 @@ void dfs(ListGraph* graph, int vertex, int ccId) {
     int neighbour = adjList.neighbours[i];
     // 如果该顶点还未被访问过，就继续递归向下执行
     if (graph->visited[neighbour] == -1) {
-      dfs(graph, neighbour, ccId);
+      // neighbour 是 vertex 的相邻节点，也就是从 vertex 遍历到的 neighbour 顶点
+      dfs(graph, neighbour, ccId, vertex);
     }
   }
 }
@@ -122,14 +130,14 @@ void dfs(ListGraph* graph, int vertex, int ccId) {
 void lg_dfs(ListGraph* graph) {
   resetVisitedStatus(graph); 
   printf("\nAdjacency List DFS: \n");
-  // 通过增加 ccCount 变量，并在循环中进行自增
+  // 通过增加 ccCount 变量，并在循环中进行自增，来记录整张图中不同的联通分量
   int ccCount = 0;
   // 遍历所有顶点，尝试 dfs 调用，因为图中有可能有多个联通分量
   // 在开始前先判断 visited 标记，以免重复遍历
   for (int i = 0; i < graph->V; i++) {
     if (graph->visited[i] == -1) {
       printf("cc%d: ", ccCount);
-      dfs(graph, i, ccCount++);
+      dfs(graph, i, ccCount++, i);
       printf("\n");
     }
   }
@@ -141,6 +149,43 @@ void lg_dfs(ListGraph* graph) {
 // 这里的 visited 数组，实际上就是并查集的应用，这里就是 quickFind 的实现
 bool lg_isConnected(ListGraph* graph, int a, int b) {
   return graph->visited[a] == graph->visited[b];
+}
+
+// 单源路径
+int* lg_path(ListGraph* graph, int a, int b, int* len) {
+  resetVisitedStatus(graph);
+
+  // 从目标起点开始遍历整个图，以免因为插入顺序导致查询的时候找不到正确的路径
+  // 比如按照 (2,1) (2,3) (1,0) 这个顺序建图
+  // 如果想找到 0->3 的路径，从 0 开始遍历是找不到的，比如从 2 开始遍历才可以
+  dfs(graph, a, 0, a);
+
+  if (lg_isConnected(graph, a, b)) {
+
+    // 先把总路径长度计算出来
+    int count = 1; // 从 1 开始是因为需要把起终点都算上
+    int current = b; // 从终点 b 开始向回查找
+    while (current != a) {
+      count++;
+      current = graph->preceder[current];
+    }
+
+    int *path = (int*)malloc(count * sizeof(int));
+
+    // 正向存储路径信息
+    current = b;
+    int index = count - 1;
+    path[index] = current;
+    while(current != a) {
+      index--;
+      current = graph->preceder[current];
+      path[index] = current;
+    }
+
+    *len = count;
+    return path;
+  }
+  return NULL;
 }
 
 void lg_print(ListGraph* graph) {
