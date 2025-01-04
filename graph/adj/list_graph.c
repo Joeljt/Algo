@@ -8,6 +8,12 @@ VertexNode* createVertexNode(int vertex) {
   return newNode;
 }
 
+void resetVisitedStatus(ListGraph* graph) {
+  for (int i = 0; i < graph->V; i++){
+    graph->visited[i] = -1;
+  }
+}
+
 ListGraph* lg_create(int capacity) {
   ListGraph* graph = (ListGraph*)malloc(sizeof(ListGraph));
   
@@ -24,6 +30,9 @@ ListGraph* lg_create(int capacity) {
     graph->adj[i] = NULL;
   }
 
+  // 为每个顶点都在 visited 数组中初始化遍历状态
+  graph->visited = (int*)malloc(capacity * sizeof(int));
+
   return graph;
 }
 
@@ -38,6 +47,7 @@ void lg_destroy(ListGraph* graph) {
     }
   }
   free(graph->adj);
+  free(graph->visited);
   free(graph);
 }
 
@@ -88,6 +98,49 @@ AdjList lg_adj(ListGraph* graph, int v){
   result.count = index;
 
   return result;
+}
+
+// 从某个顶点开始，对整张图进行递归遍历
+// 先访问当前节点，然后通过 adj() 得到当前节点的所有相连接的节点，之后再一一调用 dfs 访问该节点
+void dfs(ListGraph* graph, int vertex, int ccId) {
+  // 访问当前节点
+  printf("%d ", vertex);
+  graph->visited[vertex] = ccId;
+  // 通过 adj() 得到当前顶点的所有相连顶点
+  AdjList adjList = lg_adj(graph, vertex); 
+  for (int i = 0; i < adjList.count; i++) {
+    // 遍历访问每个相连顶点
+    int neighbour = adjList.neighbours[i];
+    // 如果该顶点还未被访问过，就继续递归向下执行
+    if (graph->visited[neighbour] == -1) {
+      dfs(graph, neighbour, ccId);
+    }
+  }
+}
+
+// 对图进行深度优先遍历
+void lg_dfs(ListGraph* graph) {
+  resetVisitedStatus(graph); 
+  printf("\nAdjacency List DFS: \n");
+  // 通过增加 ccCount 变量，并在循环中进行自增
+  int ccCount = 0;
+  // 遍历所有顶点，尝试 dfs 调用，因为图中有可能有多个联通分量
+  // 在开始前先判断 visited 标记，以免重复遍历
+  for (int i = 0; i < graph->V; i++) {
+    if (graph->visited[i] == -1) {
+      printf("cc%d: ", ccCount);
+      dfs(graph, i, ccCount++);
+      printf("\n");
+    }
+  }
+  printf("\n");
+}
+
+// 通过在 visited 数组中存储联通分量的 id，从而保证同一联通分量中的顶点值都相同
+// 从而保证方便地判断两个顶点之间是否是连接的
+// 这里的 visited 数组，实际上就是并查集的应用，这里就是 quickFind 的实现
+bool lg_isConnected(ListGraph* graph, int a, int b) {
+  return graph->visited[a] == graph->visited[b];
 }
 
 void lg_print(ListGraph* graph) {

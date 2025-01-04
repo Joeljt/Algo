@@ -36,11 +36,9 @@ void test_list_graph() {
 
   lg_addEdge(graph, 0, 1);
   lg_addEdge(graph, 0, 2);
-  lg_addEdge(graph, 1, 2);
-  lg_addEdge(graph, 1, 3);
   lg_addEdge(graph, 2, 3);
   lg_addEdge(graph, 3, 4);
-  lg_addEdge(graph, 4, 0);
+  // lg_addEdge(graph, 4, 0);
   lg_print(graph);
 
   AdjList list = lg_adj(graph, 0);
@@ -48,6 +46,10 @@ void test_list_graph() {
   for (int i = 0; i < list.count; i++) {
     printf("%d ", list.neighbours[i]);
   }
+  printf("\n");
+
+  lg_dfs(graph);
+  printf("2->4: %d", lg_isConnected(graph, 2, 4));
 
   lg_destroy(graph);
 }

@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // 定义相邻节点的结构信息
 typedef struct {
@@ -22,6 +23,7 @@ typedef struct {
   int V;        // 当前顶点数
   int E;        // 当前边数
   int capacity; // 最大顶点容量
+  int* visited; // 当前顶点是否被遍历过
   VertexNode** adj; // 存储顶点信息的数组，每个数组元素都是一个链表
 } ListGraph;
 
@@ -31,6 +33,9 @@ void lg_destroy(ListGraph* graph);
 int lg_addVertex(ListGraph* graph);
 void lg_addEdge(ListGraph* graph, int a, int b);
 AdjList lg_adj(ListGraph* graph, int v);
+
+void lg_dfs(ListGraph* graph);
+bool lg_isConnected(ListGraph* graph, int a, int b);
 
 void lg_print(ListGraph* graph);
 
