@@ -13,6 +13,7 @@ void resetVisitedStatus(ListGraph* graph) {
     graph->visited[i] = -1;
     graph->preceder[i] = -1;
     graph->colors[i] = -1;
+    graph->distance[i] = -1;
   }
 }
 
@@ -41,6 +42,9 @@ ListGraph* lg_create(int capacity) {
   // 二分图检测时染色使用
   graph->colors = (int*)malloc(capacity * sizeof(int));
 
+  // 记录顶点之间的距离
+  graph->distance = (int*)malloc(capacity * sizeof(int));
+
   return graph;
 }
 
@@ -58,6 +62,7 @@ void lg_destroy(ListGraph* graph) {
   free(graph->visited);
   free(graph->preceder);
   free(graph->colors);
+  free(graph->distance);
   free(graph);
 }
 
@@ -147,6 +152,174 @@ void lg_dfs(ListGraph* graph) {
     }
   }
   printf("\n");
+}
+
+// 对图进行广度优先遍历
+void bfs(ListGraph* graph, int vertex, int ccId) {
+  // 与二叉树的广度优先遍历类似，使用队列来实现
+  CircularQueue* queue = cq_create(graph->V);
+  // 从顶点 0 开始遍历
+  cq_enqueue(queue, vertex);
+  graph->visited[vertex] = ccId;
+  // 记录距离信息
+  graph->distance[vertex] = 0;
+  // 记录当前顶点遍历的路径
+  graph->preceder[vertex] = vertex;
+
+  while (!cq_isEmpty(queue)) {
+    // 从队列中取出顶点
+    int vertex = cq_dequeue(queue);
+    // 访问当前顶点
+    printf("%d(%d) ", vertex, graph->distance[vertex]);
+    // 通过 adj() 得到当前顶点的所有相连顶点
+    AdjList adjList = lg_adj(graph, vertex); 
+    for (int i = 0; i < adjList.count; i++) {
+      int neighbour = adjList.neighbours[i];
+      // 如果该顶点还未被访问过，就继续递归向下执行
+      if (graph->visited[neighbour] == -1) {
+        // 如果当前顶点还没有被访问过，就将当前顶点入队，然后标记为已访问
+        cq_enqueue(queue, neighbour);
+        graph->visited[neighbour] = ccId;
+        // 记录路径
+        graph->preceder[neighbour] = vertex;
+        // neighbour 顶点到根顶点的距离 = 当前顶点到根顶点的距离 + 1
+        graph->distance[neighbour] = graph->distance[vertex] + 1;
+      }
+    } 
+  }
+  cq_destroy(queue);
+}
+
+void lg_bfs(ListGraph* graph) {
+  resetVisitedStatus(graph);
+  printf("\nAdjacency List BFS: \n");
+  // 通过增加 ccCount 变量，并在循环中进行自增，来记录整张图中不同的联通分量
+  int ccCount = 0;
+  for (int i = 0; i < graph->V; i++) {
+    if (graph->visited[i] == -1) {
+      printf("cc%d: ", ccCount);
+      bfs(graph, i, ccCount++);
+      printf("\n");
+    }
+  }
+}
+
+int* lg_path_bfs(ListGraph* graph, int a, int b, int* len) {
+  resetVisitedStatus(graph);
+  bfs(graph, a, 0);
+  if (lg_isConnected(graph, a, b)) {
+
+    // 先把总路径长度计算出来
+    int count = 1; // 从 1 开始是因为需要把起终点都算上
+    int current = b; // 从终点 b 开始向回查找
+    while (current != a) {
+      count++;
+      current = graph->preceder[current];
+    }
+
+    int *path = (int*)malloc(count * sizeof(int));
+
+    // 正向存储路径信息
+    current = b;
+    int index = count - 1;
+    path[index] = current;
+    while(current != a) {
+      index--;
+      current = graph->preceder[current];
+      path[index] = current;
+    }
+
+    *len = count;
+    return path;
+  }
+  return NULL; 
+}
+
+static bool hasCycle_bfs(ListGraph* graph, int vertex) {
+  CircularQueue* queue = cq_create(graph->V);
+  // 标记当前顶点已访问
+  graph->visited[vertex] = 1;
+  // 记录当前顶点是从谁遍历过来的
+  graph->preceder[vertex] = vertex;
+
+  // 入队
+  cq_enqueue(queue, vertex);
+
+  while (!cq_isEmpty(queue)) {
+    int v = cq_dequeue(queue);
+    AdjList adj = lg_adj(graph, v);
+    for (int i = 0; i < adj.count; i++) {
+      int neighbour = adj.neighbours[i];
+      if (graph->visited[neighbour] == -1) {
+        // 如果没有访问过该顶点，入队
+        cq_enqueue(queue, neighbour);
+        graph->visited[neighbour] = 1;
+        graph->preceder[neighbour] = v;
+      }
+      // 如果已经访问过了，就要看一下这个是怎么来的
+      else if (neighbour != graph->preceder[v]) {
+        cq_destroy(queue);
+        return true;
+      }
+    }
+  }
+  cq_destroy(queue);
+  return false;
+}
+
+bool lg_hasCycle_bfs(ListGraph* graph) {
+  resetVisitedStatus(graph);
+  for (int i = 0; i < graph->V; i++) {
+    if (graph->visited[i] == -1) {
+      if (hasCycle_bfs(graph, i)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+bool isBipartite_bfs(ListGraph* graph, int vertex) {
+  CircularQueue* queue = cq_create(graph->V);
+
+  // 给当前节点染色后入队
+  // BFS 下，不再使用传入的 color 参数，而是在循环的过程中直接去取值
+  graph->colors[vertex] = 0;
+  cq_enqueue(queue, vertex);
+
+  while(!cq_isEmpty(queue)) {
+    int v = cq_dequeue(queue);
+    AdjList list = lg_adj(graph, v);
+    for (int i = 0; i < list.count; i++) {
+      int neighbour = list.neighbours[i];
+      if (graph->colors[neighbour] == -1) {
+        // 如果还没有染过色，就递归向下，注意相邻节点的颜色不一样
+        graph->colors[neighbour] = 1 - graph->colors[v];
+        cq_enqueue(queue, neighbour);
+      }
+      // 如果已经染过色了，就判断颜色是否冲突
+      else if (graph->colors[neighbour] == graph->colors[v]) {
+        cq_destroy(queue);
+        return false;
+      }
+    }
+  }
+
+  cq_destroy(queue);
+  return true;
+}
+
+bool lg_isBipartite_bfs(ListGraph* graph) {
+  resetVisitedStatus(graph);
+  for (int i = 0; i < graph->V; i++) {
+    if (graph->colors[i] == -1) {
+      if (!isBipartite_bfs(graph, i)) {
+        // 只要有一个联通分量不满足二分图的条件，就认为不是
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 // ----------------------- 检测联通分量 -----------------------
@@ -287,16 +460,16 @@ bool lg_isBipartite(ListGraph* graph) {
 }
 // ----------------------- 二分图 -----------------------
 
-void lg_print(ListGraph* graph) {
-  printf("Adjacency List:\n");
-  for (int i = 0; i < graph->V; i++) {
-    printf("%d: ", i);
-    VertexNode* current = graph->adj[i];
-    while (current != NULL) {
-      printf("%d -> ", current->vertex);
-      current = current->next;
-    }
-    printf("NULL\n");
-  }
-}
+// void lg_print(ListGraph* graph) {
+  // printf("Adjacency List:\n");
+  // for (int i = 0; i < graph->V; i++) {
+  //   printf("%d: ", i);
+  //   VertexNode* current = graph->adj[i];
+  //   while (current != NULL) {
+  //     printf("%d -> ", current->vertex);
+  //     current = current->next;
+  //   }
+  //   printf("NULL\n");
+  // }
+// }
 

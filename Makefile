@@ -63,7 +63,7 @@ hashtable: $(wildcard hashtable/*.c) $(wildcard hashtable/*/*.c)
 	@./_dist/test_$@
 	@echo "\n"
 
-graph: $(wildcard graph/*.c) $(wildcard graph/*/*.c)
+graph: $(wildcard graph/*.c) $(wildcard graph/*/*.c) $(wildcard queue/*/*.c) array/*.c
 	@$(CC) $(CFLAGS) -DTEST_GRAPH -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"

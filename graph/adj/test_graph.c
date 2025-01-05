@@ -28,19 +28,22 @@ void test_matrix_graph() {
 }
 
 void test_list_graph() {
-  ListGraph* graph = lg_create(5);
+  ListGraph* graph = lg_create(7);
 
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 7; i++) {
     lg_addVertex(graph);
   }
 
-  lg_addEdge(graph, 2, 0);
+  lg_addEdge(graph, 5, 6);
+  lg_addEdge(graph, 2, 6);
   lg_addEdge(graph, 2, 3);
+  lg_addEdge(graph, 1, 4);
+  lg_addEdge(graph, 1, 3); 
+  lg_addEdge(graph, 0, 2);
   lg_addEdge(graph, 0, 1);
-  lg_addEdge(graph, 3, 4);
-  lg_addEdge(graph, 4, 0);
-  // lg_addEdge(graph, 1, 2);
-  lg_print(graph);
+
+  // 破坏二分图性质
+  lg_addEdge(graph, 1, 2);
 
   AdjList list = lg_adj(graph, 0);
   printf("Adjacent vertices of 0: ");
@@ -53,8 +56,8 @@ void test_list_graph() {
   printf("2->4: %d\n", lg_isConnected(graph, 2, 4));
 
   int len = 0;
-  int* path = lg_path(graph, 1, 3, &len);
-  printf("\n2->1 path: ");
+  int* path = lg_path(graph, 0, 6, &len);
+  printf("\n0->6 path: ");
   for (int i = 0; i < len; i++) {
     printf("%d ", path[i]);
   }
@@ -62,6 +65,17 @@ void test_list_graph() {
 
   printf("是否有环：%d\n", lg_hasCycle(graph));
   printf("是否是二分图：%d\n", lg_isBipartite(graph));
+
+  lg_bfs(graph);
+  int length = 0;
+  int* pathbfs = lg_path_bfs(graph, 0, 6, &length);
+  printf("\n0->6 path: ");
+  for (int i = 0; i < length; i++) {
+    printf("%d ", pathbfs[i]);
+  }
+  printf("\n"); 
+  printf("是否有环：%d\n", lg_hasCycle_bfs(graph));
+  printf("是否是二分图：%d\n", lg_isBipartite_bfs(graph));
 
   lg_destroy(graph);
 }
