@@ -1,8 +1,8 @@
 #include "qu_rank.h"
 
-RankQuickUnion* qu_create(int n) {
+RankQuickUnion* qu_rank_create(int n) {
   RankQuickUnion *qu = (RankQuickUnion*)malloc(sizeof(RankQuickUnion));
-  qu->count = 0;
+  qu->count = n;
   qu->parent = (int*)malloc(sizeof(int) * n);
   qu->rank = (int*)malloc(sizeof(int) * n);
 
@@ -14,13 +14,13 @@ RankQuickUnion* qu_create(int n) {
   return qu;
 }
 
-void qu_destroy(QuickUnion *qu) {
+void qu_rank_destroy(RankQuickUnion *qu) {
   free(qu->parent);
   free(qu->rank);
   free(qu);
 }
 
-int qu_find(QuickUnion *qu, int p) {
+int qu_rank_find(RankQuickUnion *qu, int p) {
   // 找到根节点
   int root = p;
   while (root != qu->parent[root]) {
@@ -43,21 +43,21 @@ int qu_find(QuickUnion *qu, int p) {
   return p;
 }
 
-int qu_find_recursive(QuickUnion *qu, int p) {
+int qu_rank_find_recursive(RankQuickUnion *qu, int p) {
   // p == parent[p] 就说明自己指向自己，已经是根节点了
   if (p != qu->parent[p]) {
     // 不断递归查找根节点，将当前节点直接指向根节点
     // p 与 parent[p] 大部分时间下都是不同的，即使已经被压缩的节点也是一样
     // 只不过，被压缩过的节点只需要一次就可以跳出递归，开销可以忽略不计
     // 我们无法预先知道一个节点是否已经被压缩，这个可以统一处理所有情况
-    qu->parent[p] = qu_find_recursive(qu, qu->parent[p]);
+    qu->parent[p] = qu_rank_find_recursive(qu, qu->parent[p]);
   }
   return qu->parent[p];
 }
 
-void qu_union(QuickUnion *qu, int p, int q) {
-  int pRoot = qu_find(qu, p);
-  int qRoot = qu_find(qu, q);
+void qu_rank_union(RankQuickUnion *qu, int p, int q) {
+  int pRoot = qu_rank_find(qu, p);
+  int qRoot = qu_rank_find(qu, q);
   if (pRoot != qRoot) {
     // 比较 rank，将 rank 小的树连接到 rank 大的树上
     if (qu->rank[pRoot] < qu->rank[qRoot]) {
@@ -66,14 +66,22 @@ void qu_union(QuickUnion *qu, int p, int q) {
       qu->parent[qRoot] = pRoot;
     } else {
       // 相等的时候，随便选一个作为根，并维护相对应的 rank 信息
-      qu->rank[qRoot] = pRoot;
-      qu->rank[qRoot]++;
+      qu->parent[qRoot] = pRoot;    // 将 q 的根节点连接到 p 的根节点
+      qu->rank[pRoot]++;           // 增加 p 根节点的 rank
     }
+    qu->count--;
   }
 }
 
-bool qu_connected(QuickUnion *qu, int p, int q) {
-  int pRoot = qu_find(qu, p);
-  int qRoot = qu_find(qu, q);
+bool qu_rank_connected(RankQuickUnion *qu, int p, int q) {
+  int pRoot = qu_rank_find(qu, p);
+  int qRoot = qu_rank_find(qu, q);
   return pRoot == qRoot;
+}
+
+void qu_rank_print(RankQuickUnion *qu) {
+  for (int i = 0; i < qu->count; i++) {
+    printf("%d ", qu->parent[i]);
+  }
+  printf("\n");
 }

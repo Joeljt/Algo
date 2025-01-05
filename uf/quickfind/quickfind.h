@@ -2,6 +2,8 @@
 #define QUICKFIND_H
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct QuickFind {
   int *id; // 存储每个元素所属的集合编号

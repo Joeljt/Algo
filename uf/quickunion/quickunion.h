@@ -1,7 +1,9 @@
-#ifndef QUICKUNION_H
-#define QUICKUNION_H
+#ifndef QU_H
+#define QU_H
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct QuickUnion {
   int *parent; // 存放父节点索引

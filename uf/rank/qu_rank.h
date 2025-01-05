@@ -1,7 +1,9 @@
-#ifndef QUICKUNION_H
-#define QUICKUNION_H
+#ifndef QU_RANK_H
+#define QU_RANK_H
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // 在 quickunion 的基础上，增加 rank 来记录树的深度
 // 通过记录树的高度，在合并的时候可以尽可能保持树的平衡，避免退化为链表

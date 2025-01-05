@@ -28,8 +28,8 @@ bool qf_connected(QuickFind *qf, int p, int q) {
 }
 
 void qf_union(QuickFind *qf, int p, int q) {
-  int pRoot = find(qf, p);
-  int qRoot = find(qf, q);
+  int pRoot = qf_find(qf, p);
+  int qRoot = qf_find(qf, q);
   if (pRoot != qRoot) {
     // 将集合中所有与目标元素不在同一集合的元素，都放到同一个元素（更新存储的集合 id 的值）
     for (int i = 0; i < qf->count; i++) {
