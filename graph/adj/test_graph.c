@@ -38,7 +38,8 @@ void test_list_graph() {
   lg_addEdge(graph, 2, 3);
   lg_addEdge(graph, 0, 1);
   lg_addEdge(graph, 3, 4);
-  // lg_addEdge(graph, 4, 0);
+  lg_addEdge(graph, 4, 0);
+  // lg_addEdge(graph, 1, 2);
   lg_print(graph);
 
   AdjList list = lg_adj(graph, 0);
@@ -49,7 +50,7 @@ void test_list_graph() {
   printf("\n");
 
   lg_dfs(graph);
-  printf("2->4: %d", lg_isConnected(graph, 2, 4));
+  printf("2->4: %d\n", lg_isConnected(graph, 2, 4));
 
   int len = 0;
   int* path = lg_path(graph, 1, 3, &len);
@@ -58,6 +59,9 @@ void test_list_graph() {
     printf("%d ", path[i]);
   }
   printf("\n");
+
+  printf("是否有环：%d\n", lg_hasCycle(graph));
+  printf("是否是二分图：%d\n", lg_isBipartite(graph));
 
   lg_destroy(graph);
 }

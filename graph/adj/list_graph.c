@@ -12,6 +12,7 @@ void resetVisitedStatus(ListGraph* graph) {
   for (int i = 0; i < graph->V; i++){
     graph->visited[i] = -1;
     graph->preceder[i] = -1;
+    graph->colors[i] = -1;
   }
 }
 
@@ -37,6 +38,9 @@ ListGraph* lg_create(int capacity) {
   // 初始化前驱顶点的数组
   graph->preceder = (int*)malloc(capacity * sizeof(int));
 
+  // 二分图检测时染色使用
+  graph->colors = (int*)malloc(capacity * sizeof(int));
+
   return graph;
 }
 
@@ -53,6 +57,7 @@ void lg_destroy(ListGraph* graph) {
   free(graph->adj);
   free(graph->visited);
   free(graph->preceder);
+  free(graph->colors);
   free(graph);
 }
 
@@ -144,6 +149,8 @@ void lg_dfs(ListGraph* graph) {
   printf("\n");
 }
 
+// ----------------------- 检测联通分量 -----------------------
+
 // 通过在 visited 数组中存储联通分量的 id，从而保证同一联通分量中的顶点值都相同
 // 从而保证方便地判断两个顶点之间是否是连接的
 // 这里的 visited 数组，实际上就是并查集的应用，这里就是 quickFind 的实现
@@ -151,7 +158,9 @@ bool lg_isConnected(ListGraph* graph, int a, int b) {
   return graph->visited[a] == graph->visited[b];
 }
 
-// 单源路径
+// ----------------------- 检测联通分量 -----------------------
+
+// ----------------------- 单源路径检测 -----------------------
 int* lg_path(ListGraph* graph, int a, int b, int* len) {
   resetVisitedStatus(graph);
 
@@ -187,6 +196,96 @@ int* lg_path(ListGraph* graph, int a, int b, int* len) {
   }
   return NULL;
 }
+// ----------------------- 单源路径 -----------------------
+
+// ----------------------- 环 -----------------------
+static bool hasCycle(ListGraph* graph, int vertex, int parent) {
+  // 标记当前顶点被访问过了
+  graph->visited[vertex] = 1;
+
+  // 遍历所有相邻顶点
+  AdjList adj = lg_adj(graph, vertex);
+  for (int i = 0; i < adj.count; i++) {
+    int neighbour = adj.neighbours[i];
+    // 如果当前 neighbour 顶点还没有被访问过，就继续向下，同时把 vertex 作为其 parent 一起维护好
+    if (graph->visited[neighbour] == -1) {
+      hasCycle(graph, neighbour, vertex);
+    } 
+    // 如果当前 neighbour 顶点已经被访问过了，并且不是父顶点，就说明找到了环
+    // 假设存在图 0 1 2，其中 0 - 1，0 - 2，1 - 2
+    // 1. dfs(0, 0)，0 与 1 相连，递归执行 dfs(1, 0)
+    // 2. dfs(1, 0), 1 的相邻顶点有 0 和 2 两个，检查 0 的时候发现 0 已经访问过了，
+    //    此时 neighbour 是 0，但是 parent 也是 0，不能判断为环；
+    //    再检查 2，没有访问过，继续执行 dfs(2, 1)
+    // 3. dfs(2, 1), 2 的相邻顶点有 0 和 1 两个，检查 0 的时候发现 0 已经访问过了，
+    //    此时 neighbour 是 0，但是 parent 为 1，说明有环，结束匹配；
+    // 总结来看，整个流程是：
+    // 1. 从 0 开始遍历，
+    // 2. 遍历到 1 时，1 有 0 和 2 两个相连顶点，
+        // 2.1 遍历到 0 时，0 忽略不计，因为这两个顶点直接相连；
+        // 2.2 遍历到 2 时，2 有 0 和 1 两个相连顶点，
+            // 2.2.1 遍历到 0 时，0 已经访问过，并且本次遍历是从 1 过来的，说明有环
+            // 从 v 开始遍历，最终再次访问到了 v，且访问到 v 的时候不是从 v 过来的，就可以说明有环
+    else if (neighbour != parent) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool lg_hasCycle(ListGraph* graph) {
+  resetVisitedStatus(graph);
+  // 遍历所有顶点，确保覆盖到所有联通分量
+  for (int i = 0; i < graph->V; i++) {
+    // 如果当前顶点还没有被访问过，继续向下递归执行
+    if (graph->visited[i] == -1) {
+      if (hasCycle(graph, i, i)) {
+        // 如果从当前顶点出发，最后找到了环，就直接返回
+        return true;
+      }
+    } 
+  }
+  return false;
+}
+// ----------------------- 环 -----------------------
+
+// ----------------------- 二分图 -----------------------
+bool isBipartite(ListGraph* graph, int vertex, int color) {
+  // 给当前顶点染色
+  graph->colors[vertex] = color;
+  // 遍历所有连接的点，还没有访问过的都染成另外的颜色
+  AdjList list = lg_adj(graph, vertex);
+  for (int i = 0; i < list.count; i++) {
+    int neighbour = list.neighbours[i];
+    if (graph->colors[neighbour] == -1) {
+      // 如果当前访问到的顶点还没有被访问过，即没有染过色，则继续递归向下
+      // 将所有相邻的顶点都染成其他颜色
+      if(!isBipartite(graph, neighbour, 1 - color)){
+        // 如果递归返回 false，说明有子图不是二分图，直接返回 false 即可
+        return false;
+      }
+    } 
+    // 如果已经访问过了，就要检查一下是不是相同的颜色
+    else if (graph->colors[neighbour] == color) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool lg_isBipartite(ListGraph* graph) {
+  resetVisitedStatus(graph);
+  for (int i = 0; i < graph->V; i++) {
+    if (graph->colors[i] == -1) {
+      // 只要有一个连通分量不是二分图，整个图就不是
+      if (!isBipartite(graph, i, 0)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+// ----------------------- 二分图 -----------------------
 
 void lg_print(ListGraph* graph) {
   printf("Adjacency List:\n");
