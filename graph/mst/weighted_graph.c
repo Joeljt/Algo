@@ -58,23 +58,25 @@ void wg_addEdge(WeightedGraph* graph, int v, int w, int weight) {
     graph->E++;
 }
 
-int* wg_adj(WeightedGraph* graph, int v, int* length){
+WeightedVertex* wg_adj(WeightedGraph* graph, int v, int* length){
     assert(v >= 0 && v < graph->V);
 
-    int* neighbours = (int*)malloc(graph->V * sizeof(int));
+    WeightedVertex* neighbours = (WeightedVertex*)malloc(graph->V * sizeof(WeightedVertex));
     int index = 0;
 
     // 从当前节点存储的第一个节点开始遍历
     WeightedVertex* current = graph->vertices[v];
     while (current != NULL) {
         // 因为链表只会存储真正连接的顶点，所以不需要判断，直接赋值即可
-        neighbours[index] = current->vertex;
+        neighbours[index].vertex = current->vertex;
+        neighbours[index].weight = current->weight;
+        neighbours[index].next = NULL;
         index++;
         current = current->next;
     }
 
     // 调整最终的相邻节点数据
-    neighbours = (int*)realloc(neighbours, index * sizeof(int));
+    neighbours = (WeightedVertex*)realloc(neighbours, index * sizeof(WeightedVertex));
     *length = index;
 
     return neighbours;

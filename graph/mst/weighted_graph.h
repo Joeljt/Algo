@@ -27,7 +27,7 @@ void wg_destroy(WeightedGraph* graph);
 
 int wg_addVertex(WeightedGraph* graph);
 void wg_addEdge(WeightedGraph* graph, int v, int w, int weight);
-int* wg_adj(WeightedGraph* graph, int v, int* length);
+WeightedVertex* wg_adj(WeightedGraph* graph, int v, int* length);
 
 void wg_print(WeightedGraph* graph);
 
