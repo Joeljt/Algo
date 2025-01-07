@@ -73,7 +73,7 @@ graph: $(wildcard graph/*.c) $(wildcard graph/*/*.c) $(wildcard queue/*/*.c) arr
 	@./_dist/test_$@
 	@echo "\n"
 
-mst: $(wildcard graph/mst/*.c) $(wildcard graph/mst/*/*.c) $(wildcard uf/*/*.c)
+mst: $(wildcard graph/mst/*.c) $(wildcard graph/mst/*/*.c) $(wildcard uf/*/*.c) $(wildcard queue/*/*.c) $(wildcard heap/*/*.c) array/*.c
 	@$(CC) $(CFLAGS) -DTEST_MST -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"

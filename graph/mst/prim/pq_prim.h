@@ -1,7 +1,8 @@
-#ifndef PRIM_H
-#define PRIM_H
+#ifndef PQ_PRIM_H
+#define PQ_PRIM_H
 
 #include "../weighted_graph.h"
+#include "../../../queue/priority/priority_queue.h"
 #include <limits.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -12,8 +13,9 @@ typedef struct {
     int v;
     int w;
     int weight;
-} PEdge;
+} PQEdge;
 
-PEdge* prim(WeightedGraph* graph, int* length);
+PQEdge* pq_prim(WeightedGraph* graph, int* length);
+
 
 #endif

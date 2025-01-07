@@ -145,6 +145,10 @@ void* heap_peek(Heap* heap) {
   return heap->data[0];
 }
 
+bool heap_is_empty(Heap* heap) {
+  return heap->size == 0;
+}
+
 void heap_print(Heap* heap) {
   printf("Heap: ");
   for (int i = 0; i < heap->size; i++) {

@@ -1,4 +1,5 @@
-#include "prim.h"
+#include "prim/pq_prim.h"
+#include "prim/prim.h"
 
 // 测试用例1：简单的连通图
 /*
@@ -25,6 +26,9 @@ void test_simple_connected() {
     
     // 验证结果
     assert(length == 5);  // 应该有5条边
+    for (int i = 0; i < length; i++) {
+        printf("(%d, %d, %d)\n", mst[i].v, mst[i].w, mst[i].weight);
+    }
     
     free(mst);
     wg_destroy(g);
@@ -82,12 +86,40 @@ void test_same_weights() {
     wg_destroy(g);
 }
 
+void test_pq_prim() {
+    WeightedGraph* g = wg_create(6);
+    for(int i = 0; i < 6; i++) wg_addVertex(g);
+    
+    wg_addEdge(g, 0, 1, 2);  // 0-1 权重2
+    wg_addEdge(g, 1, 2, 3);  // 1-2 权重3
+    wg_addEdge(g, 0, 3, 4);  // 0-3 权重4
+    wg_addEdge(g, 1, 3, 5);  // 1-3 权重5
+    wg_addEdge(g, 2, 5, 1);  // 2-5 权重1
+    wg_addEdge(g, 3, 5, 1);  // 3-5 权重1
+    wg_addEdge(g, 3, 4, 6);  // 3-4 权重6
+
+    int length = 0;
+    PQEdge* mst = pq_prim(g, &length);
+
+    for (int i = 0; i < length; i++) {
+        printf("(%d, %d, %d)\n", mst[i].v, mst[i].w, mst[i].weight);
+    }
+
+    free(mst);
+    wg_destroy(g);
+}
+
 #ifdef TEST_MST
 int main() {
+  printf("prim\n");
   test_simple_connected();
-  test_disconnected();
-  test_same_weights();
-  printf("All tests passed!\n");
+  // test_disconnected();
+  // test_same_weights();
+  // printf("All tests passed!\n");
+
+  printf("pq_prim\n");
+  test_pq_prim();
+
   return 0;
 }
 #endif

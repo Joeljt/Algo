@@ -123,7 +123,7 @@ void test_ll_deque() {
 }
 
 int compare(void* a, void* b) {
-    return *(int*)a - *(int*)b;
+    return *(int*)b - *(int*)a;
 }
 
 void test_priority_queue() {

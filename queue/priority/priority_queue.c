@@ -23,3 +23,7 @@ void* pq_peek(PriorityQueue* pq) {
 void pq_print(PriorityQueue* pq) {
   heap_print(pq);
 }
+
+bool pq_is_empty(PriorityQueue* pq) {
+  return heap_is_empty(pq);
+}
