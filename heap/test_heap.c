@@ -3,23 +3,31 @@
 #include "index/index_heap.h"
 #ifdef TEST_HEAP
 
+int compare(void* a, void* b) {
+  return *(int*)a - *(int*)b;
+}
+
 void test_heap() {
-  Heap* heap = heap_create(5);
+  Heap* heap = heap_create(5, compare);
 
   for (int i = 0; i < 10; i++) {
-    heap_push(heap, i);
+    int* num = malloc(sizeof(int));
+    *num = i;
+    heap_push(heap, num);
     heap_print(heap);  
   }
 
-  heap_push(heap, 13);
-  heap_print(heap);
-
   heap_pop(heap);
   heap_print(heap);
 
   heap_pop(heap);
   heap_print(heap);
 
+  for (int i = 0; i < 10; i++) {
+    int* num = heap_pop(heap);
+    free(num);
+  }
+  
   heap_destroy(heap);
 }
 

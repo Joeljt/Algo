@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 // 需要在文件开头添加 swap 函数的实现
-static void swap(int* arr, int i, int j) {
-    int temp = arr[i];
+static void swap(void** arr, int i, int j) {
+    void* temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
 }
@@ -15,16 +15,18 @@ int left(int index) { return 2 * index + 1; }
 int right(int index) { return 2 * index + 2; }
 
 struct Heap {
-  int* data;
+  void** data;
   int size;
   int capacity;
+  int (*compare)(void*, void*);
 };
 
-Heap* heap_create(int capacity) {
+Heap* heap_create(int capacity, int (*compare)(void*, void*)) {
   Heap* heap = (Heap*)malloc(sizeof(Heap));
-  heap->data = (int*)malloc(sizeof(int) * capacity);
+  heap->data = (void**)malloc(sizeof(void*) * capacity);
   heap->size = 0;
   heap->capacity = capacity;
+  heap->compare = compare;
   return heap;
 }
 
@@ -34,7 +36,7 @@ void heap_destroy(Heap* heap) {
 }
 
 void heap_resize(Heap* heap, int new_capacity) {
-  heap->data = (int*)realloc(heap->data, sizeof(int) * new_capacity);
+  heap->data = (void**)realloc(heap->data, sizeof(void*) * new_capacity);
   heap->capacity = new_capacity;
 }
 
@@ -42,7 +44,7 @@ void heap_resize(Heap* heap, int new_capacity) {
 // 过程中检查当前元素是否大于其父节点，是的话就交换，然后重复这个过程，直到该节点到达其应该在的位置
 void sift_up(Heap* heap, int index) {
   int parent_index = parent(index);
-  while (index > 0 && heap->data[index] > heap->data[parent_index]) {
+  while (index > 0 && heap->compare(heap->data[index], heap->data[parent_index]) > 0) {
     swap(heap->data, index, parent_index);
     index = parent_index;
     parent_index = parent(index);
@@ -53,7 +55,7 @@ void sift_up(Heap* heap, int index) {
 // 完成交换后用新的 index 位置重复整个过程，直到不满足条件后结束
 void sift_up_recursive(Heap* heap, int index) {
   int parent_index = parent(index);
-  if (parent_index >= 0 && heap->data[index] > heap->data[parent_index]) {
+  if (parent_index >= 0 && heap->compare(heap->data[index], heap->data[parent_index]) > 0) {
     swap(heap->data, index, parent_index);
     sift_up_recursive(heap, parent_index);
   }
@@ -61,23 +63,23 @@ void sift_up_recursive(Heap* heap, int index) {
 
 // 对索引为 index 的节点进行下沉操作
 void sift_down(Heap* heap, int index) {
-    int size = heap->size;
-    while (true) {
-        int largest = index;
-        int l = left(index);
-        int r = right(index);
+  int size = heap->size;
+  while (true) {
+    int largest = index;
+    int l = left(index);
+    int r = right(index);
         
-        if (l < size && heap->data[l] > heap->data[largest])
-            largest = l;
-        if (r < size && heap->data[r] > heap->data[largest])
-            largest = r;
+    if (l < size && heap->compare(heap->data[l], heap->data[largest]) > 0)
+      largest = l;
+    if (r < size && heap->compare(heap->data[r], heap->data[largest]) > 0)
+      largest = r;
             
-        if (largest == index)
-            break;
+    if (largest == index)
+      break;
             
-        swap(heap->data, index, largest);
-        index = largest;
-    }
+    swap(heap->data, index, largest);
+    index = largest;
+  }
 }
 
 // 对索引为 index 的节点进行下沉操作
@@ -88,11 +90,11 @@ void sift_down_recursive(Heap* heap, int index) {
   int r = right(index);
   int largest = index;
   // 在节点不越界的情况下，比较大小
-  if (l < heap->size && heap->data[l] > heap->data[largest]) {
+  if (l < heap->size && heap->compare(heap->data[l], heap->data[largest]) > 0) {
     largest = l;
   }
   // 同样，右节点不越界的情况下，比较大小
-  if (r < heap->size && heap->data[r] > heap->data[largest]) {
+  if (r < heap->size && heap->compare(heap->data[r], heap->data[largest]) > 0) {
     largest = r;
   }
   // 判断当前节点是不是整个子树中的最大值
@@ -104,7 +106,7 @@ void sift_down_recursive(Heap* heap, int index) {
   }
 }
 
-void heap_push(Heap* heap, int value) {
+void heap_push(Heap* heap, void* value) {
   if (heap->size == heap->capacity) {
     heap_resize(heap, heap->capacity * 2);
   }
@@ -116,14 +118,14 @@ void heap_push(Heap* heap, int value) {
   // sift_up_recursive(heap, heap->size - 1);
 }
 
-int heap_pop(Heap* heap) {
-  if (heap->size == 0) return -1;
+void* heap_pop(Heap* heap) {
+  if (heap->size == 0) return NULL;
   // 取出堆顶元素
-  int result = heap->data[0];
+  void* result = heap->data[0];
   // 将最后一个元素放到堆顶，下沉
   heap->data[0] = heap->data[heap->size - 1];
   // 删除最后一个元素
-  heap->data[heap->size - 1] = 0;
+  heap->data[heap->size - 1] = NULL;
   // 维护堆的大小
   heap->size--;
   // 对新堆顶元素下沉，构建最大堆
@@ -138,15 +140,15 @@ int heap_pop(Heap* heap) {
   return result;
 }
 
-int heap_peek(Heap* heap) {
-  if (heap->size == 0) return -1;
+void* heap_peek(Heap* heap) {
+  if (heap->size == 0) return NULL;
   return heap->data[0];
 }
 
 void heap_print(Heap* heap) {
   printf("Heap: ");
   for (int i = 0; i < heap->size; i++) {
-    printf("%d ", heap->data[i]);
+    printf("%d ", *(int*)heap->data[i]);
   }
   printf("\n");
 }

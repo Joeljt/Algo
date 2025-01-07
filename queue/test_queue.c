@@ -4,6 +4,7 @@
 #include "circular/circular_queue.h"
 #include "deque/arr_deque.h"
 #include "deque/ll_deque.h"
+#include "priority/priority_queue.h"
 #include <time.h>
 #include <stdlib.h>
 
@@ -121,13 +122,32 @@ void test_ll_deque() {
     ld_destroy(deque);
 }
 
+int compare(void* a, void* b) {
+    return *(int*)a - *(int*)b;
+}
+
+void test_priority_queue() {
+    PriorityQueue* pq = pq_create(10, compare);
+    for (int i = 0; i < 10; i++) {
+        int* value = malloc(sizeof(int));
+        *value = i;
+        pq_push(pq, value);
+        pq_print(pq);
+    }
+    for (int i = 0; i < 10; i++) {
+        free(pq_pop(pq));
+        pq_print(pq);
+    }
+    pq_destroy(pq);
+}
+
 int main() {
     // test_array_queue();
     // test_linked_queue();
     // test_circular_queue();
     // test_arr_deque();
     // test_ll_deque();
-    test_ll_deque();
+    test_priority_queue();
     return 0;
 }
 #endif

@@ -23,7 +23,7 @@ stack: $(wildcard stack/*.c) $(wildcard stack/*/*.c) array/*.c linkedlist/*/*.c
 	@./_dist/test_$@
 	@echo "\n"
 
-queue: $(wildcard queue/*.c) $(wildcard queue/*/*.c) array/*.c
+queue: $(wildcard queue/*.c) $(wildcard queue/*/*.c) array/*.c $(wildcard heap/*/*.c)
 	@$(CC) $(CFLAGS) -DTEST_QUEUE -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
