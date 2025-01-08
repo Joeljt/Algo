@@ -1,7 +1,7 @@
 #ifndef PRIM_H
 #define PRIM_H
 
-#include "../weighted_graph.h"
+#include "../../adj/weighted_graph.h"
 #include <limits.h>
 #include <stdbool.h>
 #include <stdlib.h>

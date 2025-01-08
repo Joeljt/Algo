@@ -29,8 +29,8 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 - [x] [Linked List](./linkedlist/README.md)
 - [x] [Stack](./stack/README.md)
 - [x] [Queue](./queue/README.md)
-- [ ] [Tree](./tree/README.md)
-- [ ] [Hash Table](./hashtable/README.md)
+- [x] [Tree](./tree/README.md)
+- [x] [Hash Table](./hashtable/README.md)
 - [ ] [Graph](./graph/README.md)
 
 ### Sorting
@@ -41,7 +41,7 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 - [x] [Shell Sort](./sorting/shell/README.md)
 - [x] [Merge Sort](./sorting/merge/README.md)
 - [x] [Quick Sort](./sorting/quick/README.md)
-- [ ] [Heap Sort](./sorting/heap/README.md)
+- [x] [Heap Sort](./sorting/heap/README.md)
 - [ ] [Counting Sort](./sorting/counting/README.md)
 - [ ] [Radix Sort](./sorting/radix/README.md)
 - [ ] [Bucket Sort](./sorting/bucket/README.md)

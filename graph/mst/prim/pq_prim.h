@@ -1,7 +1,7 @@
 #ifndef PQ_PRIM_H
 #define PQ_PRIM_H
 
-#include "../weighted_graph.h"
+#include "../../adj/weighted_graph.h"
 #include "../../../queue/priority/priority_queue.h"
 #include <limits.h>
 #include <stdbool.h>

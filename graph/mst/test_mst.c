@@ -1,5 +1,7 @@
+#ifdef TEST_MST
 #include "prim/pq_prim.h"
 #include "prim/prim.h"
+#include "kruskal/kruskal.h"
 
 // 测试用例1：简单的连通图
 /*
@@ -109,8 +111,40 @@ void test_pq_prim() {
     wg_destroy(g);
 }
 
-#ifdef TEST_MST
+
+void test_kruskal() {
+  WeightedGraph* graph = wg_create(7);
+  for (int i = 0; i < 7; i++) {
+    wg_addVertex(graph);
+  }
+
+  wg_addEdge(graph, 4, 6, 7);
+  wg_addEdge(graph, 3, 6, 5);
+  wg_addEdge(graph, 3, 4, 1);
+  wg_addEdge(graph, 2, 5, 4);
+  wg_addEdge(graph, 2, 4, 4);
+  wg_addEdge(graph, 1, 5, 5);
+  wg_addEdge(graph, 1, 4, 3);
+  wg_addEdge(graph, 1, 3, 4);
+  wg_addEdge(graph, 1, 2, 1);
+  wg_addEdge(graph, 0, 5, 2);
+  wg_addEdge(graph, 0, 3, 7);
+  wg_addEdge(graph, 0, 1, 2);
+ 
+  // wg_print(graph);
+
+  int length = 0;
+  KEdge* mst = kruskal(graph, &length);
+  for (int i = 0; i < length; i++) {
+    printf("%d-%d: %d\n", mst[i].v, mst[i].w, mst[i].weight);
+  }
+  wg_destroy(graph);
+}
+
+
 int main() {
+  printf("kruskal\n");
+  test_kruskal();
   printf("prim\n");
   test_simple_connected();
   // test_disconnected();

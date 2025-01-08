@@ -1,7 +1,7 @@
 #include "adj/arr_graph.h"
 #include "adj/list_graph.h"
-#include "mst/weighted_graph.h"
-#include "mst/kruskal.h"
+#include "adj/weighted_graph.h"
+
 void test_matrix_graph() {
   MatrixGraph* graph = mg_create(5);
 
@@ -102,43 +102,14 @@ void test_weighted_graph() {
   wg_destroy(graph);
 }
 
-void test_kruskal() {
-  WeightedGraph* graph = wg_create(7);
-  for (int i = 0; i < 7; i++) {
-    wg_addVertex(graph);
-  }
-
-  wg_addEdge(graph, 4, 6, 7);
-  wg_addEdge(graph, 3, 6, 5);
-  wg_addEdge(graph, 3, 4, 1);
-  wg_addEdge(graph, 2, 5, 4);
-  wg_addEdge(graph, 2, 4, 4);
-  wg_addEdge(graph, 1, 5, 5);
-  wg_addEdge(graph, 1, 4, 3);
-  wg_addEdge(graph, 1, 3, 4);
-  wg_addEdge(graph, 1, 2, 1);
-  wg_addEdge(graph, 0, 5, 2);
-  wg_addEdge(graph, 0, 3, 7);
-  wg_addEdge(graph, 0, 1, 2);
- 
-  // wg_print(graph);
-
-  int length = 0;
-  KEdge* mst = kruskal(graph, &length);
-  for (int i = 0; i < length; i++) {
-    printf("%d-%d: %d\n", mst[i].v, mst[i].w, mst[i].weight);
-  }
-  wg_destroy(graph);
-}
 
 #ifdef TEST_GRAPH
 int main() {
-  // test_matrix_graph();
-  // printf("\n");
-  // test_list_graph();
-  // printf("\n");
-  // test_weighted_graph();
-  test_kruskal();
+  test_matrix_graph();
+  printf("\n");
+  test_list_graph();
+  printf("\n");
+  test_weighted_graph();
   return 0;
 }
 #endif
