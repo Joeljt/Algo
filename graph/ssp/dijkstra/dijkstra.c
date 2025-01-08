@@ -1,5 +1,19 @@
 #include "dijkstra.h"
 
+void dijkstra_print(int* distTo, int* from, int end, char* result) {
+  result[0] = '\0';  
+  char temp[50];  
+  int curr = end;
+  while (curr != -1) {
+      sprintf(temp, "%d(%d)", curr, distTo[curr]);
+      strcat(result, temp);
+      curr = from[curr];
+      if (curr != -1) {
+          strcat(result, " -> ");
+      }
+  }
+}
+
 void dijkstra(WeightedGraph* g, int s, char* result) {
 
   // 初始化 distTo 数组，用来记录起点到各个顶点的距离
@@ -69,27 +83,9 @@ void dijkstra(WeightedGraph* g, int s, char* result) {
     }
     free(vertices);
   }
-
-    // 生成结果字符串
-    result[0] = '\0';  // 确保结果字符串为空
-    char temp[50];     // 临时缓冲区
-
-    // 从终点往回找
-    int curr = g->V - 1;
-    while (curr != -1) {
-        // 格式化当前顶点和距离: "顶点(距离)"
-        sprintf(temp, "%d(%d)", curr, distTo[curr]);
-        strcat(result, temp);
-        
-        // 如果不是最后一个顶点，添加箭头
-        curr = from[curr];
-        if (curr != -1) {
-            strcat(result, " -> ");
-        }
-    }
-
-    free(distTo);
-    free(from);
+  dijkstra_print(distTo, from, g->V - 1, result);
+  free(distTo);
+  free(from);
 }
 
 // 从终点往回找，直到起点
