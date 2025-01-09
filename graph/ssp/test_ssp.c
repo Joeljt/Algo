@@ -1,9 +1,14 @@
 #include "dijkstra/dijkstra.h"
 #include "dijkstra/pq_dijkstra.h"
+#include "bellmanford/bellmanford.h"
 
 #ifdef TEST_SSP
 
-void test_dijkstra(int optimized) {
+#define DIJKSTRA 1
+#define DIJKSTRA_PQ 2
+#define BELLMANFORD 3
+
+void test_dijkstra(int algorithm) {
     // 测试用例1：简单路径
     /*
         2       3
@@ -27,10 +32,12 @@ void test_dijkstra(int optimized) {
         wg_addEdge(g, 4, 5, 2);  // 4-5 权重2
 
         char result[1000];
-        if (optimized) {
+        if (algorithm == DIJKSTRA_PQ) {
             pq_dijkstra(g, 0, result);
-        } else {
+        } else if (algorithm == DIJKSTRA) {
             dijkstra(g, 0, result);
+        } else if (algorithm == BELLMANFORD) {
+            bellmanford(g, 0, result);
         }
         printf("Test1 - Simple path from 0 to 5:\n%s\n", result);
         // 期望输出：0(0) -> 1(2) -> 2(5) -> 5(6)
@@ -60,10 +67,12 @@ void test_dijkstra(int optimized) {
         wg_addEdge(g, 4, 5, 1);   // 4-5 权重1
 
         char result[1000];
-        if (optimized) {
+        if (algorithm == DIJKSTRA_PQ) {
             pq_dijkstra(g, 0, result);
-        } else {
+        } else if (algorithm == DIJKSTRA) {
             dijkstra(g, 0, result);
+        } else if (algorithm == BELLMANFORD) {
+            bellmanford(g, 0, result);
         }
         printf("Test2 - Path with fewer edges is not shortest:\n%s\n", result);
         // 期望输出：0(0) -> 3(5) -> 4(6) -> 5(7)
@@ -83,10 +92,12 @@ void test_dijkstra(int optimized) {
         wg_addEdge(g, 2, 3, 1);  // 2-3 权重1
 
         char result[1000];
-        if (optimized) {
+        if (algorithm == DIJKSTRA_PQ) {
             pq_dijkstra(g, 0, result);
-        } else {
+        } else if (algorithm == DIJKSTRA) {
             dijkstra(g, 0, result);
+        } else if (algorithm == BELLMANFORD) {
+            bellmanford(g, 0, result);
         }
         printf("Test3 - Disconnected graph:\n%s", result);
         // 期望输出：无法到达
@@ -99,6 +110,8 @@ int main() {
     test_dijkstra(0);
     printf("\n\n");
     test_dijkstra(1);
+    printf("\n\n");
+    test_dijkstra(2);
 }
 
 #endif
