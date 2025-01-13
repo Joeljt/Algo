@@ -11,11 +11,13 @@ static bool hasCycle_dfs(DirectedGraph* g, int v) {
     // 如果发现相邻顶点正在被访问，说明有环
     if (g->visitState[neighbour] == VISITING) { // 2. 如果遇到 VISITING 状态，说明找到环
       free(edges);
+      // printf("Cycle Detected\n %d -> %d\n", v, neighbour);
       return true;
     } else if (g->visitState[neighbour] == UNVISITED) {
       // 如果相邻顶点未被访问，则递归访问相邻顶点，并且回溯判断是否存在环
       if (hasCycle_dfs(g, neighbour)) { // 3. 继续深入访问相邻顶点
         free(edges);
+        // printf("Cycle Detected\n %d -> %d\n", v, neighbour);
         return true;
       }
     }

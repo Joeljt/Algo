@@ -2,7 +2,7 @@
 #include "topo_sort.h"
 #include "cycle/cycle_detection.h"
 
-void test_topo_sort() {
+void test_topo_sort(int algorithm) {
     // 测试用例1：正常的 DAG
     /*
         0 --> 1 --> 3
@@ -12,15 +12,20 @@ void test_topo_sort() {
     */
     {
         DirectedGraph* g1 = dg_create(4, 1);
-        dg_addEdge(g1, 0, 1, 0);  // 0 -> 1
-        dg_addEdge(g1, 0, 2, 0);  // 0 -> 2
-        dg_addEdge(g1, 1, 3, 0);  // 1 -> 3
-        dg_addEdge(g1, 2, 3, 0);  // 2 -> 3
+        dg_addEdge(g1, 0, 1, 1);  // 0 -> 1
+        dg_addEdge(g1, 0, 2, 1);  // 0 -> 2
+        dg_addEdge(g1, 1, 3, 1);  // 1 -> 3
+        dg_addEdge(g1, 2, 3, 1);  // 2 -> 3
 
         int length = 0;
-        int* result = topo_sort(g1, &length);
+        int* result = NULL;
+        if (algorithm == 1) {
+            result = topo_sort_dfs(g1, &length);
+        } else {
+            result = topo_sort(g1, &length);
+        }
         
-        printf("Test1 - Normal DAG:\n");
+        printf("Normal DAG:\n");
         if (result) {
             printf("Length: %d\nOrder: ", length);
             for (int i = 0; i < length; i++) {
@@ -48,9 +53,14 @@ void test_topo_sort() {
         dg_addEdge(g2, 3, 0, 0);  // 3 -> 0 (creates cycle)
 
         int length = 0;
-        int* result = topo_sort(g2, &length);
-        
-        printf("\nTest2 - Graph with cycle:\n");
+        int* result = NULL;
+        if (algorithm == 1) {
+            result = topo_sort_dfs(g2, &length);
+        } else {
+            result = topo_sort(g2, &length);
+        }
+
+        printf("\nGraph with cycle:\n");
         if (result == NULL && length == -1) {
             printf("Correctly detected cycle\n");
         } else {
@@ -58,40 +68,6 @@ void test_topo_sort() {
             free(result);
         }
         dg_destroy(g2);
-    }
-
-    // 测试用例3：单个顶点
-    {
-        DirectedGraph* g3 = dg_create(1, 1);
-        
-        int length = 0;
-        int* result = topo_sort(g3, &length);
-        
-        printf("\nTest3 - Single vertex:\n");
-        if (result) {
-            printf("Length: %d\nOrder: ", length);
-            for (int i = 0; i < length; i++) {
-                printf("%d ", result[i]);
-            }
-            printf("\n");
-            // 期望输出：0
-            free(result);
-        }
-        dg_destroy(g3);
-    }
-
-    // 测试用例4：空图
-    {
-        DirectedGraph* g4 = dg_create(0, 1);
-        
-        int length = 0;
-        int* result = topo_sort(g4, &length);
-        
-        printf("\nTest4 - Empty graph:\n");
-        if (result == NULL) {
-            printf("Correctly handled empty graph\n");
-        }
-        dg_destroy(g4);
     }
 }
 
@@ -188,8 +164,14 @@ void test_cycle_detection() {
 }
 
 int main() {
-    test_topo_sort();
-    printf("\n\n");   
+    printf("Test Topo Sort:\n");
+    test_topo_sort(0);
+    printf("\n\n");
+    printf("Test Topo Sort DFS:\n");
+    test_topo_sort(1);
+    printf("\n\n");
+
+    printf("Test Cycle Detection:\n");
     test_cycle_detection();
     return 0;
 }

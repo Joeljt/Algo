@@ -10,7 +10,7 @@ DirectedGraph* dg_create(int V, int directed) {
         g->matrix[i] = (int*)malloc(V * sizeof(int));
         for (int j = 0; j < V; j++) {
           // 自己到自己（对角线）为 0，其他默认没有边，初始化为 INF
-            g->matrix[i][j] = (i == j) ? 0 : INF;
+            g->matrix[i][j] = (i == j) ? -1 : INF;
         }
     }
     // 初始化入度、出度都为 0
@@ -23,6 +23,13 @@ DirectedGraph* dg_create(int V, int directed) {
     g->visitState = (int*)malloc(V * sizeof(int));
     g->visited = (int*)malloc(V * sizeof(int));
     g->onPath = (int*)malloc(V * sizeof(int));
+
+    for (int i = 0; i < V; i++) {
+        g->visitState[i] = 0;
+        g->visited[i] = 0;
+        g->onPath[i] = 0;
+    }
+
     return g;
 }
 
@@ -55,7 +62,9 @@ DEdge* dg_adj(DirectedGraph* g, int v, int* length) {
     DEdge* edges = (DEdge*)malloc(g->V * sizeof(DEdge));
     int count = 0;
     for (int i = 0; i < g->V; i++) {
-        if (g->matrix[v][i] != INF) {
+        // 注意这里与之前判断 == 1 表示有边不同，这里判断 != INF 表示有边
+        // != -1 表示忽略自环边
+        if (g->matrix[v][i] != INF && g->matrix[v][i] != -1) {
             edges[count].vertex = i;
             edges[count].weight = g->matrix[v][i];
             count++;
@@ -69,7 +78,6 @@ DEdge* dg_adj(DirectedGraph* g, int v, int* length) {
 }
 
 void dg_print(DirectedGraph* g) {
-    printf("\nDirected Graph:\n");
     for (int i = 0; i < g->V; i++) {
         printf("%d: ", i);
         for (int j = 0; j < g->V; j++) {
