@@ -107,11 +107,11 @@ void test_dijkstra(int algorithm) {
 }
 
 int main() {
-    test_dijkstra(0);
+    test_dijkstra(DIJKSTRA_PQ);
     printf("\n\n");
-    test_dijkstra(1);
+    test_dijkstra(DIJKSTRA);
     printf("\n\n");
-    test_dijkstra(2);
+    test_dijkstra(BELLMANFORD);
 }
 
 #endif

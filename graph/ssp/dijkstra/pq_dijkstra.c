@@ -14,7 +14,7 @@ void pq_dijkstra_print(int* distTo, int* from, int end, char* result) {
   char temp[50];  
   int curr = end;
   while (curr != -1) {
-      sprintf(temp, "%d(%d)", curr, distTo[curr]);
+      snprintf(temp, sizeof(temp), "%d(%d)", curr, distTo[curr]);
       strcat(result, temp);
       curr = from[curr];
       if (curr != -1) {

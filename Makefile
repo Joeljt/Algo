@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address,undefined -fstack-protector
 $(shell mkdir -p _dist)
 
 # 定义所有数据结构
-TARGETS = array linkedlist stack queue sorting bst heap map set hashtable trie uf graph mst ssp
+TARGETS = array linkedlist stack queue sorting bst heap map set hashtable trie uf graph mst ssp dg
 
 # 每个数据结构的编译规则
 array: array/*.c
@@ -80,6 +80,11 @@ mst: $(wildcard graph/mst/*.c) $(wildcard graph/mst/*/*.c) $(wildcard graph/*/*.
 
 ssp: $(wildcard graph/ssp/*.c) $(wildcard graph/ssp/*/*.c) $(wildcard graph/*/*.c) $(wildcard queue/*/*.c) $(wildcard heap/*/*.c) array/*.c
 	@$(CC) $(CFLAGS) -DTEST_SSP -o _dist/test_$@ $^
+	@./_dist/test_$@
+	@echo "\n"
+
+dg: $(wildcard graph/dg/*.c) $(wildcard graph/dg/*/*.c) $(wildcard queue/*/*.c) array/*.c $(wildcard heap/*/*.c)
+	@$(CC) $(CFLAGS) -DTEST_DG -o _dist/test_$@ $^
 	@./_dist/test_$@
 	@echo "\n"
 
