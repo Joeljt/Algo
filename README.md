@@ -31,7 +31,7 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 - [x] [Queue](./queue/README.md)
 - [x] [Tree](./tree/README.md)
 - [x] [Hash Table](./hashtable/README.md)
-- [ ] [Graph](./graph/README.md)
+- [x] [Graph](./graph/README.md)
 
 ### Sorting
 
