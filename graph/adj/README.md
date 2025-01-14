@@ -2,11 +2,115 @@
 
 图主要解决的是连接性问题，即如何有效表达各个节点是否有连接关系，又是如何连接的。
 
+一般来说，我们习惯用 V 来表示图中的顶点数，用 E 来表示图中的边数。
+
 具体而言，图有两种基本的表达方式：邻接矩阵和邻接表。
 
 ### 邻接矩阵
 
+邻接矩阵实际上就是使用二维数组来表示顶点之间的关系。
+
+对于图中的每一个顶点，都有一个数组用来维护从该顶点出发到其他顶点是否有边，也就是说 [0][0] 表示顶点 0 到顶点 0 是否有边连接，[0][1] 表示顶点 0 到顶点 1 是否有边连接，以此类推。
+
+所以，邻接矩阵一定是一个 V*V 的二维矩阵，一维数组是所有的顶点信息，二维数组表示的具体的顶点到其他各顶点的连通性。
+
+邻接矩阵表示的图比较好理解，但是缺点在于无论对应的顶点是否有连通，都需要开辟对应的数组空间，这对于稀疏图来说是很浪费空间资源的。
+
+比如，一个有 5 个顶点的图，每个顶点只和其他一个顶点相连，在这种情况下，25 个矩阵元素中，只有 5 个元素的值是真正有价值的。
+
+相对应的，邻接矩阵更适合稠密图，即每个顶点都和其他所有顶点相连接。这种情况下，一定需要 V*V 的二维矩阵，也就没有浪费的情况了。
+
+```c
+void mg_addEdge(MatrixGraph* graph, int a, int b) {
+  assert((a >= 0 && a < graph->V) && (b >= 0 && b < graph->V));
+  if (graph->adj[a][b] == 0) {
+    // 无向图，两个节点相对于对方都需要标记连接
+    graph->adj[a][b] = 1;
+    graph->adj[b][a] = 1;
+    // 维护 E
+    graph->E++;
+  }
+}
+
+// 查找顶点 v 在图中所有相连的顶点
+AdjMatrix mg_adj(MatrixGraph* graph, int v) {
+  assert(v >= 0 && v < graph->V);
+  // 初始化一个结构，用来记录存储的相连节点列表和数量信息
+  AdjMatrix result = {NULL, 0};
+
+  // 初始化临时数组，顶点数量最大不可能超过总节点数量
+  int* temp = (int*)malloc(sizeof(int) * graph->V);
+  int index = 0;
+  for (int i = 0; i < graph->V; i++) {
+    // 在当前顶点的连接表中查找连接的顶点，并将其放到数组中记录下来
+    if (graph->adj[v][i] == 1) {
+      temp[index] = i;
+      index++;
+    }
+  }
+  // 将返回的列表重新调整为实际的大小
+  result.neighbours = (int*)realloc(temp, index * sizeof(int));
+  result.count = index;
+  return result;
+}
+```
+
 ### 邻接表
+
+邻接矩阵在稀疏图场景下对空间利用效率不高，这种情况下使用邻接表可以较好的利用空间。
+
+图的本质就是各顶点之间的表示关系，邻接表的实现实际上是基于链表的。
+
+因为图是一系列顶点的集合，所以一维数组是一定会有的，用来存储各个顶点与其他顶点的联通状态。
+
+但是不同于邻接矩阵需要提前开好 V 个空间，用来存储可能的连接状态，链表结构只需要按需声明节点并链接起来即可。
+
+正如邻接表这个名字本身所表示的一样，这个版本的表示实际上与哈希表异曲同工，也是数组+链表的搭配。
+
+```c
+void lg_addEdge(ListGraph* graph, int a, int b) {
+  assert((a >= 0 && a < graph->V) && (b >= 0 && b < graph->V));
+
+  VertexNode* newNode = NULL;
+
+  // 添加边 a -> b
+  newNode = createVertexNode(b);     // 新建一个存储了 b 顶点信息的链表节点
+  newNode->next = graph->adj[a];  // 把这个新节点插入到 graph->adj[a] 这个链表的链表头
+  graph->adj[a] = newNode;        // 更新 graph->adj[a] 链表为最新的链表头
+
+  // 添加边 b -> a
+  newNode = createVertexNode(a);     // 新建一个存储了 a 顶点信息的链表节点 
+  newNode->next = graph->adj[b];  // 让这个新链表指向 graph->adj[b] 的链表，成为该链表的头节点
+  graph->adj[b] = newNode;        // 更新 graph->adj[b] 存储的链表为最新的链表头
+
+  graph->E++;
+}
+
+// 获取与顶点 v 相连接的所有顶点信息
+AdjList lg_adj(ListGraph* graph, int v){
+  assert(v >= 0 && v < graph->V);
+
+  AdjList result = { NULL, 0 };
+
+  int* temp = (int*)malloc(graph->V * sizeof(int));
+  int index = 0;
+
+  // 从当前节点存储的第一个节点开始遍历
+  VertexNode* current = graph->adj[v];
+  while (current != NULL) {
+    // 因为链表只会存储真正连接的顶点，所以不需要判断，直接赋值即可
+    temp[index] = current->vertex;
+    index++;
+    current = current->next;
+  }
+
+  // 调整最终的相邻节点数据
+  result.neighbours = (int*)realloc(temp, index * sizeof(int));
+  result.count = index;
+
+  return result;
+}
+```
 
 ## 图的遍历
 
