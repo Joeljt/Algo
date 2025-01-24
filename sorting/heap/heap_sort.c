@@ -1,6 +1,7 @@
 #include "heap_sort.h"
 #include "../helper.h"
-#include "heap/basic/heap.h"
+#include "datastruct/heap/basic/heap.h"
+#include <stdlib.h>
 
 static void sift_down(int* arr, int length, int i) {
   int left = 2 * i + 1;
@@ -46,13 +47,19 @@ static void sink(int* arr, int n, int i) {
     arr[i] = temp;  // 放入最终位置
 }
 
+int compare(void* a, void* b) {
+  return *(int*)a - *(int*)b;
+}
+
 void heapSort(int* arr, int length) {
-  Heap* heap = heap_create(length);
+  Heap* heap = heap_create(length, compare);
   for (int i = 0; i < length; i++) {
-    heap_push(heap, arr[i]);
+    int* num = malloc(sizeof(int));
+    *num = arr[i];
+    heap_push(heap, num);
   }
   for (int i = length - 1; i >= 0; i--) {
-    arr[i] = heap_pop(heap);
+    arr[i] = *(int*)heap_pop(heap);
   }
   heap_destroy(heap);
 }

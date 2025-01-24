@@ -1,3 +1,5 @@
+#ifdef TEST_DG
+
 #include "topo_sort.h"
 
 int* topo_sort(DirectedGraph* g, int* length) {
@@ -96,3 +98,4 @@ int* topo_sort_dfs(DirectedGraph* g, int* length) {
   *length = g->V;
   return result;
 }
+#endif

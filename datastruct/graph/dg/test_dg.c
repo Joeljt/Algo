@@ -1,3 +1,5 @@
+#ifdef TEST_DG
+
 #include "directed_graph.h"
 #include "topo_sort.h"
 #include "cycle/cycle_detection.h"
@@ -175,3 +177,4 @@ int main() {
     test_cycle_detection();
     return 0;
 }
+#endif
