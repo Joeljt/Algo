@@ -1,3 +1,5 @@
+package q136_single_number;
+
 /**
  * 136. Single Number
  * 
@@ -9,12 +11,12 @@
  * 4. 遍历到最后就是唯一的那个数异或 0，结果就是自身，也就是期望的结果。
  */
 
-class Solution {
-    public int singleNumber(int[] nums) {
-        int res = 0;
-        for (int i = 0; i < nums.length; i++) {
-            res ^= nums[i];
-        }
-        return res;
-    }
+ public class Solution {
+  public int singleNumber(int[] nums) {
+      int res = 0;
+      for (int i = 0; i < nums.length; i++) {
+          res ^= nums[i];
+      }
+      return res;
+  }
 }

@@ -1,9 +1,10 @@
+package q260_single_number_iii;
 /**
  * 260. Single Number III
  * 
  * https://leetcode.cn/problems/single-number-iii/
  */
-class Solution {
+public class Solution {
     public int[] singleNumber(int[] nums) {
         // 和 136 类似，把所有数字都依次异或，得到的结果是那两个唯一的值的异或结果
         int xor = 0;

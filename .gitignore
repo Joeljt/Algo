@@ -8,3 +8,4 @@
 *.dylib
 *.dSYM
 *.DS_Store
+*.class
