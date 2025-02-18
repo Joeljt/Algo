@@ -1,4 +1,4 @@
-package q136_single_number;
+package e136_single_number;
 
 /**
  * 136. Single Number

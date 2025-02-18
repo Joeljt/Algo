@@ -1,4 +1,4 @@
-package q136_single_number;
+package e136_single_number;
 
 public class Test {
     private static void test(Solution solution, int[] input, int expected) {

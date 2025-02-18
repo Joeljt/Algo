@@ -1,4 +1,4 @@
-package q260_single_number_iii;
+package m260_single_number_iii;
 
 public class Test {
     private static void test(Solution solution, int[] input, int[] expected) {

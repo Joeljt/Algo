@@ -1,4 +1,4 @@
-package q260_single_number_iii;
+package m260_single_number_iii;
 /**
  * 260. Single Number III
  * 
