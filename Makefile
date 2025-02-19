@@ -31,6 +31,13 @@ $(foreach target,$(LC_TARGETS),$(eval $(call make-lc-target,$(target))))
 # leetcode 总目标，编译运行所有文件
 lc: $(LC_TARGETS)
 
+# 创建 leetcode 模板
+new:
+	@mkdir -p leetcode/$(q)
+	@sed "s/{{name}}/$(q)/g" leetcode/templates/Solution.template > leetcode/$(q)/Solution.java
+	@sed "s/{{name}}/$(q)/g" leetcode/templates/Test.template > leetcode/$(q)/Test.java
+	@sed "s/{{name}}/$(q)/g" leetcode/templates/README.template > leetcode/$(q)/README.md
+
 clean:
 	@rm -rf _dist
 
