@@ -17,12 +17,6 @@ This repo is for my own learning and record, so it may be messy and not well-org
 
 And welcome to any suggestions and corrections, I'll be very appreciated.
 
-### C Programming
-
-- [ ] [Makefile](./C/makefile/README.md)
-- [ ] [GDB](./C/gdb/README.md)
-- [ ] [C Programming Pitfalls](./C/c-programming-pitfalls/README.md)
-
 ### Data Structures
 
 - [x] [Array](./array/README.md)
@@ -46,11 +40,6 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 - [ ] [Radix Sort](./sorting/radix/README.md)
 - [ ] [Bucket Sort](./sorting/bucket/README.md)
 
-### Searching
-
-- [ ] [Linear Search](./searching/linear/README.md)
-- [ ] [Binary Search](./searching/binary/README.md)
-
 ### Strategies
 
 - [ ] [Recursion](./recursion/README.md)
@@ -60,4 +49,4 @@ And welcome to any suggestions and corrections, I'll be very appreciated.
 
 ### Leetcode Solutions
 
-- [ ] [1. Two Sum](./leetcode/1.two-sum/README.md)
+- [ ] [Leetcode](./leetcode/README.md) WIP
