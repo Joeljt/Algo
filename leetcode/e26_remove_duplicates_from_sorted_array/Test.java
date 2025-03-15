@@ -5,9 +5,9 @@ public class Test {
         int[] nums = {1, 1, 2};
         int[] expected = {1, 2};
         int result = solution.removeDuplicates(nums);
-        assertEquals(expected.length, result);
+        assert result == expected.length : "failed";
         for (int i = 0; i < result; i++) {
-            assertEquals(expected[i], nums[i]);
+            assert nums[i] == expected[i] : "failed";
         }
     }
 
