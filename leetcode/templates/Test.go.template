@@ -1,0 +1,71 @@
+package {{name}}
+
+import (
+	"fmt"
+	"reflect"
+	"strings"
+)
+
+// 测试用例结构体 - 根据具体题目调整字段类型
+type TestCase struct {
+	input    interface{} // 输入参数，根据题目调整类型
+	expected interface{} // 期望输出，根据题目调整类型
+	// 可以添加更多字段，如 length, target 等
+}
+
+// 运行单个测试用例
+func runTest(tc TestCase) bool {
+	// TODO: 根据具体题目实现测试逻辑
+	// 示例：
+	// result := solution(tc.input)
+	// if !reflect.DeepEqual(result, tc.expected) {
+	//     fmt.Printf("❌ 测试失败: 输入 %v, 期望 %v, 得到 %v\n", tc.input, tc.expected, result)
+	//     return false
+	// }
+	
+	fmt.Printf("✅ 测试通过: 输入 %v, 输出 %v\n", tc.input, tc.expected)
+	return true
+}
+
+// 运行所有测试用例
+func RunTests() {
+	fmt.Printf("🧪 开始测试 LeetCode {{number}}: {{title}}\n")
+	fmt.Println(strings.Repeat("=", 60))
+	
+	// TODO: 根据具体题目添加测试用例
+	testCases := []TestCase{
+		// 示例测试用例：
+		// {
+		//     input:    []int{1, 2, 3},
+		//     expected: []int{1, 2, 3},
+		// },
+		// {
+		//     input:    []int{},
+		//     expected: []int{},
+		// },
+	}
+	
+	passed := 0
+	total := len(testCases)
+	
+	for i, tc := range testCases {
+		fmt.Printf("\n📝 测试用例 %d/%d:\n", i+1, total)
+		if runTest(tc) {
+			passed++
+		}
+	}
+	
+	fmt.Println("\n" + strings.Repeat("=", 60))
+	fmt.Printf("📊 测试结果: %d/%d 通过\n", passed, total)
+	
+	if passed == total {
+		fmt.Println("🎉 所有测试用例都通过了！")
+	} else {
+		fmt.Println("⚠️  有测试用例失败，请检查代码逻辑")
+	}
+}
+
+// 主函数，可以直接运行测试
+func main() {
+	RunTests()
+} 
