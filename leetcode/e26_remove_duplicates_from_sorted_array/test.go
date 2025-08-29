@@ -17,8 +17,6 @@ func equalSlice(a, b []int) bool {
 }
 
 func main() {
-	fmt.Print("e26_remove_duplicates_from_sorted_array", " => ")
-
 	tests := []struct {
 		in  []int
 		out []int
@@ -29,20 +27,15 @@ func main() {
 		{in: []int{1}, out: []int{1}, n: 1},
 	}
 
-	ok := true
 	for _, tc := range tests {
 		arr := make([]int, len(tc.in))
 		copy(arr, tc.in)
 		k := removeDuplicates(arr)
 		if k != tc.n || !equalSlice(arr[:k], tc.out) {
-			ok = false
-			break
+			fmt.Println("[FAIL] e26_remove_duplicates_from_sorted_array")
+			return
 		}
 	}
 
-	if ok {
-		fmt.Println("[PASS]")
-	} else {
-		fmt.Println("[FAIL]")
-	}
+	fmt.Println("[PASS] e26_remove_duplicates_from_sorted_array")
 }
