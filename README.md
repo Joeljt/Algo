@@ -1,21 +1,12 @@
 ## Data Stucture and Algorithms
 
-Implemented all the linear strcutures with Java at first, but turned to C when it comes to linked list for two reasons:
+This is a whole new around of algorithm learning, I'm planning to implement all data structures with Go this time fot two reasons:
 
-- Practice C pointers and memory management in the real world, to build a relatively solid fundation for CSAPP learning.
-- The C programming language is much more lower and near the machine, so it may be better to grasp the idea of data structures and the trade-offs between different algorithms.
+1. Familirize myself with the Go programming language.
+2. Make myself comfortable with algorithms again after near a year.
 
-This repo may include the following contents according to my current plan:
-
-- All basic data structures implemented by C and with several test cases for each one;
-- Algorithm tatics such as recursion, dynamic programming and so on;
-- Leetcode solutions along the learning journey and afterwards;
-- GNU makefile / gdb / some C programming pitfalls and skills;
-- Other miscellaneous things.
-
-This repo is for my own learning and record, so it may be messy and not well-organized.
-
-And welcome to any suggestions and corrections, I'll be very appreciated.
+I expect this round of learning and implementing easier and smoother than before, for I had done it several times before.
+Also, I should be taking advantage of this round to practice my English writing skills as well.
 
 ### Data Structures
 
