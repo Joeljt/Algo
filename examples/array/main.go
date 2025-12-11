@@ -1,11 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"joseph/algo/datastructure/array"
+)
 
-// 示例使用
+// 数组示例程序
 func main() {
 	// 创建动态数组
-	arr := NewArray(5)
+	arr := array.NewArray(5)
 	fmt.Println("初始数组:", arr)
 
 	// 添加元素
