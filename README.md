@@ -29,13 +29,13 @@ joseph/algo/
 │           └── quick_test.go
 ├── leetcode/              # LeetCode problems
 │   └── e283_move_zeros/
+│       ├── solution.go
+│       ├── solution_test.go
 │       └── README.md
 └── examples/              # All example programs
     ├── array/
     │   └── main.go
-    ├── linkedlist/
-    │   └── main.go
-    └── leetcode/
+    └── linkedlist/
         └── main.go
 ```
 
@@ -87,7 +87,6 @@ joseph/algo/
 ```bash
 make run-array        # Run array example
 make run-linkedlist  # Run linked list example
-make run-leetcode     # Run LeetCode example
 make run-all          # Run all examples
 ```
 
@@ -96,6 +95,7 @@ make run-all          # Run all examples
 make test             # Run all unit tests (excluding examples)
 make test-array       # Test array only
 make test-linkedlist  # Test linked list only
+make test-leetcode    # Test LeetCode problems
 make test-coverage    # Generate coverage report
 ```
 
@@ -164,7 +164,7 @@ func main() {
 ### Adding LeetCode Problems
 1. Create a new directory under `leetcode/` (e.g., `e1_two_sum/`)
 2. Implement `solution.go` and `solution_test.go`
-3. Add corresponding examples under `examples/leetcode/` if needed
+3. Run tests with `make test-leetcode` or `go test ./leetcode/e1_two_sum -v`
 
 ## Advantages
 
