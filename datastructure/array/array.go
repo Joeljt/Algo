@@ -13,7 +13,7 @@ type Array struct {
 }
 
 // NewArray 创建新的动态数组
-func NewArray(initialCapacity int) *Array {
+func New(initialCapacity int) *Array {
 	if initialCapacity <= 0 {
 		initialCapacity = 10 // 默认初始容量
 	}

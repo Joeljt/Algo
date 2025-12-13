@@ -6,7 +6,7 @@ import (
 
 // 测试 NewArray
 func TestNewArray(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 	if arr == nil {
 		t.Fatal("NewArray() 返回 nil")
 	}
@@ -21,7 +21,7 @@ func TestNewArray(t *testing.T) {
 	}
 
 	// 测试默认容量
-	arr2 := NewArray(0)
+	arr2 := New(0)
 	if arr2.Capacity() < 10 {
 		t.Errorf("默认容量应该至少是 10，实际是 %d", arr2.Capacity())
 	}
@@ -29,7 +29,7 @@ func TestNewArray(t *testing.T) {
 
 // 测试 Add
 func TestAdd(t *testing.T) {
-	arr := NewArray(3)
+	arr := New(3)
 
 	// 测试添加元素
 	arr.Add(1)
@@ -54,7 +54,7 @@ func TestAdd(t *testing.T) {
 
 // 测试 Get
 func TestGet(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 测试空数组
 	_, err := arr.Get(0)
@@ -89,7 +89,7 @@ func TestGet(t *testing.T) {
 
 // 测试 Set
 func TestSet(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 	arr.Add(1)
 	arr.Add(2)
 	arr.Add(3)
@@ -117,7 +117,7 @@ func TestSet(t *testing.T) {
 
 // 测试 Insert
 func TestInsert(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 测试在空数组插入
 	err := arr.Insert(0, 1)
@@ -154,7 +154,7 @@ func TestInsert(t *testing.T) {
 
 // 测试 Remove
 func TestRemove(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 测试空数组
 	_, err := arr.Remove(0)
@@ -199,7 +199,7 @@ func TestRemove(t *testing.T) {
 
 // 测试 RemoveLast
 func TestRemoveLast(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 测试空数组
 	_, err := arr.RemoveLast()
@@ -227,7 +227,7 @@ func TestRemoveLast(t *testing.T) {
 
 // 测试 Contains
 func TestContains(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 测试空数组
 	if arr.Contains(1) {
@@ -252,7 +252,7 @@ func TestContains(t *testing.T) {
 
 // 测试 IndexOf
 func TestIndexOf(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 测试空数组
 	index := arr.IndexOf(1)
@@ -281,7 +281,7 @@ func TestIndexOf(t *testing.T) {
 
 // 测试 Clear
 func TestClear(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 添加元素
 	arr.Add(1)
@@ -301,7 +301,7 @@ func TestClear(t *testing.T) {
 
 // 测试 ToSlice
 func TestToSlice(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 测试空数组
 	slice := arr.ToSlice()
@@ -327,7 +327,7 @@ func TestToSlice(t *testing.T) {
 
 // 测试扩容和缩容
 func TestResize(t *testing.T) {
-	arr := NewArray(2)
+	arr := New(2)
 
 	// 测试扩容
 	for i := 0; i < 20; i++ {
@@ -351,7 +351,7 @@ func TestResize(t *testing.T) {
 
 // 综合测试
 func TestIntegration(t *testing.T) {
-	arr := NewArray(5)
+	arr := New(5)
 
 	// 添加元素
 	for i := 0; i < 10; i++ {
@@ -396,4 +396,3 @@ func TestIntegration(t *testing.T) {
 		t.Error("清空后数组应该为空")
 	}
 }
-

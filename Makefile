@@ -16,9 +16,10 @@ help:
 	@echo "Available commands:"
 	@echo ""
 	@echo "Run example programs:"
+	@echo "  make run              - Run all examples"
 	@echo "  make run-array        - Run array example"
 	@echo "  make run-list         - Run list example"
-	@echo "  make run-all          - Run all examples"
+	@echo "  make run-stack        - Run stack example"
 	@echo ""
 	@echo "Testing:"
 	@echo "  make test             - Run all unit tests (excluding examples)"
@@ -45,14 +46,16 @@ run-list:
 	@echo "=== Running list example ==="
 	@cd $(EXAMPLES_DIR)/list && go run main.go
 
-# Run all example programs
-.PHONY: run-all
-run-all: run-array run-list
-	@echo "=== All example programs completed ==="
+# Run stack example program
+.PHONY: run-stack
+run-stack:
+	@echo "=== Running stack example ==="
+	@cd $(EXAMPLES_DIR)/stack && go run main.go
 
-# 快速运行（默认运行list示例）
+# Run all example programs
 .PHONY: run
-run: run-list
+run: run-array run-list run-stack
+	@echo "=== All example programs completed ==="
 
 # ==================== 测试 ====================
 
@@ -75,6 +78,12 @@ test-array:
 test-list:
 	@echo "=== Running list unit tests ==="
 	@go test ./$(DATASOURCE_DIR)/list
+
+# Run stack unit tests
+.PHONY: test-stack
+test-stack:
+	@echo "=== Running stack unit tests ==="
+	@go test ./$(DATASOURCE_DIR)/stack
 
 # Run LeetCode tests
 .PHONY: test-leetcode
