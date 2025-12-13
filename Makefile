@@ -17,13 +17,13 @@ help:
 	@echo ""
 	@echo "Run example programs:"
 	@echo "  make run-array        - Run array example"
-	@echo "  make run-linkedlist   - Run linked list example"
+	@echo "  make run-list         - Run list example"
 	@echo "  make run-all          - Run all examples"
 	@echo ""
 	@echo "Testing:"
 	@echo "  make test             - Run all unit tests (excluding examples)"
 	@echo "  make test-array       - Run array unit tests"
-	@echo "  make test-linkedlist  - Run linked list unit tests"
+	@echo "  make test-list        - Run list unit tests"
 	@echo "  make test-leetcode    - Run LeetCode tests"
 	@echo "  make test-coverage    - Run tests and generate coverage report"
 	@echo ""
@@ -39,20 +39,20 @@ run-array:
 	@echo "=== Running array example ==="
 	@cd $(EXAMPLES_DIR)/array && go run main.go
 
-# Run linked list example program
-.PHONY: run-linkedlist
-run-linkedlist:
-	@echo "=== Running linked list example ==="
-	@cd $(EXAMPLES_DIR)/linkedlist && go run main.go
+# Run list example program
+.PHONY: run-list
+run-list:
+	@echo "=== Running list example ==="
+	@cd $(EXAMPLES_DIR)/list && go run main.go
 
 # Run all example programs
 .PHONY: run-all
-run-all: run-array run-linkedlist
+run-all: run-array run-list
 	@echo "=== All example programs completed ==="
 
-# 快速运行（默认运行链表）
+# 快速运行（默认运行list示例）
 .PHONY: run
-run: run-linkedlist
+run: run-list
 
 # ==================== 测试 ====================
 
@@ -70,11 +70,11 @@ test-array:
 	@echo "=== Running array unit tests ==="
 	@go test ./$(DATASOURCE_DIR)/array
 
-# Run linked list unit tests
-.PHONY: test-linkedlist
-test-linkedlist:
-	@echo "=== Running linked list unit tests ==="
-	@go test ./$(DATASOURCE_DIR)/linkedlist
+# Run list unit tests
+.PHONY: test-list
+test-list:
+	@echo "=== Running list unit tests ==="
+	@go test ./$(DATASOURCE_DIR)/list
 
 # Run LeetCode tests
 .PHONY: test-leetcode

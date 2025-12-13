@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"joseph/algo/datastructure/linkedlist"
+	"joseph/algo/datastructure/list"
 )
 
-// 链表示例程序
+// 双链表示例程序
 func main() {
-	// 创建单链表
-	ll := linkedlist.NewLinkedList()
+	// 创建双链表
+	ll := list.New()
 	fmt.Println("初始链表:", ll)
 	fmt.Println("是否为空:", ll.IsEmpty())
 	fmt.Println("链表大小:", ll.GetSize())
@@ -53,18 +53,26 @@ func main() {
 	}
 	fmt.Println()
 
-	// 测试 IndexOf 和 Contains
-	fmt.Println("=== 测试 IndexOf 和 Contains ===")
-	testValues := []any{999, 50, 111, 9999}
-	for _, val := range testValues {
-		index := ll.IndexOf(val)
-		contains := ll.Contains(val)
-		if index != -1 {
-			fmt.Printf("值 %v 的索引: %d, 是否包含: %v\n", val, index, contains)
-		} else {
-			fmt.Printf("值 %v 不存在, 是否包含: %v\n", val, contains)
-		}
+	// 测试 Set - 设置元素（双链表特有，支持双向遍历优化）
+	fmt.Println("=== 测试 Set（双链表特有） ===")
+	fmt.Println("设置前链表:", ll)
+	// 设置前半部分的元素（从前向后遍历）
+	err := ll.Set(1, 777)
+	if err != nil {
+		fmt.Printf("设置失败: %v\n", err)
+	} else {
+		value, _ := ll.Get(1)
+		fmt.Printf("设置索引1为777后，索引1的值: %v\n", value)
 	}
+	// 设置后半部分的元素（从后向前遍历，利用双向遍历优化）
+	err = ll.Set(ll.GetSize()-1, 666)
+	if err != nil {
+		fmt.Printf("设置失败: %v\n", err)
+	} else {
+		value, _ := ll.Get(ll.GetSize() - 1)
+		fmt.Printf("设置最后一个元素为666后，最后一个元素的值: %v\n", value)
+	}
+	fmt.Println("设置后链表:", ll)
 	fmt.Println()
 
 	// 测试 RemoveFirst - 删除头节点
@@ -112,7 +120,7 @@ func main() {
 	// 测试边界情况
 	fmt.Println("=== 测试边界情况 ===")
 	// 测试空链表删除
-	emptyList := linkedlist.NewLinkedList()
+	emptyList := list.New()
 	_, err = emptyList.RemoveFirst()
 	if err != nil {
 		fmt.Printf("空链表删除头节点（预期错误）: %v\n", err)
@@ -158,7 +166,7 @@ func main() {
 
 	// 测试单个节点的情况
 	fmt.Println("=== 测试单个节点 ===")
-	singleList := linkedlist.NewLinkedList()
+	singleList := list.New()
 	singleList.AddFirst(42)
 	fmt.Println("单个节点链表:", singleList)
 	removed, err = singleList.RemoveLast()
@@ -169,6 +177,45 @@ func main() {
 	}
 	fmt.Println()
 
+	// 测试双链表的双向遍历特性
+	fmt.Println("=== 测试双链表的双向遍历特性 ===")
+	testList := list.New()
+	for i := 0; i < 10; i++ {
+		testList.AddLast(i)
+	}
+	fmt.Println("创建包含10个元素的链表:", testList)
+
+	// 测试 Set 方法的前半部分遍历（从前向后）
+	fmt.Println("设置索引2（前半部分，从前向后遍历）:")
+	err = testList.Set(2, 222)
+	if err != nil {
+		fmt.Printf("设置失败: %v\n", err)
+	} else {
+		value, _ := testList.Get(2)
+		fmt.Printf("索引2的值: %v\n", value)
+	}
+
+	// 测试 Set 方法的后半部分遍历（从后向前）
+	fmt.Println("设置索引7（后半部分，从后向前遍历）:")
+	err = testList.Set(7, 777)
+	if err != nil {
+		fmt.Printf("设置失败: %v\n", err)
+	} else {
+		value, _ := testList.Get(7)
+		fmt.Printf("索引7的值: %v\n", value)
+	}
+	fmt.Println("修改后链表:", testList)
+	fmt.Println()
+
+	// 测试 Dummy.Prev 的维护
+	fmt.Println("=== 测试 Dummy.Prev 的维护 ===")
+	fmt.Printf("当前链表大小: %d\n", testList.GetSize())
+	fmt.Printf("Dummy.Prev 指向的节点值: %v\n", testList.Dummy.Prev.Value)
+	fmt.Println("删除最后一个节点...")
+	testList.RemoveLast()
+	fmt.Printf("删除后链表大小: %d\n", testList.GetSize())
+	fmt.Printf("删除后 Dummy.Prev 指向的节点值: %v\n", testList.Dummy.Prev.Value)
+	fmt.Println()
+
 	fmt.Println("=== 所有测试完成 ===")
 }
-

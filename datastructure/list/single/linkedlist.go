@@ -1,4 +1,4 @@
-package linkedlist
+package single
 
 import (
 	"errors"
@@ -19,7 +19,7 @@ type LinkedList struct {
 }
 
 // new()
-func NewLinkedList() *LinkedList {
+func New() *LinkedList {
 	return &LinkedList{
 		Head: nil,
 		Size: 0,
