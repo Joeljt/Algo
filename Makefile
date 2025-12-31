@@ -20,11 +20,13 @@ help:
 	@echo "  make run-array        - Run array example"
 	@echo "  make run-list         - Run list example"
 	@echo "  make run-stack        - Run stack example"
+	@echo "  make run-queue        - Run queue example"
 	@echo ""
 	@echo "Testing:"
 	@echo "  make test             - Run all unit tests (excluding examples)"
 	@echo "  make test-array       - Run array unit tests"
 	@echo "  make test-list        - Run list unit tests"
+	@echo "  make test-queue       - Run queue unit tests"
 	@echo "  make test-leetcode    - Run LeetCode tests"
 	@echo "  make test-coverage    - Run tests and generate coverage report"
 	@echo ""
@@ -52,9 +54,15 @@ run-stack:
 	@echo "=== Running stack example ==="
 	@cd $(EXAMPLES_DIR)/stack && go run main.go
 
+# Run queue example program
+.PHONY: run-queue
+run-queue:
+	@echo "=== Running queue example ==="
+	@cd $(EXAMPLES_DIR)/queue && go run main.go
+
 # Run all example programs
 .PHONY: run
-run: run-array run-list run-stack
+run: run-array run-list run-stack run-queue
 	@echo "=== All example programs completed ==="
 
 # ==================== 测试 ====================
@@ -84,6 +92,12 @@ test-list:
 test-stack:
 	@echo "=== Running stack unit tests ==="
 	@go test ./$(DATASOURCE_DIR)/stack
+
+# Run queue unit tests
+.PHONY: test-queue
+test-queue:
+	@echo "=== Running queue unit tests ==="
+	@go test ./$(DATASOURCE_DIR)/queue
 
 # Run LeetCode tests
 .PHONY: test-leetcode
