@@ -71,7 +71,7 @@ func TestEmptyQueue(t *testing.T) {
 	}
 }
 
-// 测试队列已满的情况
+// 测试队列已满的情况（更新为支持扩容）
 func TestFullQueue(t *testing.T) {
 	queue := New()
 	capacity := queue.GetCapacity()
@@ -93,10 +93,20 @@ func TestFullQueue(t *testing.T) {
 		t.Errorf("期望大小 %d，实际大小 %d", capacity, queue.GetSize())
 	}
 
-	// 测试在满队列中入队
+	// 测试在满队列中入队（现在应该自动扩容，不应该返回错误）
 	err := queue.Enqueue(999)
-	if err == nil {
-		t.Error("在满队列中 Enqueue 应该返回错误")
+	if err != nil {
+		t.Errorf("在满队列中 Enqueue 应该自动扩容，不应该返回错误: %v", err)
+	}
+
+	// 验证扩容成功
+	if queue.GetCapacity() <= capacity {
+		t.Errorf("应该发生扩容，期望容量 > %d，实际容量 %d", capacity, queue.GetCapacity())
+	}
+
+	// 验证元素正确
+	if queue.GetSize() != capacity+1 {
+		t.Errorf("期望大小 %d，实际大小 %d", capacity+1, queue.GetSize())
 	}
 }
 

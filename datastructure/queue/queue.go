@@ -41,7 +41,9 @@ func (q *Queue) IsFull() bool {
 
 func (q *Queue) Enqueue(value any) error {
 	if q.IsFull() {
-		return errors.New("queue is full")
+		// return errors.New("queue is full")
+		// 将队列扩容到原来的两倍
+		q.resize(q.capacity * 2)
 	}
 	// 当前 rear 指向空白位置，直接在对应位置赋值即可
 	q.data[q.rear] = value
@@ -63,6 +65,12 @@ func (q *Queue) Dequeue() (any, error) {
 	q.front = (q.front + 1) % q.capacity
 	// 维护 size
 	q.size--
+
+	// 如果出队以后队列不为空，并且实际占用容量只有总容量的 1/4，缩容到 1/2
+	if q.size > 0 && q.size == q.capacity/4 && q.capacity > 10 {
+		q.resize(q.capacity / 2)
+	}
+
 	return value, nil
 }
 
@@ -86,8 +94,32 @@ func (q *Queue) Clear() {
 	q.front = 0
 	q.rear = 0
 	q.size = 0
+	q.capacity = 10
 	// 清空数据，帮助 gc
 	for i := range q.data {
 		q.data[i] = nil
 	}
+}
+
+// resize
+func (q *Queue) resize(newCapacity int) {
+	if newCapacity < 10 {
+		newCapacity = 10
+	}
+
+	// 创建新数组
+	newData := make([]any, newCapacity)
+
+	// 将原队列的数据都复制到新数组里
+	for i := 0; i < q.size; i++ {
+		// 偏移 q.front 个元素，即从 q.front 的位置开始
+		index := (q.front + i) % q.capacity
+		newData[i] = q.data[index]
+	}
+
+	// 更新队列的状态
+	q.data = newData
+	q.front = 0
+	q.rear = q.size
+	q.capacity = newCapacity
 }
