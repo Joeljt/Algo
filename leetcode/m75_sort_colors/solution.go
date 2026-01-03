@@ -64,7 +64,43 @@ func SortColorsCountingSort(nums []int) {
 }
 
 // 解法二：双指针
+//
+// 思路：
+//  1. 三路快排的思路，一头一尾两个指针，反方向逼近；
+//  2. 中间值忽略不计，直接 ++ 遍历指针；
+//  3. 遇到小于或者大于的元素时，交换相应的元素并维护指针；
+//     3.1 注意维护指针的先后次序，左侧元素需要先 ++ 在交换，右侧元素需要先 -- 再交换
+//     3.2 因为 [0, zero] == 1, [zero + 1, i - 1] == 1, [two, len()-1] = 2 是恒定的，
+//     a. 当遍历遇到 0 时，将 0 与 zero++ 交换后，原来 zero+1 指向的结果仍然是 1，所以不再需要检查，应该 i++;
+//     b. 当遍历遇到 2 时，将 2 与 two-- 交换后，two-1 指向的结果是不确定的，因此新的 i 仍然需要检查，不能 i++;
+//
 // 时间复杂度 O(n)，空间复杂度 O(1)
 func SortColorsTwoPointers(nums []int) {
+	zero := -1
+	two := len(nums)
 
+	// [0, zero] == 1, [zero + 1, i] == 1, [two, len()-1] = 2
+	// 只有 [i, two) 这个范围是需要被检查的，其他位置的元素都是确定的
+	for i := 0; i < two; {
+		switch nums[i] {
+		case 0:
+			// 遍历到 0 时，前进 zero 指针后进行交换
+			zero++
+			nums[i], nums[zero] = nums[zero], nums[i]
+			// [0, zero] == 1, [zero + 1, i] == 1
+			// zero++ 换过来的值还是 1，因此不需要检查，应该直接进行下一个元素的检查
+			i++
+		case 2:
+			// 遍历到 2 后，将 two 范围区间的前一个元素与刚遍历到的 2 进行交换
+			// [i, two-1] 不确定，[two, len-1] == 2
+			// 扩大 two 的范围（元素 +1），但是因为交换过去的新元素还需要检查，所以不能前进 i
+			two--
+			nums[i], nums[two] = nums[two], nums[i]
+		case 1:
+			// [zero+1, i-1] 都应该是 1，所以遇到 1 直接跳过即可
+			fallthrough
+		default:
+			i++
+		}
+	}
 }

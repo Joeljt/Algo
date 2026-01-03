@@ -100,17 +100,17 @@ func TestSortColors(t *testing.T) {
 		})
 	}
 
-	// for _, tt := range tests {
-	// 	t.Run(tt.name, func(t *testing.T) {
-	// 		// 复制输入数组，避免修改原始测试用例
-	// 		nums := make([]int, len(tt.nums))
-	// 		copy(nums, tt.nums)
-	// 		SortColorsTwoPointers(nums)
-	// 		if !reflect.DeepEqual(nums, tt.expected) {
-	// 			t.Errorf("SortColors() = %v, want %v", nums, tt.expected)
-	// 		}
-	// 	})
-	// }
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// 复制输入数组，避免修改原始测试用例
+			nums := make([]int, len(tt.nums))
+			copy(nums, tt.nums)
+			SortColorsTwoPointers(nums)
+			if !reflect.DeepEqual(nums, tt.expected) {
+				t.Errorf("SortColors() = %v, want %v", nums, tt.expected)
+			}
+		})
+	}
 }
 
 // Benchmark tests
