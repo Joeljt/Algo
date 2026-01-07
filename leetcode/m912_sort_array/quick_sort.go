@@ -1,5 +1,7 @@
 package m912sortarray
 
+import "math/rand"
+
 // SortArrayQuickSort 排序数组 - 快速排序解法
 // LeetCode 912: 给你一个整数数组 nums，请你将该数组升序排列。
 //
@@ -47,59 +49,42 @@ func quickSort(nums []int, left, right int) {
 		return
 	}
 
-	// 调用 partition 方法获取一个基准点（下标），该基准点已经处于正确位置
-	// < pivot 的值都应该在其左侧，> pivot 的值都应该在其右侧
-	pivot := partition(nums, left, right)
-	// 根据 pivot 将数组分成左右两部分，然后分段去处理
-	quickSort(nums, left, pivot-1)
-	quickSort(nums, pivot+1, right)
+	// 调用 partition 方法获取两个下标，这两个下标将数组分为三部分，左侧部分都小于该基准点，右侧部分都大于该基准点，中间部分等于该基准点
+	lt, gt := partition(nums, left, right)
+	// 根据 lt 和 gt 将数组分成三部分，然后分段去处理
+	quickSort(nums, left, lt-1)
+	quickSort(nums, gt+1, right)
 }
 
 // 选定一个标定元素，然后在遍历过程中将该元素放到数组中间
 // 保证所有在该元素左侧的元素都小于它，所有在该元素右侧的元素都大于它
 // 最后返回该元素所在的下标
 // 这里注意循环不变量的选择，left 和 right 都是可以取到的范围
-func partition(nums []int, left, right int) int {
+func partition(nums []int, left, right int) (int, int) {
 	// 标定点可以随便选，直接用当前区间的最左侧元素
+	// left 是偏移量，保证随机索引在 [left, right] 范围内
+	randomIndex := left + rand.Intn(right-left+1)
+	nums[left], nums[randomIndex] = nums[randomIndex], nums[left]
+
 	target := nums[left]
 
-	// 三路快排
-	// 将数组分为三个部分，左侧区间 <target、当前遍历区间、右侧区间 >target
-
-	// 初始化遍历指针，标定点选择了第一个元素，所以遍历需要跳过 left 索引，直接从 left + 1 开始
 	i := left + 1
-	// 初始化两个指针指向首位两端，注意这里 start 指向 left 是正确的，因为遍历的起始点是 left+1
-	start, end := left, right+1
+	lt, gt := left, right+1
 
-	for i < end {
+	for i < gt {
 		if nums[i] < target {
-			// 当前遍历到的元素比 target 小，把元素交换到左侧
-			// 因为 start 指针默认指向区间外，所以需要先向前推进以后再进行交换
-			start++
-			nums[i], nums[start] = nums[start], nums[i]
-			// 继续向前查看下一个元素
+			lt++
+			nums[i], nums[lt] = nums[lt], nums[i]
 			i++
 		} else if nums[i] > target {
-			// 当前遍历到的元素比 target 大，需要交换到右侧
-			// 但是由于右侧指针指向数组边界外，需要先维护指针再交换
-			end--
-			nums[i], nums[end] = nums[end], nums[i]
-			// 因为交换过来的元素也是新元素，还没有接受过检查，所以 i 指针不需要向前推进
+			gt--
+			nums[i], nums[gt] = nums[gt], nums[i]
 		} else {
-			// 当前元素与目标元素相当，直接跳过查看下一个元素即可
 			i++
 		}
 	}
 
-	// 注意在这个时候，target 只是作为标准在进行判断，target 目前还在 left 的位置上，我们需要将 target 放到它应该在的位置
+	nums[left], nums[lt] = nums[lt], nums[left]
 
-	// 一次循环完成后
-	// 所有 nums[left, start] < target
-	// 所有 nums[end, right] > target
-	// 所有 nums[start+1, end-1] = target
-	// start 指向最后一个 < target 的值，所以直接把它和 left 交换即可保持定义不变
-	nums[left], nums[start] = nums[start], nums[left]
-
-	// 交换以后 start 的位置就是 target 了，所以返回 start 即可
-	return start
+	return lt, gt - 1 // gt 指向的是 >target 的第一个元素，-1 以后是等于 target 的最后一个元素
 }
