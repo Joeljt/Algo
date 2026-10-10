@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+testpaths = ["leetcode"]
+pythonpath = ["."]
+addopts = "--import-mode=importlib"

@@ -1,174 +1,39 @@
-# Data Structure and Algorithms
+# 算法练习
 
-This is a whole new round of algorithm learning. I'm planning to implement all data structures with Go for two reasons:
+用 Python 手写 LeetCode。数据结构用语言自带的。
 
-1. Familiarize myself with the Go programming language.
-2. Make myself comfortable with algorithms again after nearly a year.
+每周四次，每次 30 分钟。错过一次，下一次仍然做 30 分钟。
 
-I expect this round of learning and implementing to be easier and smoother than before, as I have done it several times before.
-Also, I should be taking advantage of this round to practice my English writing skills as well.
+## 一道题怎么写
 
-## Project Structure
+1. 在 `solution.py` 顶部用中文写下不变量和步骤。
+2. 自己把步骤写成 Python。可以查语法，不要让 AI 把函数写出来。
+3. 运行 `.venv/bin/pytest`。
+4. 通过后删掉函数体，从 `raise NotImplementedError` 再写一遍。默写通过，这道题才算完成。
 
-```
-joseph/algo/
-├── datastructure/          # Data structure implementations
-│   ├── array/
-│   │   ├── array.go
-│   │   └── array_test.go
-│   └── linkedlist/
-│       ├── linkedlist.go
-│       └── linkedlist_test.go
-├── algorithm/              # Algorithm implementations
-│   └── sorting/            # Sorting algorithms (to be added)
-│       ├── bubble/
-│       │   ├── bubble.go
-│       │   └── bubble_test.go
-│       └── quick/
-│           ├── quick.go
-│           └── quick_test.go
-├── leetcode/              # LeetCode problems
-│   └── e283_move_zeros/
-│       ├── solution.go
-│       ├── solution_test.go
-│       └── README.md
-└── examples/              # All example programs
-    ├── array/
-    │   └── main.go
-    └── linkedlist/
-        └── main.go
-```
+## 进度
 
-## Design Principles
+同向双指针已完成：[283. 移动零](leetcode/e283_move_zeros/solution.py)、[27. 移除元素](leetcode/e27_remove_element/solution.py)。两端往中间夹的双指针先不补。
 
-### 1. Categorization by Function
-- **datastructure/**：All data structure implementations (arrays, linked lists, stacks, queues, etc.)
-- **algorithm/**：All algorithm implementations (sorting, searching, dynamic programming, etc.)
-- **leetcode/**：LeetCode problems and solutions
-- **examples/**：All example programs managed in one place
+当前题型是滑动窗口。每次练习先花 10 分钟默写一道已完成的题，默写通过再做新题。
 
-### 2. Unified Example Management
-- All `main.go` files are placed in subdirectories under `examples/`
-- Each example program is in its own subdirectory to avoid `main` function conflicts
-- Example programs are not executed by `go test ./...`
+## 眼下的队列
 
-### 3. Test Isolation
-- Each module has its own `*_test.go` file
-- `go test ./datastructure/...` only tests data structures
-- `go test ./algorithm/...` only tests algorithms
-- The `examples/` directory does not contain tests and will not be executed during testing
+- [x] [283. 移动零](leetcode/e283_move_zeros/solution.py)
+- [x] [27. 移除元素](leetcode/e27_remove_element/solution.py)
+- [ ] [209. 长度最小的子数组](leetcode/m209_min_subarray_len/solution.py) — 滑动窗口
 
-## About main.go
+不用完成题数计进度。一种题型能默写代表题，再做一道变体，然后换下一种。
 
-### Why shouldn't main.go be in the package directory?
+## 目录
 
-1. **Package Design Principles**:
-   - Go packages should be reusable libraries and should not contain executable programs
-   - If a package directory contains `main.go`, that package cannot be imported by other packages
+一题一个目录，放在 `leetcode/` 下。目录名以难度开头：`e` easy，`m` medium，`h` hard。例如 `leetcode/e283_move_zeros/`，里面是 `solution.py` 和 `test_solution.py`。
 
-2. **Testing Issues**:
-   - `go test ./...` will attempt to compile all directories
-   - Directories containing `main.go` will be treated as executable programs rather than tests
-   - This will cause test failures or unexpected behavior
+## 命令
 
-3. **Import Issues**:
-   - If the `array/` directory contains `main.go`, other packages cannot import `joseph/algo/array`
-   - Because Go will consider it an executable program, not a library
-
-### Solution
-
-- **Unified example programs in examples directory**: All demonstration code is centrally managed
-- **Each example program in its own subdirectory**: Avoids `main` function conflicts
-- **Exclude examples during testing**: Use `go test ./datastructure/...` instead of `go test ./...`
-
-## Usage
-
-### Running Example Programs
 ```bash
-make run-array        # Run array example
-make run-linkedlist  # Run linked list example
-make run-all          # Run all examples
+python3 -m venv .venv
+.venv/bin/pip install "pytest>=7,<9"
+.venv/bin/pytest
+.venv/bin/pytest leetcode/m209_min_subarray_len
 ```
-
-### Running Tests
-```bash
-make test             # Run all unit tests (excluding examples)
-make test-array       # Test array only
-make test-linkedlist  # Test linked list only
-make test-leetcode    # Test LeetCode problems
-make test-coverage    # Generate coverage report
-```
-
-### Import and Use
-```go
-import (
-    "joseph/algo/datastructure/array"
-    "joseph/algo/datastructure/linkedlist"
-)
-
-func main() {
-    arr := array.NewArray(10)
-    ll := linkedlist.NewLinkedList()
-    // ...
-}
-```
-
-## Implementation Progress
-
-### Data Structures
-
-- [x] Array
-- [x] Linked List
-- [ ] Stack
-- [ ] Queue
-- [ ] Tree
-- [ ] Hash Table
-- [ ] Graph
-
-### Sorting Algorithms
-
-- [ ] Bubble Sort
-- [ ] Selection Sort
-- [ ] Insertion Sort
-- [ ] Shell Sort
-- [ ] Merge Sort
-- [ ] Quick Sort
-- [ ] Heap Sort
-- [ ] Counting Sort
-- [ ] Radix Sort
-- [ ] Bucket Sort
-
-### Strategies
-
-- [ ] Recursion
-- [ ] Dynamic Programming
-- [ ] Greedy Algorithm
-- [ ] Backtracking
-
-### LeetCode Solutions
-
-- [x] [283. Move Zeroes](./leetcode/e283_move_zeros/README.md)
-
-## Future Extensions
-
-### Adding New Data Structures
-1. Create a new directory under `datastructure/` (e.g., `stack/`)
-2. Implement `stack.go` and `stack_test.go`
-3. Create `stack/` directory and `main.go` under `examples/`
-
-### Adding New Algorithms
-1. Create a new directory under `algorithm/sorting/` (e.g., `merge/`)
-2. Implement `merge.go` and `merge_test.go`
-3. Create corresponding example programs under `examples/` if needed
-
-### Adding LeetCode Problems
-1. Create a new directory under `leetcode/` (e.g., `e1_two_sum/`)
-2. Implement `solution.go` and `solution_test.go`
-3. Run tests with `make test-leetcode` or `go test ./leetcode/e1_two_sum -v`
-
-## Advantages
-
-1. **Clear hierarchical structure**: Categorized by function, easy to find and maintain
-2. **Test isolation**: Example programs do not interfere with tests
-3. **Easy to extend**: Adding new content only requires creating in the corresponding directory
-4. **Follows Go best practices**: Packages as libraries, example programs managed independently

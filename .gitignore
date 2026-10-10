@@ -1,12 +1,6 @@
+.venv/
 .vscode/
-**/_dist/
-
-*.exe
-*.o
-*.a
-*.so
-*.dylib
-*.dSYM
-*.DS_Store
-*.class
-coverage.*
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
