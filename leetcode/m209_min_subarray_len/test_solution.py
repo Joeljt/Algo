@@ -10,6 +10,7 @@ from leetcode.m209_min_subarray_len.solution import min_subarray_len
         (4, [1, 4, 4], 1),
         (11, [1, 1, 1, 1, 1, 1, 1, 1], 0),
         (15, [1, 2, 3, 4, 5], 5),
+        (5, [1, 1, 1, 5, 1, 1, 1], 1)
     ],
 )
 def test_min_subarray_len(target, nums, expected):
