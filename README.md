@@ -2,36 +2,29 @@
 
 用 Python 手写 LeetCode。数据结构用语言自带的。
 
-**完整路线（每种题型 1 讲解 + 2 练习、先后顺序）见 [PLAN.md](PLAN.md)。**
-
-每周四次，每次 30 分钟。错过一次，下一次仍然做 30 分钟。
+题型顺序、每周节奏、过关标准、卡住怎么办，都在 [PLAN.md](PLAN.md)。
 
 ## 一道题怎么写
 
-1. 在 `solution.py` 顶部用中文写下不变量和步骤。
+1. 在 `solution.py` 顶部用中文写下不变量和变量含义。
 2. 自己把步骤写成 Python。可以查语法，不要让 AI 把函数写出来。
-3. 运行 `.venv/bin/pytest`。
-4. 通过后删掉函数体默写，LeetCode AC，这道题才算完成。
+3. 运行 `.venv/bin/pytest <题目目录>`。
+4. 讲解题隔天从空文件在 LeetCode 默写到 AC，才算完成。
 
-## 当前位置（详见 PLAN 执行顺序）
+## 当前位置
 
 | 状态 | 内容 |
 | --- | --- |
-| 已毕业 | 同向双指针 283、27；滑动窗口 209 |
-| **进行中** | 哈希 — [1. 两数之和](leetcode/e1_two_sum/solution.py) |
-| 下一步 | 见 [PLAN.md](PLAN.md) 执行顺序；`leetcode/` 下已建好至 **栈** 为止的题面与 pytest 模板 |
+| 已完成 | 同向双指针 283、27；滑动窗口 209 |
+| 进行中（第 0 周） | 滑动窗口收尾：[3](leetcode/m3_longest_substring_without_repeating/solution.py)、[643](leetcode/e643_max_average_subarray_i/solution.py) |
+| 下一周 | 哈希：[1](leetcode/e1_two_sum/solution.py)、[217](leetcode/e217_contains_duplicate/solution.py)、[49](leetcode/m49_group_anagrams/solution.py) |
 
-每次练习：先 10 分钟默写复习池（283 / 27 / 209 轮换），再做 PLAN 里当前题型。
-
-## 目录
-
-一题一个目录：`leetcode/{e|m|h}{题号}_{slug}/`，内含 `solution.py`、`test_solution.py`。
+模板只建到下一周为止，其余题型到了那一周再建。
 
 ## 命令
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install "pytest>=7,<9"
-.venv/bin/pytest
-.venv/bin/pytest leetcode/e1_two_sum
+.venv/bin/pytest leetcode/m3_longest_substring_without_repeating
 ```
