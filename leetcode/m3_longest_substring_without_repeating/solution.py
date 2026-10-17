@@ -49,15 +49,24 @@ left = 2, right = 5, char = w, substr = wkew，更新左边界，直到不再有
 """
 
 def length_of_longest_substring(s: str) -> int:
-    """字典版：记上次下标，重复时左边界一步跳（与 length_of_longest_substring 同思路）。"""
+    """字典版：用 map 当记事本，重复时把「墙」一步推到旧位置，不用 while 一格一格缩。"""
+    # 记事本：每个字符上一次出现在哪个下标（可能比当前窗口更靠左，只供查重复时用）
     last_index: dict[str, int] = {}
-    left_exclusive = -1  # 窗口为 s[left_exclusive + 1 : right]，长度 = right - left_exclusive
+    # 「墙」在窗口左边界再左侧一格。窗口 = s[left_exclusive + 1 : right]（闭区间右端是 right）
+    # 初始 -1 表示还没字符进窗口；此时长度公式 right - left_exclusive 仍成立（例如 right=0 时长为 1）
+    left_exclusive = -1
     best_len = 0
 
     for right, ch in enumerate(s):
+        # 当前字符以前出现过：说明若还按旧窗口，会再次出现同一个 ch，无重复子串条件被破坏
         if ch in last_index:
+            # 把墙至少推到 ch 上次出现的下标：窗口改从「上次那个 ch 的下一格」开始，旧的那次 ch 被排除
+            # 不能写成 left_exclusive = last_index[ch] 就完事，还要和现在的墙取 max：
+            # 例如 abccb，第二个 c 把墙推到 2 后，后面的 b 在 map 里仍是 1，但墙已在 2，不能退回到 1（abba 同理）
             left_exclusive = max(left_exclusive, last_index[ch])
+        # 无论是否重复，都更新「ch 最近一次在 right」——map 是全局记事本，不是窗口内容本身
         last_index[ch] = right
+        # 墙在 left 区间外，所以长度是 right - left_exclusive，不是 right - left + 1
         best_len = max(best_len, right - left_exclusive)
 
     return best_len
