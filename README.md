@@ -15,9 +15,9 @@
 
 | 状态 | 内容 |
 | --- | --- |
-| 已完成 | 同向双指针 283、27；滑动窗口 209 |
-| 进行中（第 0 周） | 滑动窗口收尾：[3](leetcode/m3_longest_substring_without_repeating/solution.py)、[643](leetcode/e643_max_average_subarray_i/solution.py) |
-| 下一周 | 哈希：[1](leetcode/e1_two_sum/solution.py)、[217](leetcode/e217_contains_duplicate/solution.py)、[49](leetcode/m49_group_anagrams/solution.py) |
+| 已完成 | 同向双指针 283、27；滑动窗口 209、3、643 |
+| 进行中（第 1 周） | 哈希：[1](leetcode/e1_two_sum/solution.py)、[217](leetcode/e217_contains_duplicate/solution.py)、[49](leetcode/m49_group_anagrams/solution.py) |
+| 复习 | 规则见 [PLAN.md 复习](PLAN.md#复习)。当前 A 级：283、209；B 级：27、3、643 |
 
 模板只建到下一周为止，其余题型到了那一周再建。
 
