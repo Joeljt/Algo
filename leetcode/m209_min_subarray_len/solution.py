@@ -5,6 +5,11 @@ https://leetcode.com/problems/minimum-size-subarray-sum/
 正整数数组 nums，正整数 target。
 找出和至少达到 target 的最短连续子数组，返回它的长度。没有这样的子数组就返回 0。
 
+决定性条件：
+- 元素均为正数：和随扩窗单调增、随缩窗单调减，故 sum >= target 时应用 while 持续缩 left，而不是只缩一格。
+- 求「最短」：在仍满足 sum >= target 的每一刻都要更新答案（min 长度）。
+- 窗口长度可变：不能固定 k 的滚动和，必须双指针扩 right、条件满足时缩 left。
+
 不变量：
 
 步骤：

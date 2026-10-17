@@ -4,6 +4,11 @@ https://leetcode.com/problems/maximum-average-subarray-i/
 
 整数数组 nums 和整数 k，找长度 k 的连续子数组的最大平均数。
 
+决定性条件：
+- 窗口长度恒为 k：每步右进左出各一格，不必用 209/3 那种「条件不满足才 while 缩 left」。
+- k 固定时 max(平均) 等价于 max(窗口和)：可先比 max_sum，最后除以 k。
+- 不必机械套变长窗口模板；滚动 window_sum 往往最简单。
+
 不变量（find_max_average：长度固定为 k，滚动求和）：
 - 第一次 sum(nums[:k]) 后，窗口为 nums[0 : k]，window_sum 为其元素和。
 - 循环中 i 为窗口右端下标，窗口为 nums[i - k + 1 : i + 1]，长度恒为 k。

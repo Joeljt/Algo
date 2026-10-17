@@ -4,6 +4,11 @@ https://leetcode.cn/problems/longest-substring-without-repeating-characters/
 
 字符串 s，求不含重复字符的最长子串长度。
 
+决定性条件：
+- 子串必须连续：只能滑动窗口，不能排序后双指针。
+- 字符不可重复：右扩后若重复，必须缩左端直到窗口内无重复（或按上次出现位置跳 left）。
+- 求最长：在合法窗口的每一刻用 max 更新，不能只记当前长度。
+
 不变量（主函数：字典记上次下标）：
 - last_index[c]：字符 c 最近一次出现的下标。
 - left_exclusive：窗口左边界再左侧一格；当前窗口为 s[left_exclusive + 1 : right]，长度 = right - left_exclusive（初始 -1 表示空窗口）。
